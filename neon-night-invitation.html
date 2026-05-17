@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>NEON NIGHT — Vocal Group Among Classes</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+:root {
+  --neon-pink: #ff2d78;
+  --neon-cyan: #00f5ff;
+  --neon-yellow: #fff200;
+  --neon-purple: #b400ff;
+  --neon-green: #00ff88;
+  --neon-orange: #ff6b00;
+  --dark-bg: #04000f;
+  --dark2: #080020;
+  --pixel: 'Press Start 2P', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; image-rendering: pixelated; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--dark-bg); font-family: var(--pixel); }
+
+/* ===== SCANLINE OVERLAY ===== */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== SPLASH SCREEN ===== */
+#splash {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--dark-bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0;
+}
+.splash-stars {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.splash-star {
+  position: absolute;
+  background: white;
+  width: 2px; height: 2px;
+  animation: twinkle var(--d, 2s) var(--delay, 0s) infinite alternate;
+}
+@keyframes twinkle { 0%{opacity:0.2;} 100%{opacity:1;} }
+
+.splash-title {
+  text-align: center;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+.splash-title .line1 {
+  font-size: clamp(12px, 4vw, 28px);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+  letter-spacing: 4px;
+  display: block;
+  margin-bottom: 6px;
+}
+.splash-title .line2 {
+  font-size: clamp(18px, 7vw, 52px);
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink), 0 0 30px var(--neon-pink), 0 0 60px var(--neon-pink);
+  display: block;
+  line-height: 1.2;
+}
+.splash-title .line3 {
+  font-size: clamp(7px, 2vw, 14px);
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px var(--neon-yellow);
+  display: block;
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+
+/* Pixel Character */
+.pixel-char-wrap {
+  position: relative; z-index: 2;
+  margin: 24px 0 16px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.pixel-character {
+  width: 80px; height: 120px;
+  position: relative;
+  animation: idle-breath 2s ease-in-out infinite;
+  image-rendering: pixelated;
+}
+@keyframes idle-breath {
+  0%,100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-4px) scaleY(1.02); }
+}
+.char-shadow {
+  width: 50px; height: 8px;
+  background: radial-gradient(ellipse, rgba(0,245,255,0.4) 0%, transparent 70%);
+  margin: 0 auto;
+  animation: shadow-pulse 2s ease-in-out infinite;
+}
+@keyframes shadow-pulse {
+  0%,100% { transform: scaleX(1); opacity: 0.6; }
+  50% { transform: scaleX(0.7); opacity: 0.3; }
+}
+
+/* SVG pixel character parts */
+.pc-svg { width: 80px; height: 120px; }
+
+/* START Button */
+.btn-start {
+  font-family: var(--pixel);
+  font-size: clamp(10px, 2.5vw, 16px);
+  color: var(--dark-bg);
+  background: var(--neon-cyan);
+  border: none; outline: none;
+  padding: 14px 32px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  margin-top: 20px;
+  box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+  animation: btn-pulse 1.2s ease-in-out infinite alternate;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: transform 0.1s;
+  image-rendering: auto;
+}
+.btn-start:hover { transform: scale(1.05); }
+.btn-start:active { transform: scale(0.97); }
+@keyframes btn-pulse {
+  0% { box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan); }
+  100% { box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 60px var(--neon-cyan), 0 0 80px rgba(0,245,255,0.3); }
+}
+
+.splash-hint {
+  position: relative; z-index: 2;
+  font-size: 8px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 16px;
+  animation: blink 1.5s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+/* ===== GAME CONTAINER ===== */
+#game-container {
+  position: fixed; inset: 0;
+  display: none;
+  overflow: hidden;
+}
+#game-canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* ===== HUD ===== */
+#hud {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 40px;
+  background: rgba(4,0,15,0.85);
+  border-bottom: 2px solid var(--neon-pink);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(255,45,120,0.3);
+}
+.hud-title {
+  font-size: 7px;
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink);
+  letter-spacing: 1px;
+}
+.hud-hint {
+  font-size: 6px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 6px var(--neon-cyan);
+  animation: blink 2s step-end infinite;
+}
+.hud-score {
+  font-size: 7px;
+  color: var(--neon-yellow);
+  text-shadow: 0 0 6px var(--neon-yellow);
+}
+
+/* ===== MOBILE CONTROLS ===== */
+#mobile-controls {
+  position: fixed;
+  bottom: 16px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 16px;
+  z-index: 200;
+  pointer-events: none;
+}
+.dpad { display: flex; gap: 4px; pointer-events: all; }
+.ctrl-btn {
+  width: 52px; height: 52px;
+  background: rgba(0,245,255,0.15);
+  border: 2px solid rgba(0,245,255,0.5);
+  border-radius: 0;
+  color: var(--neon-cyan);
+  font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background 0.1s;
+  image-rendering: auto;
+}
+.ctrl-btn:active, .ctrl-btn.pressed {
+  background: rgba(0,245,255,0.35);
+  border-color: var(--neon-cyan);
+}
+.jump-btn {
+  width: 64px; height: 64px;
+  background: rgba(255,45,120,0.15);
+  border: 2px solid rgba(255,45,120,0.5);
+  color: var(--neon-pink);
+  font-size: 22px;
+  border-radius: 50%;
+}
+.jump-btn:active, .jump-btn.pressed {
+  background: rgba(255,45,120,0.35);
+  border-color: var(--neon-pink);
+}
+
+/* ===== MODALS ===== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 500;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 16px;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: var(--dark2);
+  border: 3px solid var(--neon-cyan);
+  box-shadow: 0 0 0 2px var(--dark-bg), 0 0 30px var(--neon-cyan), inset 0 0 40px rgba(0,245,255,0.05);
+  width: 100%; max-width: 560px;
+  max-height: 85vh;
+  display: flex; flex-direction: column;
+  position: relative;
+  animation: modal-in 0.2s steps(4) forwards;
+}
+@keyframes modal-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.modal-header {
+  padding: 16px 20px 12px;
+  border-bottom: 2px solid rgba(0,245,255,0.3);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-shrink: 0;
+}
+.modal-title {
+  font-size: clamp(8px, 2vw, 12px);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan);
+  letter-spacing: 1px;
+}
+.modal-close {
+  font-family: var(--pixel); font-size: 10px;
+  background: var(--neon-pink); color: var(--dark-bg);
+  border: none; cursor: pointer; padding: 6px 10px;
+  box-shadow: 0 0 10px var(--neon-pink);
+  image-rendering: auto;
+}
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon-cyan) var(--dark2);
+}
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-track { background: var(--dark2); }
+.modal-body::-webkit-scrollbar-thumb { background: var(--neon-cyan); }
+
+/* Modal content styles */
+.modal-text { font-size: 8px; color: rgba(255,255,255,0.85); line-height: 2.2; }
+.modal-section-title { font-size: 9px; color: var(--neon-yellow); text-shadow: 0 0 6px var(--neon-yellow); margin: 14px 0 8px; display: block; }
+.modal-divider { border: none; border-top: 2px dashed rgba(0,245,255,0.3); margin: 12px 0; }
+.profile-card {
+  background: rgba(0,245,255,0.05);
+  border: 2px solid rgba(0,245,255,0.2);
+  padding: 14px;
+  margin: 8px 0;
+}
+.profile-avatar {
+  width: 48px; height: 48px;
+  background: var(--neon-purple);
+  border: 2px solid var(--neon-pink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin: 0 auto 10px;
+}
+.timeline-item {
+  display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;
+}
+.timeline-time { font-size: 7px; color: var(--neon-yellow); text-shadow: 0 0 6px var(--neon-yellow); min-width: 70px; padding-top: 1px; }
+.timeline-dot { width: 8px; height: 8px; background: var(--neon-pink); flex-shrink: 0; margin-top: 2px; }
+.timeline-desc { font-size: 7px; color: rgba(255,255,255,0.8); line-height: 2; }
+.class-item {
+  background: rgba(180,0,255,0.08);
+  border: 2px solid rgba(180,0,255,0.3);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.class-item:hover { background: rgba(180,0,255,0.2); }
+.class-name { font-size: 8px; color: var(--neon-purple); text-shadow: 0 0 6px var(--neon-purple); }
+.class-song { font-size: 7px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+.lyrics-panel { display: none; }
+.lyrics-panel.open { display: block; }
+.lyrics-text { font-size: 7px; color: rgba(255,255,255,0.75); line-height: 2.2; margin-top: 8px; padding: 8px; background: rgba(255,255,255,0.03); border-left: 3px solid var(--neon-purple); white-space: pre-line; }
+.back-btn {
+  font-family: var(--pixel); font-size: 7px;
+  background: transparent; border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan); cursor: pointer; padding: 6px 10px;
+  margin-bottom: 10px; image-rendering: auto;
+}
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.gallery-item {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  border: 2px solid rgba(0,245,255,0.2);
+  position: relative; overflow: hidden;
+  cursor: pointer;
+}
+.gallery-item:nth-child(3n+1) { background: rgba(255,45,120,0.1); border-color: rgba(255,45,120,0.3); }
+.gallery-item:nth-child(3n+2) { background: rgba(0,245,255,0.08); border-color: rgba(0,245,255,0.3); }
+.gallery-item:nth-child(3n+3) { background: rgba(180,0,255,0.1); border-color: rgba(180,0,255,0.3); }
+.gallery-label { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); font-size: 5px; color: white; padding: 3px; text-align: center; font-family: var(--pixel); }
+.neon-badge { display: inline-block; padding: 3px 8px; font-size: 7px; margin: 2px; }
+.badge-pink { background: rgba(255,45,120,0.2); border: 1px solid var(--neon-pink); color: var(--neon-pink); }
+.badge-cyan { background: rgba(0,245,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); }
+.badge-yellow { background: rgba(255,242,0,0.1); border: 1px solid var(--neon-yellow); color: var(--neon-yellow); }
+
+/* ===== PIANO GAME ===== */
+#piano-game {
+  position: fixed; inset: 0;
+  background: var(--dark-bg);
+  z-index: 600;
+  display: none;
+  flex-direction: column;
+}
+#piano-game.active { display: flex; }
+#piano-header {
+  padding: 12px 20px;
+  background: rgba(0,0,0,0.5);
+  border-bottom: 2px solid var(--neon-pink);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-shrink: 0;
+}
+#piano-header h2 { font-size: clamp(9px,2.5vw,14px); color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
+#piano-score-display { font-size: 10px; color: var(--neon-yellow); text-shadow: 0 0 6px var(--neon-yellow); }
+#piano-close { font-family: var(--pixel); font-size: 9px; background: var(--neon-pink); color: var(--dark-bg); border: none; cursor: pointer; padding: 6px 10px; image-rendering: auto; }
+#piano-canvas-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+#piano-canvas { display: block; width: 100%; height: 100%; }
+.piano-lane-btn {
+  position: absolute; bottom: 0;
+  height: 70px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.05);
+  border-top: 3px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background 0.05s;
+  z-index: 2;
+}
+.piano-lane-btn.hit { background: rgba(255,255,255,0.3); }
+#piano-feedback {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--pixel);
+  font-size: clamp(18px, 5vw, 32px);
+  pointer-events: none;
+  z-index: 10;
+  animation: feedback-pop 0.6s forwards;
+  text-shadow: 0 0 20px currentColor;
+}
+@keyframes feedback-pop {
+  0% { transform: translateX(-50%) scale(0.5); opacity: 1; }
+  60% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1) translateY(-30px); opacity: 0; }
+}
+#piano-start-screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
+  background: rgba(0,0,0,0.7);
+  z-index: 5;
+}
+#piano-start-screen h3 { font-size: clamp(10px,3vw,18px); color: var(--neon-cyan); text-shadow: 0 0 12px var(--neon-cyan); text-align: center; }
+#piano-start-screen p { font-size: 8px; color: rgba(255,255,255,0.6); text-align: center; line-height: 2; }
+.btn-pixel {
+  font-family: var(--pixel); font-size: clamp(9px,2.5vw,13px);
+  background: var(--neon-green); color: var(--dark-bg);
+  border: none; padding: 12px 28px; cursor: pointer;
+  box-shadow: 0 0 16px var(--neon-green);
+  image-rendering: auto; letter-spacing: 1px;
+}
+#piano-gameover {
+  position: absolute; inset: 0;
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px;
+  background: rgba(0,0,0,0.85);
+  z-index: 5;
+}
+#piano-gameover.active { display: flex; }
+#piano-gameover h3 { font-size: clamp(14px,4vw,24px); color: var(--neon-pink); text-shadow: 0 0 16px var(--neon-pink); }
+#final-score-txt { font-size: clamp(10px,2.5vw,16px); color: var(--neon-yellow); text-shadow: 0 0 8px var(--neon-yellow); }
+
+/* ===== HOTSPOT TOOLTIP ===== */
+.hotspot-label {
+  position: absolute;
+  font-family: var(--pixel);
+  font-size: 7px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  padding: 4px 6px;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: blink 2s step-end infinite;
+  z-index: 50;
+}
+
+/* ===== SCROLL HINT ===== */
+#scroll-hint {
+  position: fixed; bottom: 80px; right: 16px;
+  font-size: 7px; color: var(--neon-yellow);
+  text-shadow: 0 0 6px var(--neon-yellow);
+  z-index: 150;
+  text-align: center;
+  animation: blink 1.8s step-end infinite;
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash">
+  <div class="splash-stars" id="splashStars"></div>
+  <div class="splash-title">
+    <span class="line1">✦ UNDANGAN DIGITAL ✦</span>
+    <span class="line2">NEON<br>NIGHT</span>
+    <span class="line3">VOCAL GROUP AMONG CLASSES</span>
+  </div>
+  <div class="pixel-char-wrap">
+    <svg class="pc-svg" viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
+      <!-- Head -->
+      <rect x="13" y="2" width="14" height="14" fill="#FDBCB4"/>
+      <!-- Hair -->
+      <rect x="13" y="2" width="14" height="4" fill="#2c1810"/>
+      <rect x="11" y="4" width="2" height="4" fill="#2c1810"/>
+      <rect x="27" y="4" width="2" height="4" fill="#2c1810"/>
+      <!-- Eyes -->
+      <rect x="16" y="9" width="2" height="2" fill="#111"/>
+      <rect x="22" y="9" width="2" height="2" fill="#111"/>
+      <!-- Tie -->
+      <rect x="19" y="16" width="2" height="10" fill="#ff2d78"/>
+      <rect x="18" y="16" width="4" height="3" fill="#ff2d78"/>
+      <!-- Collar / Shirt -->
+      <rect x="13" y="16" width="14" height="16" fill="white"/>
+      <rect x="13" y="16" width="3" height="5" fill="#e0e0e0"/>
+      <rect x="24" y="16" width="3" height="5" fill="#e0e0e0"/>
+      <!-- Jacket -->
+      <rect x="9" y="16" width="5" height="20" fill="#1a0a3a"/>
+      <rect x="26" y="16" width="5" height="20" fill="#1a0a3a"/>
+      <rect x="9" y="16" width="22" height="4" fill="#1a0a3a"/>
+      <!-- Pants -->
+      <rect x="13" y="32" width="6" height="20" fill="#0d0020"/>
+      <rect x="21" y="32" width="6" height="20" fill="#0d0020"/>
+      <!-- Shoes -->
+      <rect x="11" y="50" width="8" height="4" fill="#111"/>
+      <rect x="21" y="50" width="8" height="4" fill="#111"/>
+      <!-- Arms -->
+      <rect x="5" y="18" width="5" height="14" fill="#1a0a3a"/>
+      <rect x="30" y="18" width="5" height="14" fill="#1a0a3a"/>
+      <!-- Hands -->
+      <rect x="4" y="31" width="6" height="4" fill="#FDBCB4"/>
+      <rect x="30" y="31" width="6" height="4" fill="#FDBCB4"/>
+      <!-- Neon accents on jacket -->
+      <rect x="9" y="16" width="1" height="20" fill="#00f5ff" opacity="0.5"/>
+      <rect x="30" y="16" width="1" height="20" fill="#00f5ff" opacity="0.5"/>
+    </svg>
+    <div class="char-shadow"></div>
+  </div>
+  <button class="btn-start" id="btnStart">▶ START</button>
+  <p class="splash-hint">PRESS START TO ENTER</p>
+</div>
+
+<!-- ===== GAME CONTAINER ===== -->
+<div id="game-container">
+  <div id="hud">
+    <span class="hud-title">♪ NEON NIGHT</span>
+    <span class="hud-hint">JELAJAHI PETA!</span>
+    <span class="hud-score" id="hudScore">SCORE: 0</span>
+  </div>
+  <canvas id="game-canvas"></canvas>
+  <div id="mobile-controls">
+    <div class="dpad">
+      <div class="ctrl-btn" id="btnLeft">◀</div>
+      <div class="ctrl-btn" id="btnRight">▶</div>
+    </div>
+    <div class="ctrl-btn jump-btn" id="btnJump">▲</div>
+  </div>
+  <div id="scroll-hint">SCROLL →<br>JELAJAHI!</div>
+</div>
+
+<!-- ===== MODALS ===== -->
+<!-- Modal 1: Podium - Penjelasan Acara -->
+<div class="modal-overlay" id="modal-podium">
+  <div class="modal-box" style="border-color:var(--neon-yellow);">
+    <div class="modal-header" style="border-color:rgba(255,242,0,0.3)">
+      <span class="modal-title" style="color:var(--neon-yellow);text-shadow:0 0 8px var(--neon-yellow)">🏆 PENJELASAN ACARA</span>
+      <button class="modal-close" onclick="closeModal('modal-podium')" style="background:var(--neon-yellow)">✕ TUTUP</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-text">Selamat datang di <span style="color:var(--neon-pink)">NEON NIGHT</span> — sebuah pagelaran kompetisi <span style="color:var(--neon-cyan)">Vocal Group Among Classes</span> yang spektakuler!</p>
+      <hr class="modal-divider">
+      <span class="modal-section-title">⭐ TENTANG ACARA</span>
+      <p class="modal-text">Neon Night adalah kompetisi vokal antar kelas yang mempertemukan talenta-talenta terbaik dalam satu panggung megah. Setiap kelas akan menampilkan group vokal terbaik mereka dengan kostum memukau dan performa yang menawan.</p>
+      <hr class="modal-divider">
+      <span class="modal-section-title">🎯 TUJUAN</span>
+      <p class="modal-text">✦ Menumbuhkan semangat berkesenian<br>✦ Memperkuat solidaritas antar kelas<br>✦ Mengembangkan bakat vokal siswa<br>✦ Menciptakan kenangan indah bersama</p>
+      <hr class="modal-divider">
+      <span class="modal-section-title">📍 LOKASI & TANGGAL</span>
+      <div class="profile-card">
+        <p class="modal-text">
+          <span class="neon-badge badge-pink">📅 TANGGAL</span> <span style="color:white">TBD 2025</span><br><br>
+          <span class="neon-badge badge-cyan">⏰ WAKTU</span> <span style="color:white">13.00 - Selesai</span><br><br>
+          <span class="neon-badge badge-yellow">🏟️ TEMPAT</span> <span style="color:white">Aula Sekolah</span>
+        </p>
+      </div>
+      <hr class="modal-divider">
+      <span class="modal-section-title">🏅 HADIAH</span>
+      <p class="modal-text">🥇 Juara 1 — Trophy + Sertifikat + Hadiah<br>🥈 Juara 2 — Trophy + Sertifikat + Hadiah<br>🥉 Juara 3 — Trophy + Sertifikat + Hadiah<br>⭐ Best Vocalist — Penghargaan Khusus</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Golden Mic - Ketua Panitia -->
+<div class="modal-overlay" id="modal-mic">
+  <div class="modal-box" style="border-color:var(--neon-pink);">
+    <div class="modal-header" style="border-color:rgba(255,45,120,0.3)">
+      <span class="modal-title" style="color:var(--neon-pink);text-shadow:0 0 8px var(--neon-pink)">🎤 KETUA PANITIA</span>
+      <button class="modal-close" onclick="closeModal('modal-mic')">✕ TUTUP</button>
+    </div>
+    <div class="modal-body">
+      <div class="profile-card" style="border-color:rgba(255,45,120,0.4);text-align:center">
+        <div class="profile-avatar" style="background:var(--neon-pink);border-color:var(--neon-yellow)">👤</div>
+        <p class="modal-text" style="text-align:center;color:var(--neon-pink)">NAMA KETUA PANITIA</p>
+        <p class="modal-text" style="text-align:center;color:rgba(255,255,255,0.5);margin-top:4px">Ketua Pelaksana</p>
+      </div>
+      <hr class="modal-divider">
+      <span class="modal-section-title">💌 PESAN SAMBUTAN</span>
+      <p class="modal-text">"Assalamu'alaikum warahmatullahi wabarakatuh.</p><br>
+      <p class="modal-text">Puji syukur kehadirat Tuhan Yang Maha Esa atas terselenggaranya acara <span style="color:var(--neon-pink)">NEON NIGHT — Vocal Group Among Classes</span> ini.</p><br>
+      <p class="modal-text">Acara ini merupakan wujud nyata dari semangat berkarya dan berkolaborasi yang telah kami perjuangkan bersama. Saya mengucapkan terima kasih yang sebesar-besarnya kepada seluruh panitia, peserta, guru pendamping, dan semua pihak yang telah berkontribusi.</p><br>
+      <p class="modal-text">Selamat menikmati malam yang penuh dengan harmoni dan cahaya neon ini. Mari kita jadikan momen ini sebagai kenangan indah yang tak terlupakan!</p><br>
+      <p class="modal-text" style="color:var(--neon-yellow)">Wassalamu'alaikum warahmatullahi wabarakatuh."</p>
+      <hr class="modal-divider">
+      <span class="modal-section-title">👥 TIM INTI PANITIA</span>
+      <div class="profile-card" style="border-color:rgba(255,45,120,0.2)">
+        <p class="modal-text">
+          <span class="neon-badge badge-pink">KETUA</span> [Nama]<br><br>
+          <span class="neon-badge badge-cyan">WAKIL</span> [Nama]<br><br>
+          <span class="neon-badge badge-yellow">SEKRETARIS</span> [Nama]<br><br>
+          <span class="neon-badge badge-pink">BENDAHARA</span> [Nama]<br><br>
+          <span class="neon-badge badge-cyan">HUMAS</span> [Nama]
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3: Tablet - Smartbook -->
+<div class="modal-overlay" id="modal-tablet">
+  <div class="modal-box" style="border-color:var(--neon-cyan);">
+    <div class="modal-header">
+      <span class="modal-title">📱 SMARTBOOK — PANDUAN</span>
+      <button class="modal-close" onclick="closeModal('modal-tablet')">✕ TUTUP</button>
+    </div>
+    <div class="modal-body">
+      <span class="modal-section-title">📋 PERATURAN UMUM</span>
+      <p class="modal-text">
+        1. Setiap kelas wajib mengirimkan 1 group vokal<br><br>
+        2. Anggota group terdiri dari 5-8 orang<br><br>
+        3. Membawakan 1 lagu pilihan + 1 lagu wajib<br><br>
+        4. Durasi penampilan maksimal 7 menit<br><br>
+        5. Kostum harus sesuai tema "Neon Night"<br><br>
+        6. Dilarang menggunakan backing vocal rekaman
+      </p>
+      <hr class="modal-divider">
+      <span class="modal-section-title">⚖️ KRITERIA PENILAIAN</span>
+      <div class="profile-card">
+        <p class="modal-text">
+          <span class="neon-badge badge-pink">30%</span> Teknik Vokal (pitch, intonasi, dinamika)<br><br>
+          <span class="neon-badge badge-cyan">25%</span> Harmonisasi & Blend<br><br>
+          <span class="neon-badge badge-yellow">20%</span> Penampilan & Kostum<br><br>
+          <span class="neon-badge badge-pink">15%</span> Ekspresi & Penghayatan<br><br>
+          <span class="neon-badge badge-cyan">10%</span> Kreativitas Aransemen
+        </p>
+      </div>
+      <hr class="modal-divider">
+      <span class="modal-section-title">📝 KETENTUAN TEKNIS</span>
+      <p class="modal-text">
+        ▪ Penggunaan instrumen live diperbolehkan<br><br>
+        ▪ Musik pengiring dapat berupa minus one<br><br>
+        ▪ Sound check dilakukan H-1 acara<br><br>
+        ▪ File musik diserahkan dalam format MP3<br><br>
+        ▪ Peralatan tambahan oleh peserta sendiri
+      </p>
+      <hr class="modal-divider">
+      <span class="modal-section-title">🚫 SANKSI</span>
+      <p class="modal-text">Pelanggaran peraturan akan dikenakan pengurangan nilai sebesar 10-50 poin tergantung tingkat pelanggaran. Diskualifikasi dapat dilakukan jika pelanggaran bersifat fatal.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4: Clock - Jadwal Acara -->
+<div class="modal-overlay" id="modal-clock">
+  <div class="modal-box" style="border-color:var(--neon-orange);">
+    <div class="modal-header" style="border-color:rgba(255,107,0,0.3)">
+      <span class="modal-title" style="color:var(--neon-orange);text-shadow:0 0 8px var(--neon-orange)">🕐 JADWAL ACARA</span>
+      <button class="modal-close" onclick="closeModal('modal-clock')" style="background:var(--neon-orange)">✕ TUTUP</button>
+    </div>
+    <div class="modal-body">
+      <span class="modal-section-title">📅 HARI PELAKSANAAN</span>
+      <p class="modal-text" style="color:var(--neon-orange)">TBD — [Tanggal] 2025</p>
+      <hr class="modal-divider">
+      <div class="timeline-item"><span class="timeline-time">12.00 - 13.00</span><div class="timeline-dot" style="background:var(--neon-orange)"></div><span class="timeline-desc">Registrasi & Persiapan Peserta<br><span style="color:rgba(255,255,255,0.4)">Semua peserta hadir & kostum siap</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">13.00 - 13.15</span><div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Pembukaan Acara<br><span style="color:rgba(255,255,255,0.4)">MC membuka acara resmi</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">13.15 - 13.30</span><div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Sambutan Ketua Panitia<br><span style="color:rgba(255,255,255,0.4)">& Sambutan Guru/Kepala Sekolah</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">13.30 - 13.45</span><div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Penampilan Pembuka / Guest Star<br><span style="color:rgba(255,255,255,0.4)">Persembahan spesial pembuka</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">13.45 - 16.30</span><div class="timeline-dot" style="background:var(--neon-green)"></div><span class="timeline-desc">Penampilan Vokal Group Kelas<br><span style="color:rgba(255,255,255,0.4)">Sesi kompetisi utama (dengan jeda)</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">16.30 - 16.45</span><div class="timeline-dot" style="background:var(--neon-purple)"></div><span class="timeline-desc">Break & Penilaian Juri<br><span style="color:rgba(255,255,255,0.4)">Rehat sejenak & tabulation</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">16.45 - 17.00</span><div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Penampilan Spesial Dewan Guru<br><span style="color:rgba(255,255,255,0.4)">Surprise performance!</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">17.00 - 17.30</span><div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Pengumuman & Penyerahan Hadiah<br><span style="color:rgba(255,255,255,0.4)">Juara 1, 2, 3 & Best Vocalist</span></span></div>
+      <div class="timeline-item"><span class="timeline-time">17.30 - 18.00</span><div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Foto Bersama & Penutupan<br><span style="color:rgba(255,255,255,0.4)">Kenangan indah bersama!</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 5: Vinyl - Penampilan Kelas -->
+<div class="modal-overlay" id="modal-vinyl">
+  <div class="modal-box" style="border-color:var(--neon-purple);">
+    <div class="modal-header" style="border-color:rgba(180,0,255,0.3)">
+      <span class="modal-title" style="color:var(--neon-purple);text-shadow:0 0 8px var(--neon-purple)">🎵 PENAMPILAN KELAS</span>
+      <button class="modal-close" onclick="closeModal('modal-vinyl')" style="background:var(--neon-purple)">✕ TUTUP</button>
+    </div>
+    <div class="modal-body" id="vinyl-body">
+      <p class="modal-text" style="margin-bottom:12px">Tap kelas untuk melihat lagu & lirik:</p>
+      <div id="class-list">
+        <div class="class-item" onclick="toggleLyrics('cls1')">
+          <span class="class-name">🎭 KELAS X-A</span>
+          <p class="class-song">♪ "Takut" — Idgitaf</p>
+          <div class="lyrics-panel" id="cls1">
+            <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls1')">◀ TUTUP LIRIK</button>
+            <div class="lyrics-text">Ku takut kau tak serius
+Ku takut kau hanya bermain-main
+Dengan perasaan yang kau tahu
+Kau sendiri tak mau rasakan
+
+Ku takut kau tak tulus
+Ku takut kau hanya mencari
+Seseorang yang bisa mengisi
+Kekosongan yang ada di hati
+
+Tapi ku tak bisa berhenti
+Meski kutahu ini tak pasti
+Ku tetap di sini menunggu
+Karena kau yang ku mau
+
+[Reff]
+Takut tapi maju
+Ragu tapi rindu
+Kau membuatku bingung sendiri
+Dengan semua senyum manismu</div>
+          </div>
+        </div>
+        <div class="class-item" onclick="toggleLyrics('cls2')">
+          <span class="class-name">🌟 KELAS X-B</span>
+          <p class="class-song">♪ "Bunga Tidur" — Tulus</p>
+          <div class="lyrics-panel" id="cls2">
+            <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls2')">◀ TUTUP LIRIK</button>
+            <div class="lyrics-text">Semalam kau datang dalam tidurku
+Menyapa dengan senyum lesung pipimu
+Ku terjaga dengan rindu yang membuncah
+Menyadari kau hanya bunga tidur
+
+Terasa nyata genggaman tanganmu
+Terasa hangat semua cintamu
+Mengapa harus terbangun dari mimpi ini
+Biar ku terus bersamamu
+
+[Reff]
+Jangan pergi jangan kau pergi
+Biar ku terus bermimpi
+Tentang kita yang bahagia
+Dalam bunga tidurku
+
+Biar malam ini abadi
+Biar cinta ini terjadi
+Meski hanya dalam mimpi
+Kau nyata di hatiku</div>
+          </div>
+        </div>
+        <div class="class-item" onclick="toggleLyrics('cls3')">
+          <span class="class-name">💫 KELAS XI-A</span>
+          <p class="class-song">♪ "Cinta Luar Biasa" — Andmesh</p>
+          <div class="lyrics-panel" id="cls3">
+            <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls3')">◀ TUTUP LIRIK</button>
+            <div class="lyrics-text">Kau datang membawa cinta
+Yang aku tak pernah rasakan sebelumnya
+Kau buat aku percaya
+Bahwa cinta bisa seindah ini
+
+Kau bukan sekedar teman
+Lebih dari itu kau adalah hidupku
+Kau buat aku mengerti
+Arti bahagia yang sesungguhnya
+
+[Reff]
+Cinta luar biasa
+Yang kau berikan untukku
+Takkan pernah terganti
+Oleh siapapun di dunia
+
+Ku bersyukur kau ada
+Di setiap hari-hariku
+Kau adalah cinta luar biasa
+Luar biasa bagiku</div>
+          </div>
+        </div>
+        <div class="class-item" onclick="toggleLyrics('cls4')">
+          <span class="class-name">⚡ KELAS XI-B</span>
+          <p class="class-song">♪ "Ragu" — Yura Yunita</p>
+          <div class="lyrics-panel" id="cls4">
+            <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls4')">◀ TUTUP LIRIK</button>
+            <div class="lyrics-text">Ada yang berbeda hari ini
+Saat matamu memandangku
+Ku tak mengerti maksudnya
+Membuat hatiku bimbang
+
+Apakah ini yang namanya cinta
+Atau hanya sekedar rasa kagum
+Ku tak tahu harus bagaimana
+Menghadapi perasaan ini
+
+[Reff]
+Ragu oh ragu
+Mengapa kau hadir di hatiku
+Buat aku tak bisa tidur
+Memikirkan dirimu
+
+Ingin ku pastikan
+Apa yang ada di hatimu
+Tapi ku takut salah langkah
+Dan kehilanganmu</div>
+          </div>
+        </div>
+        <div class="class-item" onclick="toggleLyrics('cls5')">
+          <span class="class-name">🎸 KELAS XII-A</span>
+          <p class="class-song">♪ "Ruang Sendiri" — Kunto Aji</p>
+          <div class="lyrics-panel" id="cls5">
+            <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls5')">◀ TUTUP LIRIK</button>
+            <div class="lyrics-text">Di sini kita berdua
+Tapi kenapa aku merasa sendiri
+Kita berbicara tapi tak saling mendengar
+Ada jurang yang memisahkan kita
+
+Ku ingin kembali ke masa lalu
+Saat kita masih saling memahami
+Saat tawa kita masih tulus
+Saat cinta kita masih bersemi
+
+[Reff]
+Ruang sendiri yang kau berikan
+Membuatku semakin jauh darimu
+Ku butuh lebih dari kata-kata
+Ku butuh kau hadir sepenuhnya
+
+Jangan biarkan kita terus begini
+Tenggelam dalam kesunyian bersama
+Mari kita temukan lagi
+Apa yang dulu kita miliki</div>
+          </div>
+        </div>
+        <div class="class-item" onclick="toggleLyrics('cls6')">
+          <span class="class-name">🌙 KELAS XII-B</span>
+          <p class="class-song">♪ "Sisa Rasa" — Tiara Andini</p>
+          <div class="lyrics-panel" id="cls6">
+            <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls6')">◀ TUTUP LIRIK</button>
+            <div class="lyrics-text">Sudah lama kita tak bertemu
+Tapi bayangmu masih menghantui
+Ku mencoba untuk melupakanmu
+Tapi selalu gagal setiap kali
+
+Ada sisa rasa yang tertinggal
+Di sudut hati yang paling dalam
+Ku tak tahu harus bagaimana
+Mengusir kenangan tentangmu
+
+[Reff]
+Sisa rasa yang kau tinggalkan
+Masih terasa hingga kini
+Meski kau telah pergi jauh
+Kau masih ada di sini
+
+Dalam setiap tarikan nafasku
+Dalam setiap langkah kakiku
+Ada jejakmu yang terus mengikuti
+Sisa cinta yang tak bisa mati</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 6: Gallery -->
+<div class="modal-overlay" id="modal-gallery">
+  <div class="modal-box" style="border-color:var(--neon-green);">
+    <div class="modal-header" style="border-color:rgba(0,255,136,0.3)">
+      <span class="modal-title" style="color:var(--neon-green);text-shadow:0 0 8px var(--neon-green)">🖼️ GALERI FOTO</span>
+      <button class="modal-close" onclick="closeModal('modal-gallery')" style="background:var(--neon-green)">✕ TUTUP</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-text" style="margin-bottom:14px;color:rgba(255,255,255,0.5)">Kenangan Indah Bersama ✨</p>
+      <div class="gallery-grid">
+        <div class="gallery-item">🎤<div class="gallery-label">SOUNDCHECK</div></div>
+        <div class="gallery-item">🎭<div class="gallery-label">KOSTUM</div></div>
+        <div class="gallery-item">🎶<div class="gallery-label">LATIHAN</div></div>
+        <div class="gallery-item">🌟<div class="gallery-label">PENAMPILAN</div></div>
+        <div class="gallery-item">👥<div class="gallery-label">TIM PANITIA</div></div>
+        <div class="gallery-item">🏆<div class="gallery-label">PENGUMUMAN</div></div>
+        <div class="gallery-item">📸<div class="gallery-label">FOTO BERSAMA</div></div>
+        <div class="gallery-item">🎉<div class="gallery-label">PENUTUPAN</div></div>
+        <div class="gallery-item">💫<div class="gallery-label">HIGHLIGHT</div></div>
+      </div>
+      <hr class="modal-divider">
+      <p class="modal-text" style="color:rgba(255,255,255,0.4);text-align:center;font-size:7px">📷 Foto akan ditambahkan setelah acara berlangsung</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PIANO GAME ===== -->
+<div id="piano-game">
+  <div id="piano-header">
+    <h2>🎹 RHYTHM HERO</h2>
+    <span id="piano-score-display">SCORE: 0</span>
+    <button id="piano-close">✕ KELUAR</button>
+  </div>
+  <div id="piano-canvas-wrap">
+    <canvas id="piano-canvas"></canvas>
+    <div id="piano-start-screen">
+      <h3>🎵 RHYTHM HERO 🎵</h3>
+      <p>Tekan tile yang jatuh tepat<br>di zona hit untuk mendapat poin!</p>
+      <p style="color:var(--neon-yellow);font-size:7px">TAP / KLIK sesuai lajur tile</p>
+      <button class="btn-pixel" id="pianoStartBtn">▶ MULAI GAME</button>
+    </div>
+    <div id="piano-gameover">
+      <h3>GAME OVER!</h3>
+      <span id="final-score-txt">SCORE: 0</span>
+      <button class="btn-pixel" id="pianoRestartBtn" style="background:var(--neon-cyan)">↺ MAIN LAGI</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== SPLASH STARS =====
+(function(){
+  const c = document.getElementById('splashStars');
+  for(let i=0;i<80;i++){
+    const s = document.createElement('div');
+    s.className = 'splash-star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${1+Math.random()*3}s;--delay:${Math.random()*3}s;opacity:${Math.random()};width:${Math.random()<0.3?4:2}px;height:${Math.random()<0.3?4:2}px;`;
+    c.appendChild(s);
+  }
+})();
+
+// ===== AUDIO PLACEHOLDERS =====
+const Audio = {
+  bgm: { play(){console.log('[BGM] play');}, stop(){console.log('[BGM] stop');} },
+  sfx: {
+    jump(){ console.log('[SFX] jump'); },
+    click(){ console.log('[SFX] click'); },
+    collect(){ console.log('[SFX] collect'); },
+    perfect(){ console.log('[SFX] perfect'); }
+  }
+};
+
+// ===== START GAME =====
+document.getElementById('btnStart').addEventListener('click', () => {
+  Audio.sfx.click();
+  document.getElementById('splash').style.opacity = '0';
+  document.getElementById('splash').style.transition = 'opacity 0.5s';
+  setTimeout(() => {
+    document.getElementById('splash').style.display = 'none';
+    startGame();
+  }, 500);
+});
+
+// ===== GAME ENGINE =====
+function startGame() {
+  const gc = document.getElementById('game-container');
+  gc.style.display = 'block';
+  document.getElementById('scroll-hint').style.display = 'block';
+  Audio.bgm.play();
+  initCanvas();
+}
+
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+let animId;
+
+// ===== WORLD CONSTANTS =====
+const WORLD_WIDTH = 4200;
+const GROUND_Y_RATIO = 0.78;
+let GROUND_Y;
+const GRAVITY = 0.55;
+const JUMP_FORCE = -13;
+const MOVE_SPEED = 3.8;
+const FRICTION = 0.82;
+const ACCEL = 0.6;
+
+// ===== PLAYER STATE =====
+const player = {
+  x: 120, y: 0, vx: 0, vy: 0,
+  w: 28, h: 44, onGround: false,
+  facing: 1, frame: 0, frameTimer: 0
+};
+
+// ===== CAMERA =====
+const cam = { x: 0, y: 0 };
+
+// ===== KEYS =====
+const keys = {};
+document.addEventListener('keydown', e => { keys[e.code] = true; });
+document.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// ===== PLATFORMS =====
+const platforms = [
+  { x: 0, y: 0, w: 4200, h: 24, isGround: true },
+  { x: 280, y: -80, w: 100, h: 14 },
+  { x: 480, y: -130, w: 90, h: 14 },
+  { x: 700, y: -70, w: 110, h: 14 },
+  { x: 900, y: -120, w: 80, h: 14 },
+  { x: 1100, y: -80, w: 100, h: 14 },
+  { x: 1350, y: -140, w: 90, h: 14 },
+  { x: 1600, y: -80, w: 100, h: 14 },
+  { x: 1800, y: -130, w: 80, h: 14 },
+  { x: 2100, y: -90, w: 110, h: 14 },
+  { x: 2300, y: -70, w: 90, h: 14 },
+  { x: 2600, y: -120, w: 100, h: 14 },
+  { x: 2800, y: -80, w: 90, h: 14 },
+  { x: 3100, y: -130, w: 100, h: 14 },
+  { x: 3400, y: -90, w: 80, h: 14 },
+  { x: 3700, y: -70, w: 120, h: 14 },
+];
+
+// ===== HOTSPOTS =====
+const hotspots = [
+  { x: 260, icon: '🏆', label: 'PENJELASAN\nACARA', modal: 'modal-podium', color: '#fff200' },
+  { x: 640, icon: '🎤', label: 'KETUA\nPANITIA', modal: 'modal-mic', color: '#ff2d78' },
+  { x: 1050, icon: '📱', label: 'SMARTBOOK', modal: 'modal-tablet', color: '#00f5ff' },
+  { x: 1650, icon: '🕐', label: 'JADWAL\nACARA', modal: 'modal-clock', color: '#ff6b00' },
+  { x: 2350, icon: '🎵', label: 'PENAMPILAN\nKELAS', modal: 'modal-vinyl', color: '#b400ff' },
+  { x: 3200, icon: '🖼️', label: 'GALERI\nFOTO', modal: 'modal-gallery', color: '#00ff88' },
+  { x: 3900, icon: '🎹', label: 'PIANO\nSTAGE!', modal: 'PIANO', color: '#ff2d78' },
+];
+
+// ===== PARALLAX LAYERS =====
+let stars = [];
+let cityLights = [];
+let bgBuildings = [];
+
+function initParallax() {
+  stars = [];
+  for(let i=0;i<120;i++) stars.push({ x: Math.random()*WORLD_WIDTH*1.3, y: Math.random()*H*0.65, size: Math.random()<0.2?3:Math.random()<0.5?2:1, twinkle: Math.random()*Math.PI*2, speed: 0.05+Math.random()*0.1 });
+  cityLights = [];
+  for(let i=0;i<40;i++) cityLights.push({ x: Math.random()*WORLD_WIDTH*1.1, y: H*0.5+Math.random()*H*0.2, color: ['#ff2d78','#00f5ff','#fff200','#b400ff','#00ff88'][Math.floor(Math.random()*5)], size: 2+Math.random()*4, blink: Math.random()*Math.PI*2 });
+  bgBuildings = [];
+  let bx = 0;
+  while(bx < WORLD_WIDTH*1.2) {
+    const bw = 40+Math.random()*80;
+    const bh = H*0.15+Math.random()*H*0.35;
+    bgBuildings.push({ x: bx, w: bw, h: bh, color: `hsl(${220+Math.random()*80},${40+Math.random()*40}%,${8+Math.random()*12}%)`, windows: [] });
+    for(let wy=10;wy<bh-10;wy+=18) for(let wx=8;wx<bw-8;wx+=16) if(Math.random()>0.3) bgBuildings[bgBuildings.length-1].windows.push({wx,wy,on:Math.random()>0.4,color:['#fff200','#00f5ff','#ff2d78','white'][Math.floor(Math.random()*4)]});
+    bx += bw + 4+Math.random()*20;
+  }
+}
+
+// ===== SCORE =====
+let score = 0;
+let collectedHotspots = new Set();
+
+// ===== INIT CANVAS =====
+function initCanvas() {
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    GROUND_Y = H * GROUND_Y_RATIO;
+    player.y = GROUND_Y - player.h;
+    initParallax();
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  setupMobileControls();
+  gameLoop();
+}
+
+// ===== MOBILE CONTROLS =====
+function setupMobileControls() {
+  const btnL = document.getElementById('btnLeft');
+  const btnR = document.getElementById('btnRight');
+  const btnJ = document.getElementById('btnJump');
+  const addTouch = (el, key, jumpKey) => {
+    const down = e => { e.preventDefault(); if(key) keys[key]=true; if(jumpKey) keys[jumpKey]=true; el.classList.add('pressed'); };
+    const up = e => { e.preventDefault(); if(key) keys[key]=false; if(jumpKey) keys[jumpKey]=false; el.classList.remove('pressed'); };
+    el.addEventListener('touchstart', down, {passive:false});
+    el.addEventListener('touchend', up, {passive:false});
+    el.addEventListener('mousedown', down);
+    el.addEventListener('mouseup', up);
+    el.addEventListener('mouseleave', up);
+  };
+  addTouch(btnL, 'ArrowLeft', null);
+  addTouch(btnR, 'ArrowRight', null);
+  addTouch(btnJ, null, 'Space');
+}
+
+// ===== GAME LOOP =====
+let tick = 0;
+function gameLoop() {
+  animId = requestAnimationFrame(gameLoop);
+  tick++;
+  update();
+  render();
+}
+
+function update() {
+  // Input
+  const left = keys['ArrowLeft']||keys['KeyA'];
+  const right = keys['ArrowRight']||keys['KeyD'];
+  const jump = keys['Space']||keys['ArrowUp']||keys['KeyW'];
+
+  if(left) { player.vx -= ACCEL; player.facing = -1; }
+  if(right) { player.vx += ACCEL; player.facing = 1; }
+  if(!left && !right) player.vx *= FRICTION;
+  player.vx = Math.max(-MOVE_SPEED, Math.min(MOVE_SPEED, player.vx));
+
+  if(jump && player.onGround) {
+    player.vy = JUMP_FORCE;
+    player.onGround = false;
+    Audio.sfx.jump();
+  }
+
+  player.vy += GRAVITY;
+  player.x += player.vx;
+  player.y += player.vy;
+
+  // Clamp world
+  player.x = Math.max(0, Math.min(WORLD_WIDTH - player.w, player.x));
+
+  // Platform collision
+  player.onGround = false;
+  for(const p of platforms) {
+    const py = GROUND_Y + p.y + (p.isGround ? 0 : 0);
+    const realY = p.isGround ? GROUND_Y : GROUND_Y + p.y;
+    if(player.x + player.w > p.x && player.x < p.x + p.w) {
+      if(player.y + player.h > realY && player.y + player.h < realY + 30 && player.vy >= 0) {
+        player.y = realY - player.h;
+        player.vy = 0;
+        player.onGround = true;
+      }
+    }
+  }
+
+  // Anim frame
+  player.frameTimer++;
+  if(player.frameTimer > 8) { player.frame = (player.frame+1)%4; player.frameTimer=0; }
+
+  // Camera
+  const targetCamX = player.x - W/2 + player.w/2;
+  cam.x += (targetCamX - cam.x) * 0.12;
+  cam.x = Math.max(0, Math.min(WORLD_WIDTH - W, cam.x));
+
+  // Hotspot collision
+  for(const h of hotspots) {
+    if(!collectedHotspots.has(h.modal)) {
+      const hx = h.x - cam.x;
+      const hy = GROUND_Y - 60;
+      const dist = Math.abs(player.x + player.w/2 - h.x);
+      if(dist < 50) {
+        collectedHotspots.add(h.modal);
+        score += 100;
+        document.getElementById('hudScore').textContent = 'SCORE: ' + score;
+        Audio.sfx.collect();
+        if(h.modal === 'PIANO') openPianoGame();
+        else openModal(h.modal);
+      }
+    }
+  }
+}
+
+function render() {
+  ctx.clearRect(0,0,W,H);
+  // Sky gradient
+  const sky = ctx.createLinearGradient(0,0,0,H);
+  sky.addColorStop(0,'#04000f');
+  sky.addColorStop(0.5,'#0a0030');
+  sky.addColorStop(1,'#140050');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0,0,W,H);
+
+  // Stars (parallax 0.05)
+  for(const s of stars) {
+    const sx = ((s.x - cam.x * 0.05) % (W*1.5) + W*1.5) % (W*1.5) - W*0.25;
+    const alpha = 0.4+0.6*Math.sin(s.twinkle+tick*s.speed);
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+    ctx.fillRect(Math.round(sx), Math.round(s.y), s.size, s.size);
+    s.twinkle += s.speed * 0.3;
+  }
+
+  // Background buildings (parallax 0.2)
+  for(const b of bgBuildings) {
+    const bx = Math.round(b.x - cam.x * 0.2);
+    const by = Math.round(H - b.h);
+    ctx.fillStyle = b.color;
+    ctx.fillRect(bx, by, b.w, b.h);
+    for(const w of b.windows) {
+      if(w.on) {
+        const wx2 = bx + w.wx; const wy2 = by + w.wy;
+        ctx.fillStyle = w.color;
+        ctx.fillRect(wx2, wy2, 8, 10);
+        if(Math.random()>0.998) w.on = Math.random()>0.3;
+      }
+    }
+    // Building top neon accent
+    ctx.fillStyle = ['#ff2d78','#00f5ff','#b400ff'][Math.floor(b.x/100)%3];
+    ctx.fillRect(bx, by-2, b.w, 2);
+  }
+
+  // City lights (parallax 0.3)
+  for(const cl of cityLights) {
+    const cx2 = (cl.x - cam.x * 0.3);
+    if(cx2 < -20 || cx2 > W+20) continue;
+    const alpha = 0.5+0.5*Math.sin(cl.blink+tick*0.05);
+    ctx.fillStyle = cl.color;
+    ctx.globalAlpha = alpha * 0.7;
+    ctx.fillRect(Math.round(cx2), Math.round(cl.y), cl.size, cl.size);
+    ctx.globalAlpha = 1;
+    cl.blink += 0.04;
+  }
+
+  // Concert stage silhouette (parallax 0.4) far bg
+  drawConcertSilhouette(ctx, cam.x * 0.4);
+
+  // Ground
+  drawGround(ctx);
+
+  // Platforms
+  for(const p of platforms) {
+    if(p.isGround) continue;
+    const px = Math.round(p.x - cam.x);
+    const py = Math.round(GROUND_Y + p.y);
+    ctx.fillStyle = '#1a0a3a';
+    ctx.fillRect(px, py, p.w, p.h);
+    ctx.fillStyle = '#00f5ff';
+    ctx.fillRect(px, py, p.w, 2);
+    ctx.fillStyle = 'rgba(0,245,255,0.15)';
+    ctx.fillRect(px, py+2, p.w, p.h-2);
+  }
+
+  // Hotspots
+  for(const h of hotspots) {
+    if(collectedHotspots.has(h.modal)) continue;
+    const hx = Math.round(h.x - cam.x);
+    const hy = Math.round(GROUND_Y - 68);
+    if(hx < -80 || hx > W+80) continue;
+    // Glow base
+    ctx.save();
+    ctx.shadowColor = h.color;
+    ctx.shadowBlur = 16+8*Math.sin(tick*0.1);
+    // Pedestal
+    ctx.fillStyle = h.color + '33';
+    ctx.fillRect(hx-16, Math.round(GROUND_Y-20), 32, 20);
+    ctx.fillStyle = h.color;
+    ctx.fillRect(hx-16, Math.round(GROUND_Y-22), 32, 3);
+    // Icon
+    ctx.font = '28px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(h.icon, hx, hy + 8*Math.sin(tick*0.08+h.x));
+    ctx.restore();
+    // Label
+    ctx.font = '6px "Press Start 2P"';
+    ctx.fillStyle = h.color;
+    ctx.textAlign = 'center';
+    const lines = h.label.split('\n');
+    lines.forEach((l,i) => ctx.fillText(l, hx, hy - 18 - (lines.length-1-i)*14));
+    // Interact ring
+    if(Math.abs(player.x + player.w/2 - h.x) < 80) {
+      ctx.strokeStyle = h.color;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.5+0.5*Math.sin(tick*0.15);
+      ctx.strokeRect(hx-22, hy-30, 44, 60);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // Player
+  drawPlayer(ctx, Math.round(player.x - cam.x), Math.round(player.y));
+
+  // Ground neon line
+  ctx.fillStyle = '#ff2d78';
+  ctx.fillRect(0, GROUND_Y+24, W, 2);
+  ctx.fillStyle = 'rgba(255,45,120,0.3)';
+  ctx.fillRect(0, GROUND_Y+26, W, 8);
+
+  // Vignette
+  const vg = ctx.createRadialGradient(W/2,H/2,H*0.3,W/2,H/2,H*0.85);
+  vg.addColorStop(0,'transparent');
+  vg.addColorStop(1,'rgba(0,0,10,0.55)');
+  ctx.fillStyle = vg;
+  ctx.fillRect(0,0,W,H);
+}
+
+function drawConcertSilhouette(ctx, camOffset) {
+  const baseY = GROUND_Y + 10;
+  ctx.fillStyle = 'rgba(5,0,20,0.95)';
+  // Stage platform
+  const sx = 3700 - camOffset;
+  if(sx > -300 && sx < W+300) {
+    ctx.fillRect(sx, baseY-80, 340, 80);
+    // Towers
+    ctx.fillRect(sx+20, baseY-200, 40, 200);
+    ctx.fillRect(sx+280, baseY-200, 40, 200);
+    // Arch
+    ctx.fillRect(sx+60, baseY-180, 220, 16);
+    // Lights on stage - neon
+    const lc = ['#ff2d78','#00f5ff','#fff200','#b400ff'];
+    for(let i=0;i<4;i++) {
+      ctx.fillStyle = lc[i];
+      ctx.globalAlpha = 0.7+0.3*Math.sin(tick*0.12+i);
+      ctx.fillRect(sx+80+i*56, baseY-85, 6, 6);
+      ctx.globalAlpha = 1;
+    }
+  }
+}
+
+function drawGround(ctx) {
+  ctx.fillStyle = '#0a0028';
+  ctx.fillRect(0, GROUND_Y, W, H-GROUND_Y);
+  // Grid lines
+  ctx.strokeStyle = 'rgba(0,245,255,0.08)';
+  ctx.lineWidth = 1;
+  const gridW = 64;
+  const offsetX = ((-cam.x * 0.6) % gridW + gridW) % gridW;
+  for(let x=offsetX-gridW; x<W+gridW; x+=gridW) {
+    ctx.beginPath(); ctx.moveTo(x,GROUND_Y); ctx.lineTo(x,H); ctx.stroke();
+  }
+  for(let y=GROUND_Y; y<H; y+=40) {
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(180,0,255,0.15)';
+  for(let x=offsetX+gridW/2; x<W+gridW; x+=gridW) {
+    ctx.beginPath(); ctx.moveTo(x,GROUND_Y); ctx.lineTo(x-80,H); ctx.stroke();
+  }
+}
+
+function drawPlayer(ctx, px, py) {
+  const f = player.frame;
+  const dir = player.facing;
+  ctx.save();
+  if(dir < 0) { ctx.translate(px + player.w, 0); ctx.scale(-1,1); px = 0; }
+  const w = player.w, h = player.h;
+  // Shadow
+  ctx.fillStyle = 'rgba(0,245,255,0.2)';
+  ctx.fillRect(px+2, GROUND_Y+2, w-4, 6);
+  // Legs (animated)
+  const legOff = player.onGround ? Math.sin(f*Math.PI/2)*5 : 0;
+  ctx.fillStyle = '#0d0020';
+  ctx.fillRect(px+4, py+h-16, 8, 16+Math.round(legOff));
+  ctx.fillRect(px+w-12, py+h-16, 8, 16-Math.round(legOff));
+  // Shoes
+  ctx.fillStyle = '#111';
+  ctx.fillRect(px+2, py+h-5, 12, 5);
+  ctx.fillRect(px+w-14, py+h-5, 12, 5);
+  // Body/Jacket
+  ctx.fillStyle = '#1a0a3a';
+  ctx.fillRect(px, py+16, w, h-32);
+  // Shirt
+  ctx.fillStyle = '#f0f0f0';
+  ctx.fillRect(px+8, py+16, w-16, h-36);
+  // Tie
+  ctx.fillStyle = '#ff2d78';
+  ctx.fillRect(px+w/2-2, py+16, 4, 14);
+  // Jacket neon trim
+  ctx.fillStyle = '#00f5ff';
+  ctx.fillRect(px, py+16, 2, h-32);
+  ctx.fillRect(px+w-2, py+16, 2, h-32);
+  // Arms
+  const armSwing = player.onGround ? Math.sin(f*Math.PI/2)*6 : 3;
+  ctx.fillStyle = '#1a0a3a';
+  ctx.fillRect(px-6, py+18+Math.round(armSwing), 8, 14);
+  ctx.fillRect(px+w-2, py+18-Math.round(armSwing), 8, 14);
+  // Hands
+  ctx.fillStyle = '#FDBCB4';
+  ctx.fillRect(px-7, py+31+Math.round(armSwing), 8, 6);
+  ctx.fillRect(px+w-1, py+31-Math.round(armSwing), 8, 6);
+  // Head
+  ctx.fillStyle = '#FDBCB4';
+  ctx.fillRect(px+5, py+2, w-10, 16);
+  // Hair
+  ctx.fillStyle = '#2c1810';
+  ctx.fillRect(px+5, py+2, w-10, 5);
+  ctx.fillRect(px+3, py+4, 3, 4);
+  // Eyes
+  ctx.fillStyle = '#111';
+  ctx.fillRect(px+9, py+11, 3, 3);
+  ctx.fillRect(px+w-12, py+11, 3, 3);
+  // Neon aura when jumping
+  if(!player.onGround) {
+    ctx.strokeStyle = 'rgba(0,245,255,0.3)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(px-4, py-4, w+8, h+8);
+  }
+  ctx.restore();
+}
+
+// ===== MODAL SYSTEM =====
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+  Audio.sfx.collect();
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  Audio.sfx.click();
+}
+window.openModal = openModal;
+window.closeModal = closeModal;
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target === m) closeModal(m.id); });
+});
+
+// ===== LYRICS TOGGLE =====
+window.toggleLyrics = function(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+};
+
+// ===== PIANO GAME =====
+let pianoGameActive = false;
+let pianoScore = 0;
+let pianoLives = 3;
+let pianoTiles = [];
+let pianoAnimId;
+const PIANO_LANES = 4;
+const LANE_COLORS = ['#ff2d78','#00f5ff','#fff200','#b400ff'];
+const LANE_EMOJIS = ['♪','♫','♬','♩'];
+let pianoCanvas, pianoCtx, pianoW, pianoH;
+let pianoLaneW;
+let pianoSpeed = 4;
+let pianoSpawnTimer = 0;
+let pianoHitZoneH = 70;
+let pianoFeedbackEl = null;
+let pianoCombo = 0;
+let pianoMissed = 0;
+const PIANO_MAX_MISS = 8;
+
+function openPianoGame() {
+  const pg = document.getElementById('piano-game');
+  pg.classList.add('active');
+  pianoCanvas = document.getElementById('piano-canvas');
+  pianoCtx = pianoCanvas.getContext('2d');
+  resizePianoCanvas();
+  window.addEventListener('resize', resizePianoCanvas);
+  document.getElementById('pianoStartBtn').onclick = startPianoGame;
+  document.getElementById('pianoRestartBtn').onclick = restartPianoGame;
+  document.getElementById('piano-close').onclick = closePianoGame;
+  setupPianoLaneBtns();
+  document.addEventListener('keydown', pianoKeyHandler);
+}
+
+function resizePianoCanvas() {
+  const wrap = document.getElementById('piano-canvas-wrap');
+  pianoW = pianoCanvas.width = wrap.clientWidth;
+  pianoH = pianoCanvas.height = wrap.clientHeight;
+  pianoLaneW = Math.floor(pianoW / PIANO_LANES);
+  updatePianoLaneBtns();
+}
+
+function setupPianoLaneBtns() {
+  document.querySelectorAll('.piano-lane-btn').forEach(el=>el.remove());
+  const wrap = document.getElementById('piano-canvas-wrap');
+  for(let i=0;i<PIANO_LANES;i++) {
+    const btn = document.createElement('div');
+    btn.className = 'piano-lane-btn';
+    btn.dataset.lane = i;
+    btn.style.background = LANE_COLORS[i] + '18';
+    btn.style.borderColor = LANE_COLORS[i] + '44';
+    btn.textContent = LANE_EMOJIS[i];
+    btn.style.color = LANE_COLORS[i];
+    btn.addEventListener('touchstart', e=>{e.preventDefault(); hitPianoLane(i, btn);}, {passive:false});
+    btn.addEventListener('mousedown', e=>{hitPianoLane(i, btn);});
+    wrap.appendChild(btn);
+    updatePianoLaneBtn(btn, i);
+  }
+}
+function updatePianoLaneBtns() { document.querySelectorAll('.piano-lane-btn').forEach((b,i)=>updatePianoLaneBtn(b,i)); }
+function updatePianoLaneBtn(btn, i) {
+  pianoLaneW = Math.floor(pianoW / PIANO_LANES);
+  btn.style.left = (i * pianoLaneW) + 'px';
+  btn.style.width = pianoLaneW + 'px';
+  btn.style.height = '70px';
+}
+
+function pianoKeyHandler(e) {
+  if(!pianoGameActive) return;
+  const map = {'KeyA':0,'KeyS':1,'KeyK':2,'KeyL':3,'ArrowLeft':0,'ArrowDown':1,'ArrowUp':2,'ArrowRight':3};
+  if(e.code in map) {
+    const i = map[e.code];
+    const btn = document.querySelectorAll('.piano-lane-btn')[i];
+    hitPianoLane(i, btn);
+  }
+}
+
+function startPianoGame() {
+  document.getElementById('piano-start-screen').style.display = 'none';
+  pianoGameActive = true;
+  pianoScore = 0; pianoMissed = 0; pianoCombo = 0; pianoSpeed = 4;
+  pianoTiles = [];
+  pianoSpawnTimer = 0;
+  document.getElementById('piano-score-display').textContent = 'SCORE: 0';
+  document.getElementById('piano-gameover').classList.remove('active');
+  cancelAnimationFrame(pianoAnimId);
+  pianoLoop();
+}
+
+function restartPianoGame() {
+  document.getElementById('piano-gameover').classList.remove('active');
+  startPianoGame();
+}
+
+function closePianoGame() {
+  pianoGameActive = false;
+  cancelAnimationFrame(pianoAnimId);
+  document.getElementById('piano-game').classList.remove('active');
+  document.removeEventListener('keydown', pianoKeyHandler);
+  document.querySelectorAll('.piano-lane-btn').forEach(el=>el.remove());
+  window.removeEventListener('resize', resizePianoCanvas);
+  // Re-add hotspot as collected but reopen
+  collectedHotspots.delete('PIANO');
+}
+
+function pianoLoop() {
+  pianoAnimId = requestAnimationFrame(pianoLoop);
+  if(!pianoGameActive) return;
+  // Spawn
+  pianoSpawnTimer++;
+  const spawnInterval = Math.max(28, 55 - Math.floor(pianoScore/500)*2);
+  if(pianoSpawnTimer >= spawnInterval) {
+    pianoSpawnTimer = 0;
+    const lane = Math.floor(Math.random()*PIANO_LANES);
+    pianoTiles.push({ lane, y: -60, h: 80, hit: false, missed: false });
+  }
+  // Update
+  pianoSpeed = 4 + Math.floor(pianoScore/800) * 0.5;
+  for(const t of pianoTiles) {
+    t.y += pianoSpeed;
+    if(!t.hit && !t.missed && t.y > pianoH - pianoHitZoneH + 40) {
+      t.missed = true;
+      pianoMissed++;
+      pianoCombo = 0;
+      if(pianoMissed >= PIANO_MAX_MISS) endPianoGame();
+    }
+  }
+  pianoTiles = pianoTiles.filter(t => t.y < pianoH + 100);
+  renderPiano();
+}
+
+function renderPiano() {
+  const pc = pianoCtx;
+  pc.clearRect(0,0,pianoW,pianoH);
+  // BG
+  const bg = pc.createLinearGradient(0,0,0,pianoH);
+  bg.addColorStop(0,'#04000f'); bg.addColorStop(1,'#0a0030');
+  pc.fillStyle = bg; pc.fillRect(0,0,pianoW,pianoH);
+  // Lane dividers
+  for(let i=1;i<PIANO_LANES;i++) {
+    pc.fillStyle = 'rgba(255,255,255,0.07)';
+    pc.fillRect(i*pianoLaneW-1,0,2,pianoH);
+  }
+  // Hit zone
+  const hzY = pianoH - pianoHitZoneH;
+  pc.fillStyle = 'rgba(255,255,255,0.04)';
+  pc.fillRect(0,hzY,pianoW,pianoHitZoneH);
+  pc.fillStyle = 'rgba(255,255,255,0.15)';
+  pc.fillRect(0,hzY,pianoW,2);
+  // Life/miss meter
+  for(let i=0;i<PIANO_MAX_MISS;i++) {
+    pc.fillStyle = i < pianoMissed ? '#333' : '#ff2d78';
+    pc.fillRect(8+i*22, 8, 16, 8);
+  }
+  pc.fillStyle = 'rgba(255,255,255,0.3)'; pc.font='6px "Press Start 2P"'; pc.textAlign='left';
+  pc.fillText('MISS',8,28);
+  // Combo
+  if(pianoCombo>1) {
+    pc.fillStyle = '#fff200'; pc.font=`${Math.min(14,8+pianoCombo/2)}px "Press Start 2P"`;
+    pc.textAlign='right'; pc.fillText('x'+pianoCombo+' COMBO', pianoW-10, 24);
+  }
+  // Tiles
+  for(const t of pianoTiles) {
+    if(t.hit) continue;
+    const tx = t.lane * pianoLaneW + 4;
+    const tw = pianoLaneW - 8;
+    const col = LANE_COLORS[t.lane];
+    // Shadow glow
+    pc.shadowColor = col; pc.shadowBlur = 12;
+    pc.fillStyle = col + 'cc';
+    pc.fillRect(tx, t.y, tw, t.h);
+    pc.fillStyle = col;
+    pc.fillRect(tx, t.y, tw, 6);
+    pc.fillRect(tx, t.y+t.h-6, tw, 6);
+    pc.shadowBlur = 0;
+    // Note icon
+    pc.fillStyle = 'rgba(0,0,0,0.5)'; pc.font='22px serif'; pc.textAlign='center';
+    pc.fillText(LANE_EMOJIS[t.lane], tx+tw/2, t.y+t.h/2+8);
+  }
+  pc.textAlign = 'left';
+}
+
+function hitPianoLane(lane, btn) {
+  if(!pianoGameActive) return;
+  // Flash btn
+  btn.classList.add('hit');
+  setTimeout(()=>btn.classList.remove('hit'),120);
+  const hitY = pianoH - pianoHitZoneH;
+  let best = null; let bestDist = 9999;
+  for(const t of pianoTiles) {
+    if(t.hit || t.missed || t.lane !== lane) continue;
+    const center = t.y + t.h/2;
+    const dist = Math.abs(center - (hitY + pianoHitZoneH/2));
+    if(dist < bestDist) { bestDist = dist; best = t; }
+  }
+  if(best && bestDist < pianoHitZoneH) {
+    best.hit = true;
+    pianoCombo++;
+    let pts, label, color;
+    if(bestDist < 15) { pts=300+pianoCombo*10; label='PERFECT!'; color='#fff200'; }
+    else if(bestDist < 35) { pts=150+pianoCombo*5; label='GREAT!'; color='#00ff88'; }
+    else { pts=80; label='GOOD'; color='#00f5ff'; pianoCombo=0; }
+    pianoScore += pts;
+    document.getElementById('piano-score-display').textContent = 'SCORE: ' + pianoScore;
+    showPianoFeedback(label, color);
+    Audio.sfx.perfect();
+  } else {
+    pianoCombo = 0;
+    showPianoFeedback('MISS', '#ff2d78');
+    pianoMissed++;
+    if(pianoMissed >= PIANO_MAX_MISS) endPianoGame();
+  }
+}
+
+function showPianoFeedback(label, color) {
+  if(pianoFeedbackEl) pianoFeedbackEl.remove();
+  const el = document.createElement('div');
+  el.id = 'piano-feedback';
+  el.style.color = color;
+  el.textContent = label;
+  document.getElementById('piano-canvas-wrap').appendChild(el);
+  pianoFeedbackEl = el;
+  setTimeout(()=>{ if(el.parentNode) el.remove(); pianoFeedbackEl=null; }, 600);
+}
+
+function endPianoGame() {
+  pianoGameActive = false;
+  document.getElementById('piano-gameover').classList.add('active');
+  document.getElementById('final-score-txt').textContent = 'SCORE: ' + pianoScore;
+  score += Math.floor(pianoScore/10);
+  document.getElementById('hudScore').textContent = 'SCORE: ' + score;
+}
+
+window.openPianoGame = openPianoGame;
+</script>
+</body>
+</html>
