@@ -297,14 +297,14 @@
     }
 
     .ctrl-btn {
-      width: 52px;
-      height: 52px;
+      width: 64px;
+      height: 64px;
       background: var(--cream-dark);
       border: 3px solid var(--navy-deep);
       border-radius: 8px;
       color: var(--navy-deep);
       font-family: var(--font-head);
-      font-size: 24px;
+      font-size: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -324,8 +324,8 @@
     }
 
     .jump-btn {
-      width: 68px;
-      height: 68px;
+      width: 80px;
+      height: 80px;
       background: var(--rust-red);
       border: 3px solid var(--navy-deep);
       color: var(--cream);
@@ -863,11 +863,9 @@
   <!-- ===== SPLASH SCREEN ===== -->
   <div id="splash">
     <div class="splash-stars" id="splashStars"></div>
-    <div class="splash-title">
-      <span class="line1">Retro Americana</span>
-      <span class="line2">VOCAL<br>GROUP</span>
-      <span class="line3">1447 H / 2026 M</span>
-    </div>
+    <img src="logo.png" alt="Vocal Group Logo"
+      style="width: 90%; max-width: 380px; height: auto; margin-bottom: 20px; position: relative; z-index: 2;"
+      onerror="this.style.display='none'">
     <div class="pixel-char-wrap">
       <svg class="pc-svg" viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
         <!-- Head -->
@@ -914,8 +912,8 @@
   <!-- ===== GAME CONTAINER ===== -->
   <div id="game-container">
     <div id="hud">
-      <span class="hud-title">♪ NEON NIGHT</span>
-      <span class="hud-hint">JELAJAHI PETA!</span>
+      <span class="hud-title">♪ VOCAL GROUP</span>
+      <span class="hud-hint">EXPLORE THE MAP!</span>
       <span class="hud-score" id="hudScore">SCORE: 0</span>
     </div>
     <canvas id="game-canvas"></canvas>
@@ -940,12 +938,15 @@
           TUTUP</button>
       </div>
       <div class="modal-body">
-        <p class="modal-text">Selamat datang di <span style="color:var(--neon-pink)">NEON NIGHT</span> — sebuah
-          pagelaran kompetisi <span style="color:var(--neon-cyan)">Vocal Group Among Classes</span> yang spektakuler!
+        <p class="modal-text">Selamat datang di <span style="color:var(--neon-pink)">Inter Class Vocal Group
+            Competition</span> — sebuah
+          pagelaran kompetisi <span style="color:var(--neon-cyan)">Inter Class Vocal Group Competition</span> yang
+          spektakuler!
         </p>
         <hr class="modal-divider">
         <span class="modal-section-title">⭐ TENTANG ACARA</span>
-        <p class="modal-text">Neon Night adalah kompetisi vokal antar kelas yang mempertemukan talenta-talenta terbaik
+        <p class="modal-text">Inter Class Vocal Group Competition adalah kompetisi vokal antar kelas yang mempertemukan
+          talenta-talenta terbaik
           dalam satu panggung megah. Setiap kelas akan menampilkan group vokal terbaik mereka dengan kostum memukau dan
           performa yang menawan.</p>
         <hr class="modal-divider">
@@ -956,9 +957,9 @@
         <span class="modal-section-title">📍 LOKASI & TANGGAL</span>
         <div class="profile-card">
           <p class="modal-text">
-            <span class="neon-badge badge-pink">📅 TANGGAL</span> <span style="color:white">TBD 2025</span><br><br>
-            <span class="neon-badge badge-cyan">⏰ WAKTU</span> <span style="color:white">13.00 - Selesai</span><br><br>
-            <span class="neon-badge badge-yellow">🏟️ TEMPAT</span> <span style="color:white">Aula Sekolah</span>
+            <span class="neon-badge badge-pink">📅 TANGGAL</span> <span style="color:white">27 Mei 2026</span><br><br>
+            <span class="neon-badge badge-cyan">⏰ WAKTU</span> <span style="color:white">08.00 - Selesai</span><br><br>
+            <span class="neon-badge badge-yellow">🏟️ TEMPAT</span> <span style="color:white">New BPPM</span>
           </p>
         </div>
         <hr class="modal-divider">
@@ -978,16 +979,16 @@
         <button class="modal-close" onclick="closeModal('modal-mic')">✕ TUTUP</button>
       </div>
       <div class="modal-body">
-        <div class="profile-card" style="border-color:rgba(255,45,120,0.4);text-align:center">
-          <div class="profile-avatar" style="background:var(--neon-pink);border-color:var(--neon-yellow)">👤</div>
-          <p class="modal-text" style="text-align:center;color:var(--neon-pink)">NAMA KETUA PANITIA</p>
-          <p class="modal-text" style="text-align:center;color:rgba(255,255,255,0.5);margin-top:4px">Ketua Pelaksana</p>
+        <div style="text-align:center; margin-bottom: 20px;">
+          <img src="ketua.png" alt="The Chiefs of Inter-Class Vocal Group"
+            style="max-width: 100%; height: auto; border: 3px solid var(--neon-pink); border-radius: 8px; box-shadow: 0 0 15px rgba(255,45,120,0.5);"
+            onerror="this.style.display='none'">
         </div>
         <hr class="modal-divider">
         <span class="modal-section-title">💌 PESAN SAMBUTAN</span>
         <p class="modal-text">"Assalamu'alaikum warahmatullahi wabarakatuh.</p><br>
         <p class="modal-text">Puji syukur kehadirat Tuhan Yang Maha Esa atas terselenggaranya acara <span
-            style="color:var(--neon-pink)">NEON NIGHT — Vocal Group Among Classes</span> ini.</p><br>
+            style="color:var(--neon-pink)">Vocal Group Among Classes</span> ini.</p><br>
         <p class="modal-text">Acara ini merupakan wujud nyata dari semangat berkarya dan berkolaborasi yang telah kami
           perjuangkan bersama. Saya mengucapkan terima kasih yang sebesar-besarnya kepada seluruh panitia, peserta, guru
           pendamping, dan semua pihak yang telah berkontribusi.</p><br>
@@ -995,14 +996,13 @@
           momen ini sebagai kenangan indah yang tak terlupakan!</p><br>
         <p class="modal-text" style="color:var(--neon-yellow)">Wassalamu'alaikum warahmatullahi wabarakatuh."</p>
         <hr class="modal-divider">
-        <span class="modal-section-title">👥 TIM INTI PANITIA</span>
+        <span class="modal-section-title">👥 THE CHIEFS</span>
         <div class="profile-card" style="border-color:rgba(255,45,120,0.2)">
           <p class="modal-text">
-            <span class="neon-badge badge-pink">KETUA</span> [Nama]<br><br>
-            <span class="neon-badge badge-cyan">WAKIL</span> [Nama]<br><br>
-            <span class="neon-badge badge-yellow">SEKRETARIS</span> [Nama]<br><br>
-            <span class="neon-badge badge-pink">BENDAHARA</span> [Nama]<br><br>
-            <span class="neon-badge badge-cyan">HUMAS</span> [Nama]
+            <span class="neon-badge badge-pink">KETUA 1</span> <span style="color:white">Muhammad Nadhif
+              (4-D)</span><br><br>
+            <span class="neon-badge badge-cyan">KETUA 2</span> <span style="color:white">Kais Ahmad (4-F)</span><br><br>
+            <span class="neon-badge badge-yellow">KETUA 3</span> <span style="color:white">Ghaza Mahdi (3xB)</span>
           </p>
         </div>
       </div>
@@ -1122,7 +1122,7 @@
         <p class="modal-text" style="margin-bottom:12px">Tap kelas untuk melihat lagu & lirik:</p>
         <div id="class-list">
           <div class="class-item" onclick="toggleLyrics('cls1')">
-            <span class="class-name">🎭 KELAS X-A</span>
+            <span class="class-name">🎭 CLASS ONE</span>
             <p class="class-song">♪ "Takut" — Idgitaf</p>
             <div class="lyrics-panel" id="cls1">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls1')">◀ TUTUP LIRIK</button>
@@ -1149,7 +1149,7 @@
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls2')">
-            <span class="class-name">🌟 KELAS X-B</span>
+            <span class="class-name">🌟 CLASS ONE INTENSIVE</span>
             <p class="class-song">♪ "Bunga Tidur" — Tulus</p>
             <div class="lyrics-panel" id="cls2">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls2')">◀ TUTUP LIRIK</button>
@@ -1176,7 +1176,7 @@
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls3')">
-            <span class="class-name">💫 KELAS XI-A</span>
+            <span class="class-name">💫 CLASS TWO</span>
             <p class="class-song">♪ "Cinta Luar Biasa" — Andmesh</p>
             <div class="lyrics-panel" id="cls3">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls3')">◀ TUTUP LIRIK</button>
@@ -1203,7 +1203,7 @@
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls4')">
-            <span class="class-name">⚡ KELAS XI-B</span>
+            <span class="class-name">⚡ CLASS THREE</span>
             <p class="class-song">♪ "Ragu" — Yura Yunita</p>
             <div class="lyrics-panel" id="cls4">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls4')">◀ TUTUP LIRIK</button>
@@ -1230,7 +1230,7 @@
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls5')">
-            <span class="class-name">🎸 KELAS XII-A</span>
+            <span class="class-name">🎸 CLASS THREE INTENSIVE</span>
             <p class="class-song">♪ "Ruang Sendiri" — Kunto Aji</p>
             <div class="lyrics-panel" id="cls5">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls5')">◀ TUTUP LIRIK</button>
@@ -1257,7 +1257,7 @@
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls6')">
-            <span class="class-name">🌙 KELAS XII-B</span>
+            <span class="class-name">🌙 CLASS FOUR</span>
             <p class="class-song">♪ "Sisa Rasa" — Tiara Andini</p>
             <div class="lyrics-panel" id="cls6">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls6')">◀ TUTUP LIRIK</button>
@@ -1432,6 +1432,10 @@
       }
     };
 
+    // ===== ASSETS =====
+    const coinImg = new Image();
+    coinImg.src = 'coin.png';
+
     // ===== START GAME =====
     document.getElementById('btnStart').addEventListener('click', () => {
       Audio.sfx.click();
@@ -1458,7 +1462,7 @@
     let animId;
 
     // ===== WORLD CONSTANTS =====
-    const WORLD_WIDTH = 4200;
+    const WORLD_WIDTH = 2600;
     const GROUND_Y_RATIO = 0.78;
     let GROUND_Y;
     const GRAVITY = 0.55;
@@ -1484,7 +1488,7 @@
 
     // ===== PLATFORMS =====
     const platforms = [
-      { x: 0, y: 0, w: 4200, h: 24, isGround: true },
+      { x: 0, y: 0, w: 2600, h: 24, isGround: true },
       { x: 280, y: -80, w: 100, h: 14 },
       { x: 480, y: -130, w: 90, h: 14 },
       { x: 700, y: -70, w: 110, h: 14 },
@@ -1495,39 +1499,76 @@
       { x: 1800, y: -130, w: 80, h: 14 },
       { x: 2100, y: -90, w: 110, h: 14 },
       { x: 2300, y: -70, w: 90, h: 14 },
-      { x: 2600, y: -120, w: 100, h: 14 },
-      { x: 2800, y: -80, w: 90, h: 14 },
-      { x: 3100, y: -130, w: 100, h: 14 },
-      { x: 3400, y: -90, w: 80, h: 14 },
-      { x: 3700, y: -70, w: 120, h: 14 },
     ];
 
     // ===== HOTSPOTS =====
     const hotspots = [
       { x: 260, icon: '🏆', label: 'PENJELASAN\nACARA', modal: 'modal-podium', color: '#fff200' },
-      { x: 640, icon: '🎤', label: 'KETUA\nPANITIA', modal: 'modal-mic', color: '#ff2d78' },
-      { x: 1050, icon: '📱', label: 'SMARTBOOK', modal: 'modal-tablet', color: '#00f5ff' },
-      { x: 1650, icon: '🕐', label: 'JADWAL\nACARA', modal: 'modal-clock', color: '#ff6b00' },
-      { x: 2350, icon: '🎵', label: 'PENAMPILAN\nKELAS', modal: 'modal-vinyl', color: '#b400ff' },
-      { x: 3200, icon: '🖼️', label: 'GALERI\nFOTO', modal: 'modal-gallery', color: '#00ff88' },
-      { x: 3900, icon: '🎹', label: 'PIANO\nSTAGE!', modal: 'PIANO', color: '#ff2d78' },
+      { x: 550, icon: '🎤', label: 'KETUA\nPANITIA', modal: 'modal-mic', color: '#ff2d78' },
+      { x: 850, icon: '📱', label: 'SMARTBOOK', modal: 'modal-tablet', color: '#00f5ff' },
+      { x: 1250, icon: '🕐', label: 'JADWAL\nACARA', modal: 'modal-clock', color: '#ff6b00' },
+      { x: 1650, icon: '🎵', label: 'PENAMPILAN\nKELAS', modal: 'modal-vinyl', color: '#b400ff' },
+      { x: 2050, icon: '🖼️', label: 'GALERI\nFOTO', modal: 'modal-gallery', color: '#00ff88' },
+      { x: 2450, icon: '🎹', label: 'PIANO\nSTAGE!', modal: 'PIANO', color: '#ff2d78' },
     ];
 
     // ===== PARALLAX LAYERS =====
-    let clouds = [];
+    let stars = [];
+    let mountains = [];
     let bgBuildings = [];
     let groundObjects = [];
+    let fgObjects = [];
     let coins = [];
+    let particles = [];
+    let ambientParticles = [];
 
     function initParallax() {
+      // Stars
+      stars = [];
+      for (let i = 0; i < 100; i++) {
+        stars.push({
+          x: Math.random() * WORLD_WIDTH,
+          y: Math.random() * H * 0.6,
+          size: Math.random() * 2,
+          blink: Math.random() * Math.PI * 2
+        });
+      }
+
+      // Mountains
+      mountains = [];
+      let mx = 0;
+      while (mx < WORLD_WIDTH * 1.5) {
+        mountains.push({
+          x: mx,
+          w: 200 + Math.random() * 300,
+          h: H * 0.3 + Math.random() * H * 0.2
+        });
+        mx += 150 + Math.random() * 150;
+      }
+
+      // Buildings
       bgBuildings = [];
       let bx = 0;
       while (bx < WORLD_WIDTH * 1.2) {
-        const bw = 60 + Math.random() * 120;
-        const bh = H * 0.2 + Math.random() * H * 0.3;
-        const colors = ['#2F4F6F', '#6C8FA3', '#C9B186', '#A63D40'];
-        bgBuildings.push({ x: bx, w: bw, h: bh, color: colors[Math.floor(Math.random() * colors.length)], windows: [] });
-        bx += bw + 2 + Math.random() * 10;
+        const bw = 80 + Math.random() * 120;
+        const bh = H * 0.2 + Math.random() * H * 0.4;
+        const colors = ['#1A253A', '#2F4F6F', '#6C8FA3'];
+
+        // Generate windows
+        let wins = [];
+        if (Math.random() > 0.3) {
+          const rows = Math.floor(bh / 30);
+          const cols = Math.floor(bw / 25);
+          for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+              if (Math.random() > 0.4) {
+                wins.push({ rx: 10 + c * 25, ry: 20 + r * 30 });
+              }
+            }
+          }
+        }
+        bgBuildings.push({ x: bx, w: bw, h: bh, color: colors[Math.floor(Math.random() * colors.length)], windows: wins, antenna: Math.random() > 0.6 });
+        bx += bw + Math.random() * 20;
       }
 
       clouds = [];
@@ -1541,16 +1582,29 @@
         });
       }
 
+      ambientParticles = [];
+      for (let i = 0; i < 40; i++) {
+        ambientParticles.push({
+          x: Math.random() * WORLD_WIDTH,
+          y: Math.random() * H,
+          size: Math.random() * 3 + 1,
+          speedY: -Math.random() * 0.5 - 0.1,
+          speedX: (Math.random() - 0.5) * 0.5,
+          life: Math.random() * 100
+        });
+      }
+
       groundObjects = [];
       let gx = 100;
       while (gx < WORLD_WIDTH) {
         if (Math.random() > 0.3) {
-          groundObjects.push({
-            x: gx,
-            type: Math.random() > 0.5 ? 'bush' : 'lamp'
-          });
+          let type = 'bush';
+          let r = Math.random();
+          if (r > 0.7) type = 'lamp';
+          else if (r > 0.5) type = 'speaker';
+          groundObjects.push({ x: gx, type: type, bounce: 0 });
         }
-        gx += 200 + Math.random() * 300;
+        gx += 150 + Math.random() * 250;
       }
 
       coins = [];
@@ -1568,6 +1622,7 @@
         }
         cx += 100 + Math.random() * 150;
       }
+
     }
 
     // ===== SCORE =====
@@ -1617,7 +1672,41 @@
       render();
     }
 
+    function spawnParticles(x, y, color, count, speed, text = null) {
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x, y,
+          vx: (Math.random() - 0.5) * speed,
+          vy: (Math.random() - 0.5) * speed - (text ? 1 : 0),
+          life: 1.0,
+          color, text
+        });
+      }
+    }
+
     function update() {
+      // Ambient Particles
+      for (let p of ambientParticles) {
+        p.x += p.speedX; p.y += p.speedY; p.life += 0.02;
+        if (p.y < -10) p.y = H + 10;
+        if (p.x < -10) p.x = WORLD_WIDTH + 10;
+        if (p.x > WORLD_WIDTH + 10) p.x = -10;
+      }
+
+      // Particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        if (!p.text) p.vy += 0.05; // gravity for non-text
+        p.life -= p.text ? 0.015 : 0.03;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+
+      // Speaker bounce anim
+      for (let go of groundObjects) {
+        if (go.type === 'speaker' && go.bounce > 0) go.bounce -= 0.1;
+      }
+
       // Input
       const left = keys['ArrowLeft'] || keys['KeyA'];
       const right = keys['ArrowRight'] || keys['KeyD'];
@@ -1632,6 +1721,12 @@
         player.vy = JUMP_FORCE;
         player.onGround = false;
         Audio.sfx.jump();
+        spawnParticles(player.x + player.w / 2, player.y + player.h, '#DCD2C4', 5, 2);
+      }
+
+      // Running dust
+      if (player.onGround && Math.abs(player.vx) > 1 && tick % 10 === 0) {
+        spawnParticles(player.x + player.w / 2, player.y + player.h, '#DCD2C4', 2, 1);
       }
 
       player.vy += GRAVITY;
@@ -1648,9 +1743,28 @@
         const realY = p.isGround ? GROUND_Y : GROUND_Y + p.y;
         if (player.x + player.w > p.x && player.x < p.x + p.w) {
           if (player.y + player.h > realY && player.y + player.h < realY + 30 && player.vy >= 0) {
+            if (!player.onGround && player.vy > 2) {
+              spawnParticles(player.x + player.w / 2, realY, '#DCD2C4', 8, 3);
+            }
             player.y = realY - player.h;
             player.vy = 0;
             player.onGround = true;
+          }
+        }
+      }
+
+      // Speaker collision
+      for (let go of groundObjects) {
+        if (go.type === 'speaker') {
+          if (player.vy >= 0 && player.x + player.w > go.x && player.x < go.x + 40) {
+            if (player.y + player.h > GROUND_Y - 30 && player.y + player.h < GROUND_Y) {
+              player.vy = JUMP_FORCE * 1.5;
+              player.y = GROUND_Y - 30 - player.h;
+              player.onGround = false;
+              go.bounce = 1.0;
+              Audio.sfx.jump();
+              spawnParticles(go.x + 20, GROUND_Y - 30, '#00f5ff', 10, 4);
+            }
           }
         }
       }
@@ -1666,18 +1780,21 @@
 
       // Hotspot collision
       for (const h of hotspots) {
-        if (!collectedHotspots.has(h.modal)) {
-          const hx = h.x - cam.x;
-          const hy = GROUND_Y - 60;
-          const dist = Math.abs(player.x + player.w / 2 - h.x);
-          if (dist < 50) {
-            collectedHotspots.add(h.modal);
-            score += 100;
-            document.getElementById('hudScore').textContent = 'SCORE: ' + score;
+        const dist = Math.abs(player.x + player.w / 2 - h.x);
+        if (dist < 50) {
+          if (!h.visitedThisTime) {
+            h.visitedThisTime = true;
+            if (!h.scored) {
+              h.scored = true;
+              score += 100;
+              document.getElementById('hudScore').textContent = 'SCORE: ' + score;
+            }
             Audio.sfx.collect();
             if (h.modal === 'PIANO') openPianoGame();
             else openModal(h.modal);
           }
+        } else {
+          h.visitedThisTime = false;
         }
       }
 
@@ -1690,6 +1807,8 @@
             score += 10;
             document.getElementById('hudScore').textContent = 'SCORE: ' + score;
             Audio.sfx.collect();
+            spawnParticles(c.x, c.y, '#ff2d78', 12, 5);
+            spawnParticles(c.x, c.y, '#fff200', 1, 1, '+10');
           }
         }
       }
@@ -1697,12 +1816,47 @@
 
     function render() {
       ctx.clearRect(0, 0, W, H);
-      // Sky gradient
+      // Sky gradient (Deep night sky)
       const sky = ctx.createLinearGradient(0, 0, 0, H);
-      sky.addColorStop(0, '#DCD2C4');
-      sky.addColorStop(1, '#F4EDE4');
+      sky.addColorStop(0, '#0a0a2a');
+      sky.addColorStop(0.5, '#1a1a4a');
+      sky.addColorStop(1, '#DCD2C4');
       ctx.fillStyle = sky;
       ctx.fillRect(0, 0, W, H);
+
+      // Stars
+      ctx.fillStyle = '#FFFFFF';
+      for (const s of stars) {
+        const sx = ((s.x - cam.x * 0.02) % W + W) % W;
+        ctx.globalAlpha = 0.5 + Math.sin(tick * 0.05 + s.blink) * 0.5;
+        ctx.beginPath(); ctx.arc(sx, s.y, s.size, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Moon
+      const mx = ((WORLD_WIDTH * 0.2 - cam.x * 0.02) % W + W) % W;
+      ctx.fillStyle = '#FFF200';
+      ctx.shadowColor = '#FFF200';
+      ctx.shadowBlur = 30;
+      ctx.beginPath(); ctx.arc(mx, H * 0.2, 40, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+      // Moon craters
+      ctx.fillStyle = 'rgba(0,0,0,0.1)';
+      ctx.beginPath(); ctx.arc(mx - 10, H * 0.2 - 10, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(mx + 15, H * 0.2 + 5, 12, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(mx - 5, H * 0.2 + 15, 6, 0, Math.PI * 2); ctx.fill();
+
+      // Mountains (parallax 0.08)
+      ctx.fillStyle = '#111827';
+      for (const m of mountains) {
+        const max = Math.round(m.x - cam.x * 0.08);
+        const may = Math.round(H - m.h);
+        ctx.beginPath();
+        ctx.moveTo(max, H);
+        ctx.lineTo(max + m.w / 2, may);
+        ctx.lineTo(max + m.w, H);
+        ctx.fill();
+      }
 
       // Clouds (parallax 0.05)
       for (const c of clouds) {
@@ -1718,15 +1872,45 @@
         c.x += c.speed;
       }
 
+      // Ambient Particles
+      ctx.fillStyle = 'rgba(255, 242, 0, 0.4)';
+      for (const p of ambientParticles) {
+        const px = ((p.x - cam.x * 0.1) % (WORLD_WIDTH));
+        if (px < -20 || px > W + 20) continue;
+        ctx.globalAlpha = Math.abs(Math.sin(p.life));
+        ctx.beginPath(); ctx.arc(px, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
       // Background buildings (parallax 0.2)
       for (const b of bgBuildings) {
         const bx = Math.round(b.x - cam.x * 0.2);
         const by = Math.round(H - b.h);
+
+        // Building body
         ctx.fillStyle = b.color;
         ctx.fillRect(bx, by, b.w, b.h);
 
+        // Antenna
+        if (b.antenna) {
+          ctx.fillStyle = '#111';
+          ctx.fillRect(bx + b.w / 2 - 2, by - 40, 4, 40);
+          if (Math.sin(tick * 0.1 + b.x) > 0.8) {
+            ctx.fillStyle = '#ff2d78'; // blinking red light
+            ctx.fillRect(bx + b.w / 2 - 3, by - 42, 6, 6);
+          }
+        }
+
+        // Windows
+        for (const w of b.windows) {
+          ctx.fillStyle = Math.sin(tick * 0.01 + b.x + w.rx) > 0 ? '#fff200' : '#444'; // some turn off
+          ctx.globalAlpha = 0.8;
+          ctx.fillRect(bx + w.rx, by + w.ry, 10, 15);
+        }
+        ctx.globalAlpha = 1;
+
         // Vintage border accent
-        ctx.fillStyle = '#1F2A44';
+        ctx.fillStyle = '#0f172a';
         ctx.fillRect(bx, by, b.w, 4);
       }
 
@@ -1752,14 +1936,35 @@
           ctx.fillRect(gx, GROUND_Y - 80, 6, 80);
           ctx.fillRect(gx - 4, GROUND_Y - 4, 14, 4);
           ctx.fillRect(gx - 10, GROUND_Y - 90, 26, 10);
-          ctx.fillStyle = '#F4EDE4';
+
+          // Glow effect based on player proximity
+          const distToPlayer = Math.abs(player.x - go.x);
+          let glowAlpha = 0.2;
+          let lightColor = '#F4EDE4';
+          if (distToPlayer < 150) {
+            glowAlpha = 0.6;
+            lightColor = '#fff200'; // neon yellow
+            ctx.shadowColor = lightColor;
+            ctx.shadowBlur = 15;
+          }
+
+          ctx.fillStyle = lightColor;
           ctx.fillRect(gx - 6, GROUND_Y - 88, 18, 6);
-          ctx.fillStyle = 'rgba(244,237,228,0.2)';
+          ctx.shadowBlur = 0; // reset
+
+          ctx.fillStyle = `rgba(255, 242, 0, ${glowAlpha * 0.5})`;
           ctx.beginPath();
           ctx.moveTo(gx + 3, GROUND_Y - 80);
-          ctx.lineTo(gx - 40, GROUND_Y);
-          ctx.lineTo(gx + 46, GROUND_Y);
+          ctx.lineTo(gx - 60, GROUND_Y);
+          ctx.lineTo(gx + 66, GROUND_Y);
           ctx.fill();
+        } else if (go.type === 'speaker') {
+          const by = GROUND_Y - 30;
+          const bounceOff = Math.max(0, Math.sin(go.bounce * Math.PI) * 10);
+          ctx.fillStyle = '#1F2A44';
+          ctx.fillRect(gx, by - bounceOff, 40, 30 + bounceOff);
+          ctx.fillStyle = '#00f5ff';
+          ctx.beginPath(); ctx.arc(gx + 20, by + 15, 8 + bounceOff / 2, 0, Math.PI * 2); ctx.fill();
         }
       }
 
@@ -1776,7 +1981,6 @@
 
       // Hotspots
       for (const h of hotspots) {
-        if (collectedHotspots.has(h.modal)) continue;
         const hx = Math.round(h.x - cam.x);
         const hy = Math.round(GROUND_Y - 68);
         if (hx < -80 || hx > W + 80) continue;
@@ -1793,11 +1997,17 @@
         ctx.fillText(h.icon, hx, hy + 8 * Math.sin(tick * 0.08 + h.x));
 
         // Label
-        ctx.font = 'bold 10px "Montserrat"';
-        ctx.fillStyle = '#1F2A44';
+        const floatY = Math.sin(tick * 0.05 + h.x) * 5;
+        ctx.font = 'bold 13px "Montserrat"';
         ctx.textAlign = 'center';
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+        ctx.shadowBlur = 6;
         const lines = h.label.split('\n');
-        lines.forEach((l, i) => ctx.fillText(l, hx, hy - 18 - (lines.length - 1 - i) * 14));
+        lines.forEach((l, i) => {
+          ctx.fillStyle = '#1F2A44';
+          ctx.fillText(l, hx, hy - 22 + floatY - (lines.length - 1 - i) * 16);
+        });
+        ctx.shadowBlur = 0;
 
         // Interact indicator
         if (Math.abs(player.x + player.w / 2 - h.x) < 80) {
@@ -1814,18 +2024,42 @@
         const cy = Math.round(c.y + 4 * Math.sin(tick * 0.1 + c.x));
         if (cx < -40 || cx > W + 40) continue;
 
-        ctx.fillStyle = '#C9B186';
-        ctx.beginPath();
-        ctx.arc(cx, cy, 10, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#A63D40';
-        ctx.beginPath();
-        ctx.arc(cx, cy, 6, 0, Math.PI * 2);
-        ctx.fill();
+        if (coinImg.complete && coinImg.naturalHeight !== 0) {
+          ctx.drawImage(coinImg, cx - 18, cy - 18, 36, 36);
+        } else {
+          ctx.fillStyle = '#C9B186';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#A63D40';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       // Player
       drawPlayer(ctx, Math.round(player.x - cam.x), Math.round(player.y));
+
+      // Particles
+      for (const p of particles) {
+        const px = Math.round(p.x - cam.x);
+        const py = Math.round(p.y);
+        ctx.globalAlpha = Math.max(0, p.life);
+        if (p.text) {
+          ctx.fillStyle = p.color;
+          ctx.font = 'bold 20px "Bebas Neue"';
+          ctx.textAlign = 'center';
+          ctx.shadowColor = '#1F2A44';
+          ctx.shadowBlur = 4;
+          ctx.fillText(p.text, px, py);
+          ctx.shadowBlur = 0;
+        } else {
+          ctx.fillStyle = p.color;
+          ctx.fillRect(px, py, 6, 6);
+        }
+      }
+      ctx.globalAlpha = 1;
 
       // Ground trim
       ctx.fillStyle = '#1F2A44';
@@ -1836,7 +2070,7 @@
       // Vignette
       const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.4, W / 2, H / 2, H * 1.2);
       vg.addColorStop(0, 'transparent');
-      vg.addColorStop(1, 'rgba(31,42,68,0.2)');
+      vg.addColorStop(1, 'rgba(10,10,20,0.6)'); // darker vignette for night
       ctx.fillStyle = vg;
       ctx.fillRect(0, 0, W, H);
     }
@@ -1845,7 +2079,7 @@
       const baseY = GROUND_Y + 10;
       ctx.fillStyle = '#2F4F6F';
       // Stage platform
-      const sx = 3700 - camOffset;
+      const sx = 2300 - camOffset;
       if (sx > -300 && sx < W + 300) {
         ctx.fillRect(sx, baseY - 80, 340, 80);
         // Towers
@@ -1962,7 +2196,7 @@
     let pianoFeedbackEl = null;
     let pianoCombo = 0;
     let pianoMissed = 0;
-    const PIANO_MAX_MISS = 8;
+    const PIANO_MAX_MISS = 5;
 
     function openPianoGame() {
       const pg = document.getElementById('piano-game');
