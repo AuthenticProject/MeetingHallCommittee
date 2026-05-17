@@ -4,19 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>NEON NIGHT — Vocal Group Among Classes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>Vocal Group Among Classes</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+    rel="stylesheet">
   <style>
     :root {
-      --neon-pink: #ff2d78;
-      --neon-cyan: #00f5ff;
-      --neon-yellow: #fff200;
-      --neon-purple: #b400ff;
-      --neon-green: #00ff88;
-      --neon-orange: #ff6b00;
-      --dark-bg: #04000f;
-      --dark2: #080020;
-      --pixel: 'Press Start 2P', monospace;
+      --navy-deep: #1F2A44;
+      --vintage-blue: #2F4F6F;
+      --faded-blue: #6C8FA3;
+      --cream: #F4EDE4;
+      --cream-dark: #DCD2C4;
+      --rust-red: #A63D40;
+      --warm-tan: #C9B186;
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-serif: 'Playfair Display', serif;
+      --font-script: 'Pacifico', cursive;
+      --font-body: 'Montserrat', sans-serif;
     }
 
     * {
@@ -31,16 +35,17 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: var(--dark-bg);
-      font-family: var(--pixel);
+      background: var(--cream);
+      font-family: var(--font-body);
+      color: var(--navy-deep);
     }
 
-    /* ===== SCANLINE OVERLAY ===== */
+    /* ===== PAPER TEXTURE OVERLAY ===== */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.08) 2px, rgba(0, 0, 0, 0.08) 4px);
+      background-image: radial-gradient(circle at center, transparent 40%, rgba(31, 42, 68, 0.1) 100%);
       pointer-events: none;
       z-index: 9999;
     }
@@ -50,36 +55,19 @@
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: var(--dark-bg);
+      background: var(--cream);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 0;
+      border: 10px solid var(--navy-deep);
+      box-sizing: border-box;
     }
 
     .splash-stars {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-
-    .splash-star {
-      position: absolute;
-      background: white;
-      width: 2px;
-      height: 2px;
-      animation: twinkle var(--d, 2s) var(--delay, 0s) infinite alternate;
-    }
-
-    @keyframes twinkle {
-      0% {
-        opacity: 0.2;
-      }
-
-      100% {
-        opacity: 1;
-      }
+      display: none;
+      /* Removed neon stars */
     }
 
     .splash-title {
@@ -90,29 +78,37 @@
     }
 
     .splash-title .line1 {
-      font-size: clamp(12px, 4vw, 28px);
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan), 0 0 20px var(--neon-cyan);
-      letter-spacing: 4px;
+      font-family: var(--font-script);
+      font-size: clamp(24px, 6vw, 42px);
+      color: var(--navy-deep);
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: -10px;
+      text-shadow: 2px 2px 0px var(--cream-dark);
+      transform: rotate(-3deg);
     }
 
     .splash-title .line2 {
-      font-size: clamp(18px, 7vw, 52px);
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink), 0 0 30px var(--neon-pink), 0 0 60px var(--neon-pink);
+      font-family: var(--font-head);
+      font-size: clamp(32px, 10vw, 72px);
+      color: var(--rust-red);
       display: block;
-      line-height: 1.2;
+      line-height: 1;
+      text-shadow: 3px 3px 0px var(--navy-deep);
+      letter-spacing: 2px;
     }
 
     .splash-title .line3 {
-      font-size: clamp(7px, 2vw, 14px);
-      color: var(--neon-yellow);
-      text-shadow: 0 0 8px var(--neon-yellow);
+      font-family: var(--font-serif);
+      font-weight: bold;
+      font-size: clamp(10px, 3vw, 18px);
+      color: var(--vintage-blue);
       display: block;
-      margin-top: 8px;
-      letter-spacing: 2px;
+      margin-top: 12px;
+      letter-spacing: 4px;
+      background: var(--warm-tan);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 2px solid var(--navy-deep);
     }
 
     /* Pixel Character */
@@ -148,7 +144,7 @@
     .char-shadow {
       width: 50px;
       height: 8px;
-      background: radial-gradient(ellipse, rgba(0, 245, 255, 0.4) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(31, 42, 68, 0.4) 0%, transparent 70%);
       margin: 0 auto;
       animation: shadow-pulse 2s ease-in-out infinite;
     }
@@ -175,48 +171,39 @@
 
     /* START Button */
     .btn-start {
-      font-family: var(--pixel);
-      font-size: clamp(10px, 2.5vw, 16px);
-      color: var(--dark-bg);
-      background: var(--neon-cyan);
-      border: none;
+      font-family: var(--font-head);
+      font-size: clamp(18px, 4vw, 28px);
+      color: var(--cream);
+      background: var(--rust-red);
+      border: 3px solid var(--navy-deep);
       outline: none;
-      padding: 14px 32px;
+      padding: 12px 32px;
       cursor: pointer;
       position: relative;
       z-index: 2;
       margin-top: 20px;
-      box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
-      animation: btn-pulse 1.2s ease-in-out infinite alternate;
+      box-shadow: 4px 4px 0px var(--navy-deep);
       letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: transform 0.1s;
-      image-rendering: auto;
+      transition: all 0.1s;
     }
 
     .btn-start:hover {
-      transform: scale(1.05);
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--navy-deep);
     }
 
     .btn-start:active {
-      transform: scale(0.97);
-    }
-
-    @keyframes btn-pulse {
-      0% {
-        box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
-      }
-
-      100% {
-        box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 60px var(--neon-cyan), 0 0 80px rgba(0, 245, 255, 0.3);
-      }
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--navy-deep);
     }
 
     .splash-hint {
       position: relative;
       z-index: 2;
-      font-size: 8px;
-      color: rgba(255, 255, 255, 0.4);
+      font-family: var(--font-serif);
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--vintage-blue);
       margin-top: 16px;
       animation: blink 1.5s step-end infinite;
     }
@@ -252,35 +239,41 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 40px;
-      background: rgba(4, 0, 15, 0.85);
-      border-bottom: 2px solid var(--neon-pink);
+      height: 44px;
+      background: var(--cream);
+      border-bottom: 4px solid var(--navy-deep);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 12px;
+      padding: 0 16px;
       z-index: 100;
-      box-shadow: 0 2px 20px rgba(255, 45, 120, 0.3);
+      box-shadow: 0 4px 0px rgba(31, 42, 68, 0.2);
     }
 
     .hud-title {
-      font-size: 7px;
-      color: var(--neon-pink);
-      text-shadow: 0 0 8px var(--neon-pink);
-      letter-spacing: 1px;
+      font-family: var(--font-head);
+      font-size: 24px;
+      color: var(--rust-red);
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 0px var(--navy-deep);
     }
 
     .hud-hint {
-      font-size: 6px;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 6px var(--neon-cyan);
+      font-family: var(--font-serif);
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--vintage-blue);
       animation: blink 2s step-end infinite;
     }
 
     .hud-score {
-      font-size: 7px;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 6px var(--neon-yellow);
+      font-family: var(--font-head);
+      font-size: 20px;
+      color: var(--navy-deep);
+      background: var(--warm-tan);
+      padding: 4px 10px;
+      border: 2px solid var(--navy-deep);
+      border-radius: 6px;
     }
 
     /* ===== MOBILE CONTROLS ===== */
@@ -306,41 +299,44 @@
     .ctrl-btn {
       width: 52px;
       height: 52px;
-      background: rgba(0, 245, 255, 0.15);
-      border: 2px solid rgba(0, 245, 255, 0.5);
-      border-radius: 0;
-      color: var(--neon-cyan);
-      font-size: 20px;
+      background: var(--cream-dark);
+      border: 3px solid var(--navy-deep);
+      border-radius: 8px;
+      color: var(--navy-deep);
+      font-family: var(--font-head);
+      font-size: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
-      transition: background 0.1s;
-      image-rendering: auto;
+      transition: all 0.1s;
+      box-shadow: 3px 3px 0px var(--navy-deep);
+      pointer-events: all;
     }
 
     .ctrl-btn:active,
     .ctrl-btn.pressed {
-      background: rgba(0, 245, 255, 0.35);
-      border-color: var(--neon-cyan);
+      background: var(--warm-tan);
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--navy-deep);
     }
 
     .jump-btn {
-      width: 64px;
-      height: 64px;
-      background: rgba(255, 45, 120, 0.15);
-      border: 2px solid rgba(255, 45, 120, 0.5);
-      color: var(--neon-pink);
-      font-size: 22px;
+      width: 68px;
+      height: 68px;
+      background: var(--rust-red);
+      border: 3px solid var(--navy-deep);
+      color: var(--cream);
+      font-size: 32px;
       border-radius: 50%;
     }
 
     .jump-btn:active,
     .jump-btn.pressed {
-      background: rgba(255, 45, 120, 0.35);
-      border-color: var(--neon-pink);
+      background: var(--rust-red);
+      color: var(--warm-tan);
     }
 
     /* ===== MODALS ===== */
@@ -360,9 +356,9 @@
     }
 
     .modal-box {
-      background: var(--dark2);
-      border: 3px solid var(--neon-cyan);
-      box-shadow: 0 0 0 2px var(--dark-bg), 0 0 30px var(--neon-cyan), inset 0 0 40px rgba(0, 245, 255, 0.05);
+      background: var(--cream);
+      border: 4px solid var(--navy-deep);
+      box-shadow: 8px 8px 0px rgba(31, 42, 68, 0.6);
       width: 100%;
       max-width: 560px;
       max-height: 85vh;
@@ -386,7 +382,8 @@
 
     .modal-header {
       padding: 16px 20px 12px;
-      border-bottom: 2px solid rgba(0, 245, 255, 0.3);
+      border-bottom: 4px solid var(--navy-deep);
+      background: var(--warm-tan);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -394,70 +391,80 @@
     }
 
     .modal-title {
-      font-size: clamp(8px, 2vw, 12px);
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan);
-      letter-spacing: 1px;
+      font-family: var(--font-head);
+      font-size: clamp(20px, 4vw, 28px);
+      color: var(--navy-deep);
+      letter-spacing: 2px;
     }
 
     .modal-close {
-      font-family: var(--pixel);
-      font-size: 10px;
-      background: var(--neon-pink);
-      color: var(--dark-bg);
-      border: none;
+      font-family: var(--font-body);
+      font-weight: bold;
+      font-size: 14px;
+      background: var(--rust-red);
+      color: var(--cream);
+      border: 2px solid var(--navy-deep);
       cursor: pointer;
-      padding: 6px 10px;
-      box-shadow: 0 0 10px var(--neon-pink);
-      image-rendering: auto;
+      padding: 6px 14px;
+      box-shadow: 2px 2px 0px var(--navy-deep);
+      transition: all 0.1s;
+    }
+
+    .modal-close:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px var(--navy-deep);
     }
 
     .modal-body {
-      padding: 20px;
+      padding: 24px;
       overflow-y: auto;
       flex: 1;
       scrollbar-width: thin;
-      scrollbar-color: var(--neon-cyan) var(--dark2);
+      scrollbar-color: var(--vintage-blue) var(--cream-dark);
     }
 
     .modal-body::-webkit-scrollbar {
-      width: 6px;
+      width: 8px;
     }
 
     .modal-body::-webkit-scrollbar-track {
-      background: var(--dark2);
+      background: var(--cream-dark);
     }
 
     .modal-body::-webkit-scrollbar-thumb {
-      background: var(--neon-cyan);
+      background: var(--vintage-blue);
+      border-radius: 4px;
     }
 
     /* Modal content styles */
     .modal-text {
-      font-size: 8px;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 2.2;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--navy-deep);
+      line-height: 1.6;
     }
 
     .modal-section-title {
-      font-size: 9px;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 6px var(--neon-yellow);
-      margin: 14px 0 8px;
-      display: block;
+      font-family: var(--font-head);
+      font-size: 24px;
+      color: var(--rust-red);
+      margin: 18px 0 8px;
+      display: inline-block;
+      border-bottom: 3px solid var(--rust-red);
     }
 
     .modal-divider {
       border: none;
-      border-top: 2px dashed rgba(0, 245, 255, 0.3);
-      margin: 12px 0;
+      border-top: 3px dotted var(--faded-blue);
+      margin: 16px 0;
     }
 
     .profile-card {
-      background: rgba(0, 245, 255, 0.05);
-      border: 2px solid rgba(0, 245, 255, 0.2);
-      padding: 14px;
-      margin: 8px 0;
+      background: var(--cream-dark);
+      border: 3px solid var(--navy-deep);
+      padding: 16px;
+      margin: 12px 0;
+      box-shadow: 4px 4px 0px var(--faded-blue);
     }
 
     .profile-avatar {
@@ -480,49 +487,57 @@
     }
 
     .timeline-time {
-      font-size: 7px;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 6px var(--neon-yellow);
+      font-family: var(--font-head);
+      font-size: 18px;
+      color: var(--rust-red);
       min-width: 70px;
       padding-top: 1px;
     }
 
     .timeline-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--neon-pink);
+      width: 10px;
+      height: 10px;
+      background: var(--navy-deep);
+      border-radius: 50%;
       flex-shrink: 0;
-      margin-top: 2px;
+      margin-top: 6px;
     }
 
     .timeline-desc {
-      font-size: 7px;
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 2;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--navy-deep);
+      line-height: 1.6;
     }
 
     .class-item {
-      background: rgba(180, 0, 255, 0.08);
-      border: 2px solid rgba(180, 0, 255, 0.3);
+      background: var(--cream);
+      border: 2px solid var(--navy-deep);
       padding: 10px 12px;
       margin-bottom: 8px;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all 0.15s;
+      box-shadow: 2px 2px 0px var(--faded-blue);
     }
 
     .class-item:hover {
-      background: rgba(180, 0, 255, 0.2);
+      background: var(--warm-tan);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--faded-blue);
     }
 
     .class-name {
-      font-size: 8px;
-      color: var(--neon-purple);
-      text-shadow: 0 0 6px var(--neon-purple);
+      font-family: var(--font-head);
+      font-size: 22px;
+      color: var(--navy-deep);
+      letter-spacing: 1px;
     }
 
     .class-song {
-      font-size: 7px;
-      color: rgba(255, 255, 255, 0.7);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--vintage-blue);
       margin-top: 4px;
     }
 
@@ -535,32 +550,41 @@
     }
 
     .lyrics-text {
-      font-size: 7px;
-      color: rgba(255, 255, 255, 0.75);
-      line-height: 2.2;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--navy-deep);
+      line-height: 1.8;
       margin-top: 8px;
-      padding: 8px;
-      background: rgba(255, 255, 255, 0.03);
-      border-left: 3px solid var(--neon-purple);
+      padding: 12px;
+      background: var(--cream-dark);
+      border-left: 4px solid var(--rust-red);
       white-space: pre-line;
     }
 
     .back-btn {
-      font-family: var(--pixel);
-      font-size: 7px;
-      background: transparent;
-      border: 2px solid var(--neon-cyan);
-      color: var(--neon-cyan);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: bold;
+      background: var(--faded-blue);
+      border: 2px solid var(--navy-deep);
+      color: var(--cream);
       cursor: pointer;
-      padding: 6px 10px;
-      margin-bottom: 10px;
-      image-rendering: auto;
+      padding: 6px 12px;
+      margin-bottom: 12px;
+      box-shadow: 2px 2px 0px var(--navy-deep);
+      transition: all 0.1s;
+    }
+
+    .back-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px var(--navy-deep);
     }
 
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
+      gap: 10px;
     }
 
     .gallery-item {
@@ -568,26 +592,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      border: 2px solid rgba(0, 245, 255, 0.2);
+      font-size: 32px;
+      border: 3px solid var(--navy-deep);
+      background: var(--cream);
       position: relative;
       overflow: hidden;
       cursor: pointer;
-    }
-
-    .gallery-item:nth-child(3n+1) {
-      background: rgba(255, 45, 120, 0.1);
-      border-color: rgba(255, 45, 120, 0.3);
-    }
-
-    .gallery-item:nth-child(3n+2) {
-      background: rgba(0, 245, 255, 0.08);
-      border-color: rgba(0, 245, 255, 0.3);
-    }
-
-    .gallery-item:nth-child(3n+3) {
-      background: rgba(180, 0, 255, 0.1);
-      border-color: rgba(180, 0, 255, 0.3);
+      box-shadow: 3px 3px 0px var(--faded-blue);
     }
 
     .gallery-label {
@@ -595,44 +606,45 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      font-size: 5px;
-      color: white;
-      padding: 3px;
+      background: var(--navy-deep);
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: bold;
+      color: var(--cream);
+      padding: 4px;
       text-align: center;
-      font-family: var(--pixel);
     }
 
     .neon-badge {
       display: inline-block;
-      padding: 3px 8px;
-      font-size: 7px;
+      padding: 4px 8px;
+      font-family: var(--font-head);
+      font-size: 14px;
       margin: 2px;
+      border: 2px solid var(--navy-deep);
+      border-radius: 4px;
     }
 
     .badge-pink {
-      background: rgba(255, 45, 120, 0.2);
-      border: 1px solid var(--neon-pink);
-      color: var(--neon-pink);
+      background: var(--rust-red);
+      color: var(--cream);
     }
 
     .badge-cyan {
-      background: rgba(0, 245, 255, 0.1);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
+      background: var(--vintage-blue);
+      color: var(--cream);
     }
 
     .badge-yellow {
-      background: rgba(255, 242, 0, 0.1);
-      border: 1px solid var(--neon-yellow);
-      color: var(--neon-yellow);
+      background: var(--warm-tan);
+      color: var(--navy-deep);
     }
 
     /* ===== PIANO GAME ===== */
     #piano-game {
       position: fixed;
       inset: 0;
-      background: var(--dark-bg);
+      background: var(--cream);
       z-index: 600;
       display: none;
       flex-direction: column;
@@ -644,8 +656,8 @@
 
     #piano-header {
       padding: 12px 20px;
-      background: rgba(0, 0, 0, 0.5);
-      border-bottom: 2px solid var(--neon-pink);
+      background: var(--navy-deep);
+      border-bottom: 4px solid var(--rust-red);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -653,26 +665,29 @@
     }
 
     #piano-header h2 {
-      font-size: clamp(9px, 2.5vw, 14px);
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink);
+      font-family: var(--font-head);
+      font-size: clamp(20px, 4vw, 28px);
+      color: var(--cream);
+      letter-spacing: 2px;
     }
 
     #piano-score-display {
-      font-size: 10px;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 6px var(--neon-yellow);
+      font-family: var(--font-head);
+      font-size: 20px;
+      color: var(--warm-tan);
     }
 
     #piano-close {
-      font-family: var(--pixel);
-      font-size: 9px;
-      background: var(--neon-pink);
-      color: var(--dark-bg);
-      border: none;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: bold;
+      background: var(--rust-red);
+      color: var(--cream);
+      border: 2px solid var(--cream);
       cursor: pointer;
-      padding: 6px 10px;
-      image-rendering: auto;
+      padding: 6px 12px;
+      border-radius: 4px;
+      box-shadow: 2px 2px 0px var(--navy-deep);
     }
 
     #piano-canvas-wrap {
@@ -690,14 +705,15 @@
     .piano-lane-btn {
       position: absolute;
       bottom: 0;
-      height: 70px;
+      height: 80px;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.05);
-      border-top: 3px solid rgba(255, 255, 255, 0.2);
+      background: rgba(31, 42, 68, 0.1);
+      border-top: 4px solid var(--navy-deep);
+      border-right: 2px solid var(--navy-deep);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 24px;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
       transition: background 0.05s;
@@ -705,7 +721,7 @@
     }
 
     .piano-lane-btn.hit {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(31, 42, 68, 0.3);
     }
 
     #piano-feedback {
@@ -713,12 +729,13 @@
       top: 30%;
       left: 50%;
       transform: translateX(-50%);
-      font-family: var(--pixel);
-      font-size: clamp(18px, 5vw, 32px);
+      font-family: var(--font-head);
+      font-size: clamp(32px, 8vw, 64px);
+      color: var(--rust-red);
+      text-shadow: 2px 2px 0px var(--navy-deep);
       pointer-events: none;
       z-index: 10;
       animation: feedback-pop 0.6s forwards;
-      text-shadow: 0 0 20px currentColor;
     }
 
     @keyframes feedback-pop {
@@ -746,34 +763,35 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(31, 42, 68, 0.9);
       z-index: 5;
     }
 
     #piano-start-screen h3 {
-      font-size: clamp(10px, 3vw, 18px);
-      color: var(--neon-cyan);
-      text-shadow: 0 0 12px var(--neon-cyan);
+      font-family: var(--font-head);
+      font-size: clamp(32px, 8vw, 64px);
+      color: var(--rust-red);
+      text-shadow: 2px 2px 0px var(--cream);
       text-align: center;
     }
 
     #piano-start-screen p {
-      font-size: 8px;
-      color: rgba(255, 255, 255, 0.6);
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--cream);
       text-align: center;
-      line-height: 2;
+      line-height: 1.6;
     }
 
     .btn-pixel {
-      font-family: var(--pixel);
-      font-size: clamp(9px, 2.5vw, 13px);
-      background: var(--neon-green);
-      color: var(--dark-bg);
-      border: none;
+      font-family: var(--font-head);
+      font-size: clamp(24px, 4vw, 32px);
+      background: var(--warm-tan);
+      color: var(--navy-deep);
+      border: 3px solid var(--navy-deep);
       padding: 12px 28px;
       cursor: pointer;
-      box-shadow: 0 0 16px var(--neon-green);
-      image-rendering: auto;
+      box-shadow: 4px 4px 0px var(--navy-deep);
       letter-spacing: 1px;
     }
 
@@ -785,7 +803,7 @@
       align-items: center;
       justify-content: center;
       gap: 14px;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(31, 42, 68, 0.9);
       z-index: 5;
     }
 
@@ -794,30 +812,33 @@
     }
 
     #piano-gameover h3 {
-      font-size: clamp(14px, 4vw, 24px);
-      color: var(--neon-pink);
-      text-shadow: 0 0 16px var(--neon-pink);
+      font-family: var(--font-head);
+      font-size: clamp(48px, 10vw, 80px);
+      color: var(--rust-red);
+      text-shadow: 3px 3px 0px var(--cream);
     }
 
     #final-score-txt {
-      font-size: clamp(10px, 2.5vw, 16px);
-      color: var(--neon-yellow);
-      text-shadow: 0 0 8px var(--neon-yellow);
+      font-family: var(--font-head);
+      font-size: clamp(24px, 5vw, 40px);
+      color: var(--warm-tan);
     }
 
     /* ===== HOTSPOT TOOLTIP ===== */
     .hotspot-label {
       position: absolute;
-      font-family: var(--pixel);
-      font-size: 7px;
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      padding: 4px 6px;
+      font-family: var(--font-body);
+      font-weight: bold;
+      font-size: 12px;
+      background: var(--cream);
+      border: 2px solid var(--navy-deep);
+      color: var(--navy-deep);
+      padding: 4px 8px;
       pointer-events: none;
       white-space: nowrap;
       animation: blink 2s step-end infinite;
       z-index: 50;
+      box-shadow: 2px 2px 0px var(--navy-deep);
     }
 
     /* ===== SCROLL HINT ===== */
@@ -825,9 +846,10 @@
       position: fixed;
       bottom: 80px;
       right: 16px;
-      font-size: 7px;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 6px var(--neon-yellow);
+      font-family: var(--font-head);
+      font-size: 20px;
+      color: var(--navy-deep);
+      text-shadow: 1px 1px 0px var(--cream);
       z-index: 150;
       text-align: center;
       animation: blink 1.8s step-end infinite;
@@ -842,9 +864,9 @@
   <div id="splash">
     <div class="splash-stars" id="splashStars"></div>
     <div class="splash-title">
-      <span class="line1">✦ UNDANGAN DIGITAL ✦</span>
-      <span class="line2">NEON<br>NIGHT</span>
-      <span class="line3">VOCAL GROUP AMONG CLASSES</span>
+      <span class="line1">Retro Americana</span>
+      <span class="line2">VOCAL<br>GROUP</span>
+      <span class="line3">1447 H / 2026 M</span>
     </div>
     <div class="pixel-char-wrap">
       <svg class="pc-svg" viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
@@ -858,31 +880,30 @@
         <rect x="16" y="9" width="2" height="2" fill="#111" />
         <rect x="22" y="9" width="2" height="2" fill="#111" />
         <!-- Tie -->
-        <rect x="19" y="16" width="2" height="10" fill="#ff2d78" />
-        <rect x="18" y="16" width="4" height="3" fill="#ff2d78" />
+        <rect x="19" y="16" width="2" height="10" fill="#A63D40" />
+        <rect x="18" y="16" width="4" height="3" fill="#A63D40" />
         <!-- Collar / Shirt -->
         <rect x="13" y="16" width="14" height="16" fill="white" />
         <rect x="13" y="16" width="3" height="5" fill="#e0e0e0" />
         <rect x="24" y="16" width="3" height="5" fill="#e0e0e0" />
         <!-- Jacket -->
-        <rect x="9" y="16" width="5" height="20" fill="#1a0a3a" />
-        <rect x="26" y="16" width="5" height="20" fill="#1a0a3a" />
-        <rect x="9" y="16" width="22" height="4" fill="#1a0a3a" />
+        <rect x="9" y="16" width="5" height="20" fill="#2F4F6F" />
+        <rect x="26" y="16" width="5" height="20" fill="#2F4F6F" />
+        <rect x="9" y="16" width="22" height="4" fill="#2F4F6F" />
         <!-- Pants -->
-        <rect x="13" y="32" width="6" height="20" fill="#0d0020" />
-        <rect x="21" y="32" width="6" height="20" fill="#0d0020" />
+        <rect x="13" y="32" width="6" height="20" fill="#1F2A44" />
+        <rect x="21" y="32" width="6" height="20" fill="#1F2A44" />
         <!-- Shoes -->
         <rect x="11" y="50" width="8" height="4" fill="#111" />
         <rect x="21" y="50" width="8" height="4" fill="#111" />
         <!-- Arms -->
-        <rect x="5" y="18" width="5" height="14" fill="#1a0a3a" />
-        <rect x="30" y="18" width="5" height="14" fill="#1a0a3a" />
+        <rect x="5" y="18" width="5" height="14" fill="#2F4F6F" />
+        <rect x="30" y="18" width="5" height="14" fill="#2F4F6F" />
         <!-- Hands -->
         <rect x="4" y="31" width="6" height="4" fill="#FDBCB4" />
         <rect x="30" y="31" width="6" height="4" fill="#FDBCB4" />
-        <!-- Neon accents on jacket -->
-        <rect x="9" y="16" width="1" height="20" fill="#00f5ff" opacity="0.5" />
-        <rect x="30" y="16" width="1" height="20" fill="#00f5ff" opacity="0.5" />
+        <!-- Classic accent -->
+        <rect x="9" y="34" width="22" height="2" fill="#C9B186" opacity="0.8" />
       </svg>
       <div class="char-shadow"></div>
     </div>
@@ -1340,14 +1361,74 @@
       }
     })();
 
-    // ===== AUDIO PLACEHOLDERS =====
+    // ===== AUDIO ENGINE =====
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const actx = new AudioCtx();
+
+    function playTone(freq, type, duration, vol = 0.1, slideFreq = null) {
+      if (actx.state === 'suspended') actx.resume();
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, actx.currentTime);
+      if (slideFreq) {
+        osc.frequency.exponentialRampToValueAtTime(slideFreq, actx.currentTime + duration);
+      }
+      gain.gain.setValueAtTime(vol, actx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, actx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(actx.destination);
+      osc.start();
+      osc.stop(actx.currentTime + duration);
+    }
+
+    let bgmInterval = null;
+    let pianoBgmInterval = null;
+
     const Audio = {
-      bgm: { play() { console.log('[BGM] play'); }, stop() { console.log('[BGM] stop'); } },
+      bgm: {
+        play() {
+          if (bgmInterval) return;
+          const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
+          let step = 0;
+          bgmInterval = setInterval(() => {
+            playTone(notes[step % notes.length], 'square', 0.2, 0.05);
+            step++;
+            if (step % 12 === 0) playTone(130.81, 'sawtooth', 0.5, 0.05); // simple bass beat
+          }, 300);
+        },
+        stop() {
+          clearInterval(bgmInterval);
+          bgmInterval = null;
+        }
+      },
+      pianoBgm: {
+        play() {
+          if (pianoBgmInterval) return;
+          const notes = [440, 554.37, 659.25, 880];
+          let step = 0;
+          pianoBgmInterval = setInterval(() => {
+            playTone(notes[step % notes.length], 'sine', 0.15, 0.05);
+            step++;
+          }, 200);
+        },
+        stop() {
+          clearInterval(pianoBgmInterval);
+          pianoBgmInterval = null;
+        }
+      },
       sfx: {
-        jump() { console.log('[SFX] jump'); },
-        click() { console.log('[SFX] click'); },
-        collect() { console.log('[SFX] collect'); },
-        perfect() { console.log('[SFX] perfect'); }
+        jump() { playTone(300, 'square', 0.3, 0.1, 600); },
+        click() { playTone(400, 'triangle', 0.1, 0.1); },
+        collect() {
+          playTone(880, 'sine', 0.1, 0.1);
+          setTimeout(() => playTone(1108.73, 'sine', 0.2, 0.1), 100);
+        },
+        perfect() {
+          playTone(523.25, 'sine', 0.1, 0.1);
+          setTimeout(() => playTone(659.25, 'sine', 0.1, 0.1), 100);
+          setTimeout(() => playTone(783.99, 'sine', 0.2, 0.1), 200);
+        }
       }
     };
 
@@ -1433,23 +1514,59 @@
     ];
 
     // ===== PARALLAX LAYERS =====
-    let stars = [];
-    let cityLights = [];
+    let clouds = [];
     let bgBuildings = [];
+    let groundObjects = [];
+    let coins = [];
 
     function initParallax() {
-      stars = [];
-      for (let i = 0; i < 120; i++) stars.push({ x: Math.random() * WORLD_WIDTH * 1.3, y: Math.random() * H * 0.65, size: Math.random() < 0.2 ? 3 : Math.random() < 0.5 ? 2 : 1, twinkle: Math.random() * Math.PI * 2, speed: 0.05 + Math.random() * 0.1 });
-      cityLights = [];
-      for (let i = 0; i < 40; i++) cityLights.push({ x: Math.random() * WORLD_WIDTH * 1.1, y: H * 0.5 + Math.random() * H * 0.2, color: ['#ff2d78', '#00f5ff', '#fff200', '#b400ff', '#00ff88'][Math.floor(Math.random() * 5)], size: 2 + Math.random() * 4, blink: Math.random() * Math.PI * 2 });
       bgBuildings = [];
       let bx = 0;
       while (bx < WORLD_WIDTH * 1.2) {
-        const bw = 40 + Math.random() * 80;
-        const bh = H * 0.15 + Math.random() * H * 0.35;
-        bgBuildings.push({ x: bx, w: bw, h: bh, color: `hsl(${220 + Math.random() * 80},${40 + Math.random() * 40}%,${8 + Math.random() * 12}%)`, windows: [] });
-        for (let wy = 10; wy < bh - 10; wy += 18) for (let wx = 8; wx < bw - 8; wx += 16) if (Math.random() > 0.3) bgBuildings[bgBuildings.length - 1].windows.push({ wx, wy, on: Math.random() > 0.4, color: ['#fff200', '#00f5ff', '#ff2d78', 'white'][Math.floor(Math.random() * 4)] });
-        bx += bw + 4 + Math.random() * 20;
+        const bw = 60 + Math.random() * 120;
+        const bh = H * 0.2 + Math.random() * H * 0.3;
+        const colors = ['#2F4F6F', '#6C8FA3', '#C9B186', '#A63D40'];
+        bgBuildings.push({ x: bx, w: bw, h: bh, color: colors[Math.floor(Math.random() * colors.length)], windows: [] });
+        bx += bw + 2 + Math.random() * 10;
+      }
+
+      clouds = [];
+      for (let i = 0; i < 30; i++) {
+        clouds.push({
+          x: Math.random() * WORLD_WIDTH * 1.2,
+          y: Math.random() * (H * 0.4),
+          w: 80 + Math.random() * 100,
+          h: 20 + Math.random() * 20,
+          speed: 0.1 + Math.random() * 0.3
+        });
+      }
+
+      groundObjects = [];
+      let gx = 100;
+      while (gx < WORLD_WIDTH) {
+        if (Math.random() > 0.3) {
+          groundObjects.push({
+            x: gx,
+            type: Math.random() > 0.5 ? 'bush' : 'lamp'
+          });
+        }
+        gx += 200 + Math.random() * 300;
+      }
+
+      coins = [];
+      let cx = 300;
+      while (cx < WORLD_WIDTH - 200) {
+        if (Math.random() > 0.4) {
+          let coinY = GROUND_Y - 30;
+          for (const p of platforms) {
+            if (!p.isGround && cx > p.x && cx < p.x + p.w) {
+              coinY = GROUND_Y + p.y - 30;
+              break;
+            }
+          }
+          coins.push({ x: cx, y: coinY, collected: false });
+        }
+        cx += 100 + Math.random() * 150;
       }
     }
 
@@ -1563,25 +1680,42 @@
           }
         }
       }
+
+      // Coin collision
+      for (const c of coins) {
+        if (!c.collected) {
+          const dist = Math.hypot((player.x + player.w / 2) - c.x, (player.y + player.h / 2) - c.y);
+          if (dist < 40) {
+            c.collected = true;
+            score += 10;
+            document.getElementById('hudScore').textContent = 'SCORE: ' + score;
+            Audio.sfx.collect();
+          }
+        }
+      }
     }
 
     function render() {
       ctx.clearRect(0, 0, W, H);
       // Sky gradient
       const sky = ctx.createLinearGradient(0, 0, 0, H);
-      sky.addColorStop(0, '#04000f');
-      sky.addColorStop(0.5, '#0a0030');
-      sky.addColorStop(1, '#140050');
+      sky.addColorStop(0, '#DCD2C4');
+      sky.addColorStop(1, '#F4EDE4');
       ctx.fillStyle = sky;
       ctx.fillRect(0, 0, W, H);
 
-      // Stars (parallax 0.05)
-      for (const s of stars) {
-        const sx = ((s.x - cam.x * 0.05) % (W * 1.5) + W * 1.5) % (W * 1.5) - W * 0.25;
-        const alpha = 0.4 + 0.6 * Math.sin(s.twinkle + tick * s.speed);
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-        ctx.fillRect(Math.round(sx), Math.round(s.y), s.size, s.size);
-        s.twinkle += s.speed * 0.3;
+      // Clouds (parallax 0.05)
+      for (const c of clouds) {
+        const cx2 = ((c.x - cam.x * 0.05) % (W * 1.5) + W * 1.5) % (W * 1.5) - W * 0.25;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.globalAlpha = 0.6;
+        ctx.beginPath();
+        ctx.arc(cx2, c.y, c.h, 0, Math.PI * 2);
+        ctx.arc(cx2 + c.w * 0.4, c.y - c.h * 0.3, c.h * 1.2, 0, Math.PI * 2);
+        ctx.arc(cx2 + c.w * 0.8, c.y, c.h * 0.9, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        c.x += c.speed;
       }
 
       // Background buildings (parallax 0.2)
@@ -1590,29 +1724,10 @@
         const by = Math.round(H - b.h);
         ctx.fillStyle = b.color;
         ctx.fillRect(bx, by, b.w, b.h);
-        for (const w of b.windows) {
-          if (w.on) {
-            const wx2 = bx + w.wx; const wy2 = by + w.wy;
-            ctx.fillStyle = w.color;
-            ctx.fillRect(wx2, wy2, 8, 10);
-            if (Math.random() > 0.998) w.on = Math.random() > 0.3;
-          }
-        }
-        // Building top neon accent
-        ctx.fillStyle = ['#ff2d78', '#00f5ff', '#b400ff'][Math.floor(b.x / 100) % 3];
-        ctx.fillRect(bx, by - 2, b.w, 2);
-      }
 
-      // City lights (parallax 0.3)
-      for (const cl of cityLights) {
-        const cx2 = (cl.x - cam.x * 0.3);
-        if (cx2 < -20 || cx2 > W + 20) continue;
-        const alpha = 0.5 + 0.5 * Math.sin(cl.blink + tick * 0.05);
-        ctx.fillStyle = cl.color;
-        ctx.globalAlpha = alpha * 0.7;
-        ctx.fillRect(Math.round(cx2), Math.round(cl.y), cl.size, cl.size);
-        ctx.globalAlpha = 1;
-        cl.blink += 0.04;
+        // Vintage border accent
+        ctx.fillStyle = '#1F2A44';
+        ctx.fillRect(bx, by, b.w, 4);
       }
 
       // Concert stage silhouette (parallax 0.4) far bg
@@ -1621,17 +1736,42 @@
       // Ground
       drawGround(ctx);
 
+      // Ground Objects (parallax 1.0)
+      for (const go of groundObjects) {
+        const gx = Math.round(go.x - cam.x);
+        if (gx < -100 || gx > W + 100) continue;
+        if (go.type === 'bush') {
+          ctx.fillStyle = '#2F4F6F';
+          ctx.beginPath();
+          ctx.arc(gx, GROUND_Y, 20, 0, Math.PI, true);
+          ctx.arc(gx + 25, GROUND_Y, 30, 0, Math.PI, true);
+          ctx.arc(gx + 50, GROUND_Y, 20, 0, Math.PI, true);
+          ctx.fill();
+        } else if (go.type === 'lamp') {
+          ctx.fillStyle = '#1F2A44';
+          ctx.fillRect(gx, GROUND_Y - 80, 6, 80);
+          ctx.fillRect(gx - 4, GROUND_Y - 4, 14, 4);
+          ctx.fillRect(gx - 10, GROUND_Y - 90, 26, 10);
+          ctx.fillStyle = '#F4EDE4';
+          ctx.fillRect(gx - 6, GROUND_Y - 88, 18, 6);
+          ctx.fillStyle = 'rgba(244,237,228,0.2)';
+          ctx.beginPath();
+          ctx.moveTo(gx + 3, GROUND_Y - 80);
+          ctx.lineTo(gx - 40, GROUND_Y);
+          ctx.lineTo(gx + 46, GROUND_Y);
+          ctx.fill();
+        }
+      }
+
       // Platforms
       for (const p of platforms) {
         if (p.isGround) continue;
         const px = Math.round(p.x - cam.x);
         const py = Math.round(GROUND_Y + p.y);
-        ctx.fillStyle = '#1a0a3a';
+        ctx.fillStyle = '#1F2A44';
         ctx.fillRect(px, py, p.w, p.h);
-        ctx.fillStyle = '#00f5ff';
-        ctx.fillRect(px, py, p.w, 2);
-        ctx.fillStyle = 'rgba(0,245,255,0.15)';
-        ctx.fillRect(px, py + 2, p.w, p.h - 2);
+        ctx.fillStyle = '#A63D40';
+        ctx.fillRect(px, py, p.w, 4);
       }
 
       // Hotspots
@@ -1640,56 +1780,70 @@
         const hx = Math.round(h.x - cam.x);
         const hy = Math.round(GROUND_Y - 68);
         if (hx < -80 || hx > W + 80) continue;
-        // Glow base
-        ctx.save();
-        ctx.shadowColor = h.color;
-        ctx.shadowBlur = 16 + 8 * Math.sin(tick * 0.1);
+
         // Pedestal
-        ctx.fillStyle = h.color + '33';
+        ctx.fillStyle = '#C9B186';
         ctx.fillRect(hx - 16, Math.round(GROUND_Y - 20), 32, 20);
-        ctx.fillStyle = h.color;
-        ctx.fillRect(hx - 16, Math.round(GROUND_Y - 22), 32, 3);
+        ctx.fillStyle = '#A63D40';
+        ctx.fillRect(hx - 16, Math.round(GROUND_Y - 24), 32, 4);
+
         // Icon
         ctx.font = '28px serif';
         ctx.textAlign = 'center';
         ctx.fillText(h.icon, hx, hy + 8 * Math.sin(tick * 0.08 + h.x));
-        ctx.restore();
+
         // Label
-        ctx.font = '6px "Press Start 2P"';
-        ctx.fillStyle = h.color;
+        ctx.font = 'bold 10px "Montserrat"';
+        ctx.fillStyle = '#1F2A44';
         ctx.textAlign = 'center';
         const lines = h.label.split('\n');
         lines.forEach((l, i) => ctx.fillText(l, hx, hy - 18 - (lines.length - 1 - i) * 14));
-        // Interact ring
+
+        // Interact indicator
         if (Math.abs(player.x + player.w / 2 - h.x) < 80) {
-          ctx.strokeStyle = h.color;
-          ctx.lineWidth = 2;
-          ctx.globalAlpha = 0.5 + 0.5 * Math.sin(tick * 0.15);
+          ctx.strokeStyle = '#A63D40';
+          ctx.lineWidth = 3;
           ctx.strokeRect(hx - 22, hy - 30, 44, 60);
-          ctx.globalAlpha = 1;
         }
+      }
+
+      // Coins
+      for (const c of coins) {
+        if (c.collected) continue;
+        const cx = Math.round(c.x - cam.x);
+        const cy = Math.round(c.y + 4 * Math.sin(tick * 0.1 + c.x));
+        if (cx < -40 || cx > W + 40) continue;
+
+        ctx.fillStyle = '#C9B186';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#A63D40';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx.fill();
       }
 
       // Player
       drawPlayer(ctx, Math.round(player.x - cam.x), Math.round(player.y));
 
-      // Ground neon line
-      ctx.fillStyle = '#ff2d78';
-      ctx.fillRect(0, GROUND_Y + 24, W, 2);
-      ctx.fillStyle = 'rgba(255,45,120,0.3)';
-      ctx.fillRect(0, GROUND_Y + 26, W, 8);
+      // Ground trim
+      ctx.fillStyle = '#1F2A44';
+      ctx.fillRect(0, GROUND_Y, W, 4);
+      ctx.fillStyle = '#A63D40';
+      ctx.fillRect(0, GROUND_Y + 4, W, 2);
 
       // Vignette
-      const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.85);
+      const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.4, W / 2, H / 2, H * 1.2);
       vg.addColorStop(0, 'transparent');
-      vg.addColorStop(1, 'rgba(0,0,10,0.55)');
+      vg.addColorStop(1, 'rgba(31,42,68,0.2)');
       ctx.fillStyle = vg;
       ctx.fillRect(0, 0, W, H);
     }
 
     function drawConcertSilhouette(ctx, camOffset) {
       const baseY = GROUND_Y + 10;
-      ctx.fillStyle = 'rgba(5,0,20,0.95)';
+      ctx.fillStyle = '#2F4F6F';
       // Stage platform
       const sx = 3700 - camOffset;
       if (sx > -300 && sx < W + 300) {
@@ -1699,23 +1853,15 @@
         ctx.fillRect(sx + 280, baseY - 200, 40, 200);
         // Arch
         ctx.fillRect(sx + 60, baseY - 180, 220, 16);
-        // Lights on stage - neon
-        const lc = ['#ff2d78', '#00f5ff', '#fff200', '#b400ff'];
-        for (let i = 0; i < 4; i++) {
-          ctx.fillStyle = lc[i];
-          ctx.globalAlpha = 0.7 + 0.3 * Math.sin(tick * 0.12 + i);
-          ctx.fillRect(sx + 80 + i * 56, baseY - 85, 6, 6);
-          ctx.globalAlpha = 1;
-        }
       }
     }
 
     function drawGround(ctx) {
-      ctx.fillStyle = '#0a0028';
+      ctx.fillStyle = '#C9B186';
       ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
       // Grid lines
-      ctx.strokeStyle = 'rgba(0,245,255,0.08)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#DCD2C4';
+      ctx.lineWidth = 2;
       const gridW = 64;
       const offsetX = ((-cam.x * 0.6) % gridW + gridW) % gridW;
       for (let x = offsetX - gridW; x < W + gridW; x += gridW) {
@@ -1723,10 +1869,6 @@
       }
       for (let y = GROUND_Y; y < H; y += 40) {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-      }
-      ctx.strokeStyle = 'rgba(180,0,255,0.15)';
-      for (let x = offsetX + gridW / 2; x < W + gridW; x += gridW) {
-        ctx.beginPath(); ctx.moveTo(x, GROUND_Y); ctx.lineTo(x - 80, H); ctx.stroke();
       }
     }
 
@@ -1737,11 +1879,11 @@
       if (dir < 0) { ctx.translate(px + player.w, 0); ctx.scale(-1, 1); px = 0; }
       const w = player.w, h = player.h;
       // Shadow
-      ctx.fillStyle = 'rgba(0,245,255,0.2)';
+      ctx.fillStyle = 'rgba(31, 42, 68, 0.2)';
       ctx.fillRect(px + 2, GROUND_Y + 2, w - 4, 6);
       // Legs (animated)
       const legOff = player.onGround ? Math.sin(f * Math.PI / 2) * 5 : 0;
-      ctx.fillStyle = '#0d0020';
+      ctx.fillStyle = '#1F2A44';
       ctx.fillRect(px + 4, py + h - 16, 8, 16 + Math.round(legOff));
       ctx.fillRect(px + w - 12, py + h - 16, 8, 16 - Math.round(legOff));
       // Shoes
@@ -1749,21 +1891,17 @@
       ctx.fillRect(px + 2, py + h - 5, 12, 5);
       ctx.fillRect(px + w - 14, py + h - 5, 12, 5);
       // Body/Jacket
-      ctx.fillStyle = '#1a0a3a';
+      ctx.fillStyle = '#2F4F6F';
       ctx.fillRect(px, py + 16, w, h - 32);
       // Shirt
       ctx.fillStyle = '#f0f0f0';
       ctx.fillRect(px + 8, py + 16, w - 16, h - 36);
       // Tie
-      ctx.fillStyle = '#ff2d78';
+      ctx.fillStyle = '#A63D40';
       ctx.fillRect(px + w / 2 - 2, py + 16, 4, 14);
-      // Jacket neon trim
-      ctx.fillStyle = '#00f5ff';
-      ctx.fillRect(px, py + 16, 2, h - 32);
-      ctx.fillRect(px + w - 2, py + 16, 2, h - 32);
       // Arms
       const armSwing = player.onGround ? Math.sin(f * Math.PI / 2) * 6 : 3;
-      ctx.fillStyle = '#1a0a3a';
+      ctx.fillStyle = '#2F4F6F';
       ctx.fillRect(px - 6, py + 18 + Math.round(armSwing), 8, 14);
       ctx.fillRect(px + w - 2, py + 18 - Math.round(armSwing), 8, 14);
       // Hands
@@ -1781,12 +1919,6 @@
       ctx.fillStyle = '#111';
       ctx.fillRect(px + 9, py + 11, 3, 3);
       ctx.fillRect(px + w - 12, py + 11, 3, 3);
-      // Neon aura when jumping
-      if (!player.onGround) {
-        ctx.strokeStyle = 'rgba(0,245,255,0.3)';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(px - 4, py - 4, w + 8, h + 8);
-      }
       ctx.restore();
     }
 
@@ -1844,6 +1976,7 @@
       document.getElementById('piano-close').onclick = closePianoGame;
       setupPianoLaneBtns();
       document.addEventListener('keydown', pianoKeyHandler);
+      Audio.bgm.stop();
     }
 
     function resizePianoCanvas() {
@@ -1898,6 +2031,7 @@
       document.getElementById('piano-score-display').textContent = 'SCORE: 0';
       document.getElementById('piano-gameover').classList.remove('active');
       cancelAnimationFrame(pianoAnimId);
+      Audio.pianoBgm.play();
       pianoLoop();
     }
 
@@ -1913,6 +2047,8 @@
       document.removeEventListener('keydown', pianoKeyHandler);
       document.querySelectorAll('.piano-lane-btn').forEach(el => el.remove());
       window.removeEventListener('resize', resizePianoCanvas);
+      Audio.pianoBgm.stop();
+      Audio.bgm.play();
       // Re-add hotspot as collected but reopen
       collectedHotspots.delete('PIANO');
     }
@@ -2039,6 +2175,7 @@
 
     function endPianoGame() {
       pianoGameActive = false;
+      Audio.pianoBgm.stop();
       document.getElementById('piano-gameover').classList.add('active');
       document.getElementById('final-score-txt').textContent = 'SCORE: ' + pianoScore;
       score += Math.floor(pianoScore / 10);
