@@ -55,14 +55,133 @@
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: var(--cream);
+      background: radial-gradient(ellipse at 50% 60%, #1a2a4a 0%, #0a0f1e 70%, #000 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 0;
-      border: 10px solid var(--navy-deep);
+      border: 10px solid var(--warm-tan);
       box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    /* Animated scanlines overlay */
+    #splash::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 4px);
+      pointer-events: none;
+      z-index: 1;
+      animation: scanlines-move 8s linear infinite;
+    }
+
+    @keyframes scanlines-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100px; }
+    }
+
+    /* Neon border pulse */
+    #splash::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 3px solid var(--warm-tan);
+      pointer-events: none;
+      z-index: 1;
+      animation: border-neon 2s ease-in-out infinite alternate;
+      box-shadow: 0 0 20px rgba(201,177,134,0.4), inset 0 0 20px rgba(201,177,134,0.1);
+    }
+
+    @keyframes border-neon {
+      0% { border-color: var(--warm-tan); box-shadow: 0 0 10px rgba(201,177,134,0.3), inset 0 0 10px rgba(201,177,134,0.05); }
+      100% { border-color: #ffe8a0; box-shadow: 0 0 40px rgba(255,232,160,0.7), inset 0 0 30px rgba(255,232,160,0.15); }
+    }
+
+    /* Retro stars bg */
+    .splash-star-field {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .splash-star-field .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: star-twinkle var(--d, 2s) var(--delay, 0s) ease-in-out infinite alternate;
+    }
+
+    @keyframes star-twinkle {
+      0% { opacity: 0.1; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Logo animated */
+    #splash-logo {
+      width: 88%;
+      max-width: 360px;
+      height: auto;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 2;
+      animation: logo-entrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both, logo-float 3s ease-in-out 0.8s infinite;
+      filter: drop-shadow(0 0 18px rgba(201,177,134,0.8)) drop-shadow(0 0 40px rgba(255,232,160,0.4));
+    }
+
+    @keyframes logo-entrance {
+      0% { opacity: 0; transform: scale(0.3) rotate(-10deg) translateY(-40px); filter: blur(10px) drop-shadow(0 0 0px transparent); }
+      60% { opacity: 1; transform: scale(1.08) rotate(2deg) translateY(5px); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg) translateY(0); }
+    }
+
+    @keyframes logo-float {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); filter: drop-shadow(0 0 18px rgba(201,177,134,0.8)) drop-shadow(0 0 40px rgba(255,232,160,0.4)); }
+      50% { transform: translateY(-10px) rotate(1deg); filter: drop-shadow(0 0 28px rgba(255,232,160,1)) drop-shadow(0 0 60px rgba(255,200,80,0.6)); }
+    }
+
+    /* Retro title text entrance */
+    .splash-title-wrap {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-bottom: 4px;
+      animation: title-slide-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+    }
+
+    @keyframes title-slide-up {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Neon marquee strip */
+    .splash-marquee {
+      position: relative;
+      z-index: 2;
+      background: var(--navy-deep);
+      border: 3px solid var(--warm-tan);
+      padding: 5px 0;
+      width: 100%;
+      overflow: hidden;
+      margin: 8px 0;
+      animation: title-slide-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+    }
+
+    .splash-marquee span {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: clamp(11px, 3vw, 16px);
+      color: var(--warm-tan);
+      letter-spacing: 3px;
+      white-space: nowrap;
+      animation: marquee-scroll 14s linear infinite;
+    }
+
+    @keyframes marquee-scroll {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
     }
 
     .splash-stars {
@@ -862,49 +981,56 @@
 
   <!-- ===== SPLASH SCREEN ===== -->
   <div id="splash">
-    <div class="splash-stars" id="splashStars"></div>
-    <img src="logo.png" alt="Vocal Group Logo"
-      style="width: 90%; max-width: 380px; height: auto; margin-bottom: 20px; position: relative; z-index: 2;"
-      onerror="this.style.display='none'">
+    <!-- Star field -->
+    <div class="splash-star-field" id="splashStarField"></div>
+
+    <!-- Animated Logo -->
+    <img src="logo.png" id="splash-logo" alt="Vocal Group Logo" onerror="this.style.display='none'">
+
+    <!-- Marquee -->
+    <div class="splash-marquee">
+      <span>✦ INTER CLASS VOCAL GROUP COMPETITION ✦ 27 MEI 2026 ✦ NEW BPPM ✦ INTER CLASS VOCAL GROUP COMPETITION ✦</span>
+    </div>
+
+    <!-- Title -->
+    <div class="splash-title-wrap">
+      <span class="splash-title">
+        <span class="line1">Welcome to</span>
+        <span class="line2">VOLKSONG</span>
+        <span class="line3">INTER CLASS • 2026</span>
+      </span>
+    </div>
+
+    <!-- Pixel Character -->
     <div class="pixel-char-wrap">
       <svg class="pc-svg" viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
-        <!-- Head -->
         <rect x="13" y="2" width="14" height="14" fill="#FDBCB4" />
-        <!-- Hair -->
         <rect x="13" y="2" width="14" height="4" fill="#2c1810" />
         <rect x="11" y="4" width="2" height="4" fill="#2c1810" />
         <rect x="27" y="4" width="2" height="4" fill="#2c1810" />
-        <!-- Eyes -->
         <rect x="16" y="9" width="2" height="2" fill="#111" />
         <rect x="22" y="9" width="2" height="2" fill="#111" />
-        <!-- Tie -->
         <rect x="19" y="16" width="2" height="10" fill="#A63D40" />
         <rect x="18" y="16" width="4" height="3" fill="#A63D40" />
-        <!-- Collar / Shirt -->
         <rect x="13" y="16" width="14" height="16" fill="white" />
         <rect x="13" y="16" width="3" height="5" fill="#e0e0e0" />
         <rect x="24" y="16" width="3" height="5" fill="#e0e0e0" />
-        <!-- Jacket -->
         <rect x="9" y="16" width="5" height="20" fill="#2F4F6F" />
         <rect x="26" y="16" width="5" height="20" fill="#2F4F6F" />
         <rect x="9" y="16" width="22" height="4" fill="#2F4F6F" />
-        <!-- Pants -->
         <rect x="13" y="32" width="6" height="20" fill="#1F2A44" />
         <rect x="21" y="32" width="6" height="20" fill="#1F2A44" />
-        <!-- Shoes -->
         <rect x="11" y="50" width="8" height="4" fill="#111" />
         <rect x="21" y="50" width="8" height="4" fill="#111" />
-        <!-- Arms -->
         <rect x="5" y="18" width="5" height="14" fill="#2F4F6F" />
         <rect x="30" y="18" width="5" height="14" fill="#2F4F6F" />
-        <!-- Hands -->
         <rect x="4" y="31" width="6" height="4" fill="#FDBCB4" />
         <rect x="30" y="31" width="6" height="4" fill="#FDBCB4" />
-        <!-- Classic accent -->
         <rect x="9" y="34" width="22" height="2" fill="#C9B186" opacity="0.8" />
       </svg>
       <div class="char-shadow"></div>
     </div>
+
     <button class="btn-start" id="btnStart">▶ START</button>
     <p class="splash-hint">PRESS START TO ENTER</p>
   </div>
@@ -1335,6 +1461,10 @@
     </div>
     <div id="piano-canvas-wrap">
       <canvas id="piano-canvas"></canvas>
+      <div id="piano-lyrics-wrap" style="position: absolute; top: 16px; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 8; font-family: var(--font-body);">
+        <div id="piano-lyrics-current" style="color: #fff; font-size: clamp(14px, 3.5vw, 22px); font-weight: bold; text-shadow: 0 0 10px rgba(255, 242, 0, 0.6), 2px 2px 4px #000; min-height: 28px; transition: all 0.2s;"></div>
+        <div id="piano-lyrics-next" style="color: rgba(255,255,255,0.4); font-size: clamp(10px, 2.5vw, 14px); margin-top: 4px; text-shadow: 1px 1px 2px #000; min-height: 20px;"></div>
+      </div>
       <div id="piano-start-screen">
         <h3>🎵 RHYTHM HERO 🎵</h3>
         <p>Tekan tile yang jatuh tepat<br>di zona hit untuk mendapat poin!</p>
@@ -1350,13 +1480,14 @@
   </div>
 
   <script>
-    // ===== SPLASH STARS =====
+    // ===== SPLASH STAR FIELD =====
     (function () {
-      const c = document.getElementById('splashStars');
-      for (let i = 0; i < 80; i++) {
+      const c = document.getElementById('splashStarField');
+      for (let i = 0; i < 120; i++) {
         const s = document.createElement('div');
-        s.className = 'splash-star';
-        s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${1 + Math.random() * 3}s;--delay:${Math.random() * 3}s;opacity:${Math.random()};width:${Math.random() < 0.3 ? 4 : 2}px;height:${Math.random() < 0.3 ? 4 : 2}px;`;
+        s.className = 'star';
+        const sz = Math.random() < 0.2 ? 3 : Math.random() < 0.5 ? 2 : 1;
+        s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${1+Math.random()*3}s;--delay:${Math.random()*4}s;opacity:${0.3+Math.random()*0.7};`;
         c.appendChild(s);
       }
     })();
@@ -1382,39 +1513,36 @@
       osc.stop(actx.currentTime + duration);
     }
 
-    let bgmInterval = null;
-    let pianoBgmInterval = null;
+    // ===== BGM via HTML Audio =====
+    const bgmAudio = new window.Audio('Retro Riff.mp3');
+    bgmAudio.loop = true;
+    bgmAudio.volume = 0.45;
+
+    const ninaAudio = new window.Audio('Nina - .Feast (KARAOKE VERSION).mp3');
+    ninaAudio.loop = true;
+    ninaAudio.volume = 0.5;
 
     const Audio = {
       bgm: {
         play() {
-          if (bgmInterval) return;
-          const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
-          let step = 0;
-          bgmInterval = setInterval(() => {
-            playTone(notes[step % notes.length], 'square', 0.2, 0.05);
-            step++;
-            if (step % 12 === 0) playTone(130.81, 'sawtooth', 0.5, 0.05); // simple bass beat
-          }, 300);
+          if (actx.state === 'suspended') actx.resume();
+          bgmAudio.currentTime = 0;
+          bgmAudio.play().catch(() => {});
         },
         stop() {
-          clearInterval(bgmInterval);
-          bgmInterval = null;
+          bgmAudio.pause();
+          bgmAudio.currentTime = 0;
         }
       },
       pianoBgm: {
         play() {
-          if (pianoBgmInterval) return;
-          const notes = [440, 554.37, 659.25, 880];
-          let step = 0;
-          pianoBgmInterval = setInterval(() => {
-            playTone(notes[step % notes.length], 'sine', 0.15, 0.05);
-            step++;
-          }, 200);
+          if (actx.state === 'suspended') actx.resume();
+          ninaAudio.currentTime = 0;
+          ninaAudio.play().catch(() => {});
         },
         stop() {
-          clearInterval(pianoBgmInterval);
-          pianoBgmInterval = null;
+          ninaAudio.pause();
+          ninaAudio.currentTime = 0;
         }
       },
       sfx: {
@@ -1818,12 +1946,12 @@
 
     function render() {
       ctx.clearRect(0, 0, W, H);
-      
+
       // Draw new background image
       if (mainBgImg.complete && mainBgImg.naturalWidth !== 0) {
         const imgRatio = mainBgImg.naturalWidth / mainBgImg.naturalHeight;
         const screenRatio = W / H;
-        
+
         // Use 'cover' logic to make sure the background is full
         let dw, dh, dx, dy;
         if (screenRatio > imgRatio) {
@@ -1839,9 +1967,9 @@
           dx = (W - dw) / 2;
           dy = 0;
         }
-        
+
         ctx.drawImage(mainBgImg, dx, dy, dw, dh);
-        
+
         // Slight dark overlay so game objects stand out
         ctx.fillStyle = 'rgba(10, 10, 20, 0.4)';
         ctx.fillRect(0, 0, W, H);
@@ -2131,9 +2259,9 @@
     };
 
     // ===== PIANO GAME =====
+    // ===== PIANO GAME =====
     let pianoGameActive = false;
     let pianoScore = 0;
-    let pianoLives = 3;
     let pianoTiles = [];
     let pianoAnimId;
     const PIANO_LANES = 4;
@@ -2141,13 +2269,378 @@
     const LANE_EMOJIS = ['♪', '♫', '♬', '♩'];
     let pianoCanvas, pianoCtx, pianoW, pianoH;
     let pianoLaneW;
-    let pianoSpeed = 4;
-    let pianoSpawnTimer = 0;
     let pianoHitZoneH = 70;
     let pianoFeedbackEl = null;
     let pianoCombo = 0;
     let pianoMissed = 0;
     const PIANO_MAX_MISS = 5;
+
+    // 90 BPM for .Feast - Nina
+    const NINA_BPM = 90;
+    const BEAT_TIME = 60 / NINA_BPM; // 0.6667 seconds
+    const PIANO_SPEED_SEC = 380; // pixels per second
+
+    // Piano Note Synthesizer (Realistic ADSR envelope and harmonics)
+    function playPianoNote(freq, duration = 0.8, vol = 0.25) {
+      if (actx.state === 'suspended') actx.resume();
+      const now = actx.currentTime;
+      
+      const osc1 = actx.createOscillator();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(freq, now);
+
+      const osc2 = actx.createOscillator();
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(freq * 2, now);
+
+      const osc3 = actx.createOscillator();
+      osc3.type = 'sine';
+      osc3.frequency.setValueAtTime(freq * 3, now);
+
+      const filter = actx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(freq * 3, now);
+      filter.frequency.exponentialRampToValueAtTime(freq * 1.2, now + duration);
+
+      const g1 = actx.createGain();
+      const g2 = actx.createGain();
+      const g3 = actx.createGain();
+      
+      g1.gain.setValueAtTime(vol * 0.8, now);
+      g2.gain.setValueAtTime(vol * 0.3, now);
+      g3.gain.setValueAtTime(vol * 0.1, now);
+
+      const masterGain = actx.createGain();
+      masterGain.gain.setValueAtTime(0, now);
+      masterGain.gain.linearRampToValueAtTime(1.0, now + 0.005);
+      masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+      osc1.connect(g1);
+      osc2.connect(filter);
+      filter.connect(g2);
+      osc3.connect(g3);
+
+      g1.connect(masterGain);
+      g2.connect(masterGain);
+      g3.connect(masterGain);
+
+      masterGain.connect(actx.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc3.start(now);
+      
+      osc1.stop(now + duration);
+      osc2.stop(now + duration);
+      osc3.stop(now + duration);
+    }
+
+    // Syllable text particle system
+    let pianoParticles = [];
+    function spawnPianoParticle(x, y, text, color) {
+      pianoParticles.push({
+        x: x,
+        y: y,
+        vx: (Math.random() - 0.5) * 2.0,
+        vy: -2 - Math.random() * 2.5,
+        life: 1.0,
+        color: color,
+        text: text,
+        size: 16 + Math.random() * 6
+      });
+    }
+
+    // Lyrics structure corresponding to song progress
+    const NINA_LYRICS = [
+      { start: 0, end: 9.0, text: "🎵 [Instrumental Intro] 🎵", next: "Saat engkau tertidur..." },
+      { start: 9.0, end: 12.8, text: "Saat engkau tertidur", next: "Aku pergi menghibur" },
+      { start: 12.8, end: 17.0, text: "Aku pergi menghibur", next: "Beda kota, pisah raga bukan masalahku" },
+      { start: 17.0, end: 23.8, text: "Beda kota, pisah raga bukan masalahku", next: "Lihat wajahmu di layar, ku tetap bersyukur" },
+      { start: 23.8, end: 30.5, text: "Lihat wajahmu di layar, ku tetap bersyukur", next: "Saat engkau terjaga..." },
+      
+      { start: 30.5, end: 35.0, text: "Saat engkau terjaga", next: "Aku kan ada di sana" },
+      { start: 35.0, end: 39.0, text: "Aku kan ada di sana", next: "Sempatkan bermain dan bawakan cenderamata" },
+      { start: 39.0, end: 45.5, text: "Sempatkan bermain dan bawakan cenderamata", next: "Satu sampai lima tahun cepat tak terasa" },
+      { start: 45.5, end: 51.0, text: "Satu sampai lima tahun cepat tak terasa", next: "Segala hal ku upayakan untuk melindungi..." },
+      
+      { start: 51.0, end: 57.0, text: "Segala hal ku upayakan untuk melindungi", next: "Tunggu aku kembali lagi esok pagi" },
+      { start: 57.0, end: 62.0, text: "Tunggu aku kembali lagi esok pagi", next: "Tumbuh lebih baik, cari panggilanmu" },
+      { start: 62.0, end: 67.5, text: "Tumbuh lebih baik, cari panggilanmu", next: "Jadi lebih baik dibanding diriku" },
+      { start: 67.5, end: 73.0, text: "Jadi lebih baik dibanding diriku", next: "Tuk sementara ini aku mengembara jauh..." },
+      
+      { start: 73.0, end: 79.0, text: "Tuk sementara ini aku mengembara jauh", next: "Jika ku berpulang lebih awal, tidak apa" },
+      { start: 79.0, end: 84.0, text: "Jika ku berpulang lebih awal, tidak apa", next: "Saat engkau teringat, tengkar kita, manakala" },
+      { start: 84.0, end: 89.0, text: "Saat engkau teringat, tengkar kita, manakala", next: "Namun percayalah untukmu kujual dunia..." },
+      { start: 89.0, end: 95.0, text: "Namun percayalah untukmu kujual dunia", next: "🎵 [Guitar Solo / Outro] 🎵" },
+      { start: 95.0, end: 999.0, text: "🎵 [Outro] 🎵", next: "" }
+    ];
+
+    function generateNinaChart() {
+      const chart = [];
+      const bpm = 90;
+      const beatTime = 60 / bpm; // 0.6667 seconds
+
+      // Intro instrumental notes
+      const introNotes = [
+        { b: 3, l: 0, f: 293.66, s: "♫" },
+        { b: 4, l: 1, f: 369.99, s: "♪" },
+        { b: 5, l: 2, f: 440.00, s: "♫" },
+        { b: 6, l: 3, f: 587.33, s: "♬" },
+        { b: 7, l: 2, f: 554.37, s: "♩" },
+        { b: 8, l: 1, f: 440.00, s: "♪" },
+        { b: 9, l: 0, f: 369.99, s: "♫" },
+        { b: 10, l: 1, f: 329.63, s: "♬" },
+        { b: 11, l: 2, f: 369.99, s: "♩" },
+        { b: 12, l: 3, f: 392.00, s: "♪" }
+      ];
+
+      // Verse 1
+      const v1Notes = [
+        { b: 13.5, l: 0, f: 440.00, s: "Saat" },
+        { b: 14.0, l: 1, f: 440.00, s: "eng-" },
+        { b: 14.5, l: 2, f: 440.00, s: "kau" },
+        { b: 15.0, l: 3, f: 493.88, s: "ter-" },
+        { b: 15.5, l: 2, f: 440.00, s: "ti-" },
+        { b: 16.0, l: 1, f: 369.99, s: "dur" },
+        
+        { b: 19.5, l: 0, f: 440.00, s: "A-" },
+        { b: 20.0, l: 1, f: 440.00, s: "ku" },
+        { b: 20.5, l: 2, f: 440.00, s: "per-" },
+        { b: 21.0, l: 3, f: 493.88, s: "gi" },
+        { b: 21.5, l: 2, f: 440.00, s: "meng-" },
+        { b: 22.0, l: 1, f: 369.99, s: "hi-" },
+        { b: 23.0, l: 0, f: 293.66, s: "bur" },
+        
+        { b: 25.5, l: 0, f: 440.00, s: "Be-" },
+        { b: 26.0, l: 1, f: 440.00, s: "da" },
+        { b: 26.5, l: 2, f: 440.00, s: "ko-" },
+        { b: 27.0, l: 3, f: 493.88, s: "ta" },
+        { b: 27.5, l: 2, f: 440.00, s: "pi-" },
+        { b: 28.0, l: 1, f: 392.00, s: "sah" },
+        { b: 28.5, l: 0, f: 369.99, s: "ra-" },
+        { b: 29.0, l: 1, f: 329.63, s: "ga" },
+        { b: 29.5, l: 2, f: 293.66, s: "bu-" },
+        { b: 30.0, l: 3, f: 329.63, s: "kan" },
+        { b: 30.5, l: 2, f: 369.99, s: "ma-" },
+        { b: 31.0, l: 1, f: 329.63, s: "sa-" },
+        { b: 31.5, l: 0, f: 293.66, s: "lah-" },
+        { b: 32.5, l: 1, f: 293.66, s: "ku" },
+        
+        { b: 33.5, l: 0, f: 440.00, s: "Li-" },
+        { b: 34.0, l: 1, f: 440.00, s: "hat" },
+        { b: 34.5, l: 2, f: 440.00, s: "wa-" },
+        { b: 35.0, l: 3, f: 493.88, s: "jah-" },
+        { b: 35.5, l: 2, f: 440.00, s: "mu" },
+        { b: 36.0, l: 1, f: 392.00, s: "di" },
+        { b: 36.5, l: 0, f: 369.99, s: "la-" },
+        { b: 37.0, l: 1, f: 329.63, s: "yar" },
+        { b: 37.5, l: 2, f: 293.66, s: "ku" },
+        { b: 38.0, l: 3, f: 329.63, s: "te-" },
+        { b: 38.5, l: 2, f: 369.99, s: "tap" },
+        { b: 39.0, l: 1, f: 329.63, s: "ber-" },
+        { b: 39.5, l: 0, f: 293.66, s: "syu-" },
+        { b: 40.5, l: 1, f: 293.66, s: "kur" }
+      ];
+
+      // Verse 2
+      const v2Notes = [
+        { b: 43.5, l: 0, f: 440.00, s: "Saat" },
+        { b: 44.0, l: 1, f: 440.00, s: "eng-" },
+        { b: 44.5, l: 2, f: 440.00, s: "kau" },
+        { b: 45.0, l: 3, f: 493.88, s: "ter-" },
+        { b: 45.5, l: 2, f: 440.00, s: "ja-" },
+        { b: 46.0, l: 1, f: 369.99, s: "ga" },
+        
+        { b: 49.5, l: 0, f: 440.00, s: "A-" },
+        { b: 50.0, l: 1, f: 440.00, s: "ku" },
+        { b: 50.5, l: 2, f: 440.00, s: "kan" },
+        { b: 51.0, l: 3, f: 493.88, s: "a-" },
+        { b: 51.5, l: 2, f: 440.00, s: "da" },
+        { b: 52.0, l: 1, f: 369.99, s: "di" },
+        { b: 52.5, l: 0, f: 293.66, s: "sa-" },
+        { b: 53.0, l: 1, f: 293.66, s: "na" },
+        
+        { b: 55.5, l: 0, f: 440.00, s: "Sem-" },
+        { b: 56.0, l: 1, f: 440.00, s: "pat-" },
+        { b: 56.5, l: 2, f: 440.00, s: "kan" },
+        { b: 57.0, l: 3, f: 493.88, s: "ber-" },
+        { b: 57.5, l: 2, f: 440.00, s: "ma-" },
+        { b: 58.0, l: 1, f: 392.00, s: "in" },
+        { b: 58.5, l: 0, f: 369.99, s: "dan" },
+        { b: 59.0, l: 1, f: 329.63, s: "ba-" },
+        { b: 59.5, l: 2, f: 293.66, s: "wa-" },
+        { b: 60.0, l: 3, f: 329.63, s: "kan" },
+        { b: 60.5, l: 2, f: 369.99, s: "cen-" },
+        { b: 61.0, l: 1, f: 329.63, s: "de-" },
+        { b: 61.5, l: 0, f: 293.66, s: "ra-" },
+        { b: 62.0, l: 1, f: 329.63, s: "ma-" },
+        { b: 62.5, l: 2, f: 293.66, s: "ta" },
+        
+        { b: 63.5, l: 0, f: 440.00, s: "Sa-" },
+        { b: 64.0, l: 1, f: 440.00, s: "tu" },
+        { b: 64.5, l: 2, f: 440.00, s: "sam-" },
+        { b: 65.0, l: 3, f: 493.88, s: "pai" },
+        { b: 65.5, l: 2, f: 440.00, s: "li-" },
+        { b: 66.0, l: 1, f: 392.00, s: "ma" },
+        { b: 66.5, l: 0, f: 369.99, s: "ta-" },
+        { b: 67.0, l: 1, f: 329.63, s: "hun" },
+        { b: 67.5, l: 2, f: 293.66, s: "ce-" },
+        { b: 68.0, l: 3, f: 329.63, s: "pat" },
+        { b: 68.5, l: 2, f: 369.99, s: "tak" },
+        { b: 69.0, l: 1, f: 329.63, s: "te-" },
+        { b: 69.5, l: 0, f: 293.66, s: "ra-" },
+        { b: 70.5, l: 1, f: 293.66, s: "sa" }
+      ];
+
+      // Pre-Chorus
+      const preNotes = [
+        { b: 73.5, l: 0, f: 493.88, s: "Se-" },
+        { b: 74.0, l: 1, f: 493.88, s: "ga-" },
+        { b: 74.5, l: 2, f: 493.88, s: "la" },
+        { b: 75.0, l: 3, f: 493.88, s: "hal" },
+        { b: 75.5, l: 2, f: 440.00, s: "ku-" },
+        { b: 76.0, l: 1, f: 392.00, s: "u-" },
+        { b: 76.5, l: 0, f: 369.99, s: "pa-" },
+        { b: 77.0, l: 1, f: 329.63, s: "ya-" },
+        { b: 77.5, l: 2, f: 293.66, s: "kan" },
+        { b: 78.0, l: 3, f: 329.63, s: "un-" },
+        { b: 78.5, l: 2, f: 369.99, s: "tuk" },
+        { b: 79.0, l: 1, f: 392.00, s: "me-" },
+        { b: 79.5, l: 0, f: 369.99, s: "lin-" },
+        { b: 80.0, l: 1, f: 329.63, s: "dun-" },
+        { b: 81.0, l: 2, f: 329.63, s: "gi" },
+        
+        { b: 81.5, l: 0, f: 493.88, s: "Tung-" },
+        { b: 82.0, l: 1, f: 493.88, s: "gu" },
+        { b: 82.5, l: 2, f: 493.88, s: "a-" },
+        { b: 83.0, l: 3, f: 493.88, s: "ku" },
+        { b: 83.5, l: 2, f: 440.00, s: "kem-" },
+        { b: 84.0, l: 1, f: 392.00, s: "ba-" },
+        { b: 84.5, l: 0, f: 369.99, s: "li" },
+        { b: 85.0, l: 1, f: 329.63, s: "la-" },
+        { b: 85.5, l: 2, f: 293.66, s: "gi" },
+        { b: 86.0, l: 3, f: 329.63, s: "e-" },
+        { b: 86.5, l: 2, f: 369.99, s: "sok" },
+        { b: 87.0, l: 1, f: 329.63, s: "pa-" },
+        { b: 88.0, l: 0, f: 293.66, s: "gi" },
+        
+        { b: 89.5, l: 0, f: 440.00, s: "Tum-" },
+        { b: 90.0, l: 1, f: 493.88, s: "buh" },
+        { b: 90.5, l: 2, f: 554.37, s: "le-" },
+        { b: 91.0, l: 3, f: 587.33, s: "bih" },
+        { b: 91.5, l: 2, f: 587.33, s: "ba-" },
+        { b: 92.0, l: 1, f: 554.37, s: "ik" },
+        { b: 92.5, l: 0, f: 493.88, s: "ca-" },
+        { b: 93.0, l: 1, f: 440.00, s: "ri" },
+        { b: 93.5, l: 2, f: 392.00, s: "pang-" },
+        { b: 94.0, l: 3, f: 440.00, s: "gi-" },
+        { b: 94.5, l: 2, f: 493.88, s: "lan-" },
+        { b: 95.5, l: 1, f: 440.00, s: "mu" },
+        
+        { b: 97.5, l: 0, f: 392.00, s: "Ja-" },
+        { b: 98.0, l: 1, f: 440.00, s: "di" },
+        { b: 98.5, l: 2, f: 493.88, s: "le-" },
+        { b: 99.0, l: 3, f: 554.37, s: "bih" },
+        { b: 99.5, l: 2, f: 554.37, s: "ba-" },
+        { b: 100.0, l: 1, f: 493.88, s: "ik" },
+        { b: 100.5, l: 0, f: 440.00, s: "di-" },
+        { b: 101.0, l: 1, f: 392.00, s: "ban-" },
+        { b: 101.5, l: 2, f: 369.99, s: "ding" },
+        { b: 102.0, l: 3, f: 329.63, s: "di-" },
+        { b: 102.5, l: 2, f: 293.66, s: "ri-" },
+        { b: 103.5, l: 1, f: 293.66, s: "ku" }
+      ];
+
+      // Chorus
+      const choNotes = [
+        { b: 105.5, l: 0, f: 369.99, s: "Tuk" },
+        { b: 106.0, l: 1, f: 392.00, s: "se-" },
+        { b: 106.5, l: 2, f: 440.00, s: "men-" },
+        { b: 107.0, l: 3, f: 440.00, s: "ta-" },
+        { b: 107.5, l: 2, f: 392.00, s: "ra" },
+        { b: 108.0, l: 1, f: 369.99, s: "i-" },
+        { b: 108.5, l: 0, f: 329.63, s: "ni" },
+        { b: 109.0, l: 1, f: 329.63, s: "a-" },
+        { b: 109.5, l: 2, f: 293.66, s: "ku" },
+        { b: 110.0, l: 3, f: 329.63, s: "meng-" },
+        { b: 110.5, l: 2, f: 369.99, s: "em-" },
+        { b: 111.0, l: 1, f: 392.00, s: "ba-" },
+        { b: 111.5, l: 0, f: 369.99, s: "ra" },
+        { b: 112.0, l: 1, f: 329.63, s: "ja-" },
+        { b: 113.0, l: 2, f: 293.66, s: "uh" },
+        
+        { b: 113.5, l: 0, f: 369.99, s: "Ji-" },
+        { b: 114.0, l: 1, f: 392.00, s: "ka" },
+        { b: 114.5, l: 2, f: 440.00, s: "ku" },
+        { b: 115.0, l: 3, f: 440.00, s: "ber-" },
+        { b: 115.5, l: 2, f: 392.00, s: "pu-" },
+        { b: 116.0, l: 1, f: 369.99, s: "lang" },
+        { b: 116.5, l: 0, f: 329.63, s: "le-" },
+        { b: 117.0, l: 1, f: 293.66, s: "bih" },
+        { b: 117.5, l: 2, f: 329.63, s: "a-" },
+        { b: 118.0, l: 3, f: 369.99, s: "wal" },
+        { b: 118.5, l: 2, f: 329.63, s: "ti-" },
+        { b: 119.0, l: 1, f: 293.66, s: "dak" },
+        { b: 119.5, l: 0, f: 329.63, s: "a-" },
+        { b: 120.5, l: 1, f: 293.66, s: "pa" },
+        
+        { b: 121.5, l: 0, f: 369.99, s: "Sa-" },
+        { b: 122.0, l: 1, f: 392.00, s: "at" },
+        { b: 122.5, l: 2, f: 440.00, s: "eng-" },
+        { b: 123.0, l: 3, f: 440.00, s: "kau" },
+        { b: 123.5, l: 2, f: 392.00, s: "te-" },
+        { b: 124.0, l: 1, f: 369.99, s: "ri-" },
+        { b: 124.5, l: 0, f: 329.63, s: "ngat" },
+        { b: 125.0, l: 1, f: 369.99, s: "teng-" },
+        { b: 125.5, l: 2, f: 392.00, s: "kar" },
+        { b: 126.0, l: 3, f: 440.00, s: "ki-" },
+        { b: 126.5, l: 2, f: 440.00, s: "ta" },
+        { b: 127.0, l: 1, f: 392.00, s: "ma-" },
+        { b: 127.5, l: 0, f: 369.99, s: "na-" },
+        { b: 128.0, l: 1, f: 329.63, s: "ka-" },
+        { b: 129.0, l: 2, f: 293.66, s: "la" },
+        
+        { b: 129.5, l: 0, f: 369.99, s: "Na-" },
+        { b: 130.0, l: 1, f: 392.00, s: "mun" },
+        { b: 130.5, l: 2, f: 440.00, s: "per-" },
+        { b: 131.0, l: 3, f: 440.00, s: "ca-" },
+        { b: 131.5, l: 2, f: 392.00, s: "ya-" },
+        { b: 132.0, l: 1, f: 369.99, s: "lah" },
+        { b: 132.5, l: 0, f: 329.63, s: "un-" },
+        { b: 133.0, l: 1, f: 293.66, s: "tuk-" },
+        { b: 133.5, l: 2, f: 329.63, s: "mu" },
+        { b: 134.0, l: 3, f: 369.99, s: "ku-" },
+        { b: 134.5, l: 2, f: 329.63, s: "ju-" },
+        { b: 135.0, l: 1, f: 293.66, s: "al" },
+        { b: 135.5, l: 0, f: 329.63, s: "du-" },
+        { b: 136.0, l: 1, f: 369.99, s: "ni-" },
+        { b: 137.0, l: 2, f: 293.66, s: "a" }
+      ];
+
+      const addNotes = (notesList) => {
+        for (const n of notesList) {
+          chart.push({
+            time: n.b * beatTime,
+            lane: n.l,
+            freq: n.f,
+            syllable: n.s,
+            hit: false,
+            missed: false
+          });
+        }
+      };
+
+      addNotes(introNotes);
+      addNotes(v1Notes);
+      addNotes(v2Notes);
+      addNotes(preNotes);
+      addNotes(choNotes);
+
+      // Sort by time just in case
+      chart.sort((a, b) => a.time - b.time);
+
+      return chart;
+    }
 
     function openPianoGame() {
       const pg = document.getElementById('piano-game');
@@ -2210,11 +2703,17 @@
     function startPianoGame() {
       document.getElementById('piano-start-screen').style.display = 'none';
       pianoGameActive = true;
-      pianoScore = 0; pianoMissed = 0; pianoCombo = 0; pianoSpeed = 4;
-      pianoTiles = [];
-      pianoSpawnTimer = 0;
+      pianoScore = 0; pianoMissed = 0; pianoCombo = 0;
+      pianoTiles = generateNinaChart();
+      pianoParticles = [];
       document.getElementById('piano-score-display').textContent = 'SCORE: 0';
       document.getElementById('piano-gameover').classList.remove('active');
+      
+      const currentEl = document.getElementById('piano-lyrics-current');
+      const nextEl = document.getElementById('piano-lyrics-next');
+      if (currentEl) currentEl.textContent = '';
+      if (nextEl) nextEl.textContent = '';
+
       cancelAnimationFrame(pianoAnimId);
       Audio.pianoBgm.play();
       pianoLoop();
@@ -2239,28 +2738,55 @@
     }
 
     function pianoLoop() {
-      pianoAnimId = requestAnimationFrame(pianoLoop);
       if (!pianoGameActive) return;
-      // Spawn
-      pianoSpawnTimer++;
-      const spawnInterval = Math.max(28, 55 - Math.floor(pianoScore / 500) * 2);
-      if (pianoSpawnTimer >= spawnInterval) {
-        pianoSpawnTimer = 0;
-        const lane = Math.floor(Math.random() * PIANO_LANES);
-        pianoTiles.push({ lane, y: -60, h: 80, hit: false, missed: false });
+      pianoAnimId = requestAnimationFrame(pianoLoop);
+
+      const audioTime = ninaAudio.currentTime;
+
+      // Update lyrics display based on current audioTime
+      let currentLyrics = "";
+      let nextLyrics = "";
+      for (const line of NINA_LYRICS) {
+        if (audioTime >= line.start && audioTime < line.end) {
+          currentLyrics = line.text;
+          nextLyrics = line.next;
+          break;
+        }
       }
-      // Update
-      pianoSpeed = 4 + Math.floor(pianoScore / 800) * 0.5;
+      const currentEl = document.getElementById('piano-lyrics-current');
+      const nextEl = document.getElementById('piano-lyrics-next');
+      if (currentEl) currentEl.textContent = currentLyrics;
+      if (nextEl) nextEl.textContent = nextLyrics;
+
+      // Update piano particles
+      for (let i = pianoParticles.length - 1; i >= 0; i--) {
+        let p = pianoParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 0.02;
+        if (p.life <= 0) pianoParticles.splice(i, 1);
+      }
+
+      // Update misses for passed tiles
       for (const t of pianoTiles) {
-        t.y += pianoSpeed;
-        if (!t.hit && !t.missed && t.y > pianoH - pianoHitZoneH + 40) {
+        if (!t.hit && !t.missed && audioTime > t.time + 0.25) {
           t.missed = true;
           pianoMissed++;
           pianoCombo = 0;
-          if (pianoMissed >= PIANO_MAX_MISS) endPianoGame();
+          showPianoFeedback('MISS', '#ff2d78');
+          if (pianoMissed >= PIANO_MAX_MISS) {
+            endPianoGame();
+            return;
+          }
         }
       }
-      pianoTiles = pianoTiles.filter(t => t.y < pianoH + 100);
+
+      // Check if song has finished
+      if (ninaAudio.ended || (pianoTiles.length > 0 && audioTime > pianoTiles[pianoTiles.length - 1].time + 2.0)) {
+        endPianoGame();
+        return;
+      }
+
       renderPiano();
     }
 
@@ -2278,6 +2804,7 @@
       }
       // Hit zone
       const hzY = pianoH - pianoHitZoneH;
+      const targetY = hzY + pianoHitZoneH / 2;
       pc.fillStyle = 'rgba(255,255,255,0.04)';
       pc.fillRect(0, hzY, pianoW, pianoHitZoneH);
       pc.fillStyle = 'rgba(255,255,255,0.15)';
@@ -2294,51 +2821,85 @@
         pc.fillStyle = '#fff200'; pc.font = `${Math.min(14, 8 + pianoCombo / 2)}px "Press Start 2P"`;
         pc.textAlign = 'right'; pc.fillText('x' + pianoCombo + ' COMBO', pianoW - 10, 24);
       }
+      
       // Tiles
+      const audioTime = ninaAudio.currentTime;
       for (const t of pianoTiles) {
         if (t.hit) continue;
+        const dt = t.time - audioTime;
+        if (dt > 2.0 || dt < -0.5) continue; // Out of visible bounds
+
         const tx = t.lane * pianoLaneW + 4;
         const tw = pianoLaneW - 8;
+        const ty = targetY - (dt * PIANO_SPEED_SEC) - 40; // Center vertically (height=80)
+        const th = 80;
         const col = LANE_COLORS[t.lane];
+
         // Shadow glow
         pc.shadowColor = col; pc.shadowBlur = 12;
         pc.fillStyle = col + 'cc';
-        pc.fillRect(tx, t.y, tw, t.h);
+        pc.fillRect(tx, ty, tw, th);
         pc.fillStyle = col;
-        pc.fillRect(tx, t.y, tw, 6);
-        pc.fillRect(tx, t.y + t.h - 6, tw, 6);
+        pc.fillRect(tx, ty, tw, 6);
+        pc.fillRect(tx, ty + th - 6, tw, 6);
         pc.shadowBlur = 0;
         // Note icon
         pc.fillStyle = 'rgba(0,0,0,0.5)'; pc.font = '22px serif'; pc.textAlign = 'center';
-        pc.fillText(LANE_EMOJIS[t.lane], tx + tw / 2, t.y + t.h / 2 + 8);
+        pc.fillText(LANE_EMOJIS[t.lane], tx + tw / 2, ty + th / 2 + 8);
       }
+
+      // Render floating syllable particles
+      for (const p of pianoParticles) {
+        pc.globalAlpha = p.life;
+        pc.fillStyle = p.color;
+        pc.font = `bold ${p.size}px "Montserrat"`;
+        pc.textAlign = 'center';
+        pc.shadowColor = p.color;
+        pc.shadowBlur = 12;
+        pc.fillText(p.text, p.x, p.y);
+        pc.shadowBlur = 0;
+      }
+      pc.globalAlpha = 1.0;
+
       pc.textAlign = 'left';
     }
 
     function hitPianoLane(lane, btn) {
       if (!pianoGameActive) return;
-      // Flash btn
       btn.classList.add('hit');
       setTimeout(() => btn.classList.remove('hit'), 120);
-      const hitY = pianoH - pianoHitZoneH;
-      let best = null; let bestDist = 9999;
+
+      const audioTime = ninaAudio.currentTime;
+      let best = null;
+      let bestDist = 9999;
+      
       for (const t of pianoTiles) {
         if (t.hit || t.missed || t.lane !== lane) continue;
-        const center = t.y + t.h / 2;
-        const dist = Math.abs(center - (hitY + pianoHitZoneH / 2));
-        if (dist < bestDist) { bestDist = dist; best = t; }
+        const dist = Math.abs(t.time - audioTime);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = t;
+        }
       }
-      if (best && bestDist < pianoHitZoneH) {
+
+      if (best && bestDist < 0.25) {
         best.hit = true;
         pianoCombo++;
         let pts, label, color;
-        if (bestDist < 15) { pts = 300 + pianoCombo * 10; label = 'PERFECT!'; color = '#fff200'; }
-        else if (bestDist < 35) { pts = 150 + pianoCombo * 5; label = 'GREAT!'; color = '#00ff88'; }
+        if (bestDist < 0.08) { pts = 300 + pianoCombo * 10; label = 'PERFECT!'; color = '#fff200'; }
+        else if (bestDist < 0.16) { pts = 150 + pianoCombo * 5; label = 'GREAT!'; color = '#00ff88'; }
         else { pts = 80; label = 'GOOD'; color = '#00f5ff'; pianoCombo = 0; }
         pianoScore += pts;
         document.getElementById('piano-score-display').textContent = 'SCORE: ' + pianoScore;
         showPianoFeedback(label, color);
-        Audio.sfx.perfect();
+        
+        // Play beautiful synthesized piano note instead of basic sine wave beep
+        playPianoNote(best.freq, 0.7, 0.25);
+
+        // Spawn drifting lyrics particle
+        const tx = lane * pianoLaneW + pianoLaneW / 2;
+        const ty = pianoH - pianoHitZoneH;
+        spawnPianoParticle(tx, ty, best.syllable, LANE_COLORS[lane]);
       } else {
         pianoCombo = 0;
         showPianoFeedback('MISS', '#ff2d78');
