@@ -840,6 +840,21 @@
       overflow: hidden;
       cursor: pointer;
       box-shadow: 3px 3px 0px var(--faded-blue);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.04);
+      box-shadow: 5px 5px 0px var(--rust-red);
+      z-index: 2;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      image-rendering: auto;
     }
 
     .gallery-label {
@@ -847,13 +862,19 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: var(--navy-deep);
+      background: rgba(31, 42, 68, 0.85);
       font-family: var(--font-body);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: bold;
       color: var(--cream);
       padding: 4px;
       text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .gallery-item:hover .gallery-label {
+      opacity: 1;
     }
 
     .neon-badge {
@@ -2597,29 +2618,64 @@
         <p class="modal-text" style="margin-bottom:14px;color:rgba(31, 42, 68, 0.75); font-weight: 500;">Kenangan Indah
           Bersama ✨</p>
         <div class="gallery-grid">
-          <div class="gallery-item">🎤<div class="gallery-label">SOUNDCHECK</div>
+          <div class="gallery-item"><img src="galeri/IMG_0552.JPG" alt="Foto 1">
+            <div class="gallery-label">📸 FOTO 1</div>
           </div>
-          <div class="gallery-item">🎭<div class="gallery-label">KOSTUM</div>
+          <div class="gallery-item"><img src="galeri/IMG_0559.JPG" alt="Foto 2">
+            <div class="gallery-label">📸 FOTO 2</div>
           </div>
-          <div class="gallery-item">🎶<div class="gallery-label">LATIHAN</div>
+          <div class="gallery-item"><img src="galeri/IMG_0605.JPG" alt="Foto 3">
+            <div class="gallery-label">📸 FOTO 3</div>
           </div>
-          <div class="gallery-item">🌟<div class="gallery-label">PENAMPILAN</div>
+          <div class="gallery-item"><img src="galeri/IMG_0610.JPG" alt="Foto 4">
+            <div class="gallery-label">📸 FOTO 4</div>
           </div>
-          <div class="gallery-item">👥<div class="gallery-label">TIM PANITIA</div>
+          <div class="gallery-item"><img src="galeri/IMG_0625.JPG" alt="Foto 5">
+            <div class="gallery-label">📸 FOTO 5</div>
           </div>
-          <div class="gallery-item">🏆<div class="gallery-label">PENGUMUMAN</div>
+          <div class="gallery-item"><img src="galeri/IMG_0626.JPG" alt="Foto 6">
+            <div class="gallery-label">📸 FOTO 6</div>
           </div>
-          <div class="gallery-item">📸<div class="gallery-label">FOTO BERSAMA</div>
+          <div class="gallery-item"><img src="galeri/IMG_0628.JPG" alt="Foto 7">
+            <div class="gallery-label">📸 FOTO 7</div>
           </div>
-          <div class="gallery-item">🎉<div class="gallery-label">PENUTUPAN</div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.02.jpeg" alt="Foto 8">
+            <div class="gallery-label">📸 FOTO 8</div>
           </div>
-          <div class="gallery-item">💫<div class="gallery-label">HIGHLIGHT</div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.39 (1).jpeg" alt="Foto 9">
+            <div class="gallery-label">📸 FOTO 9</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.39 (2).jpeg" alt="Foto 10">
+            <div class="gallery-label">📸 FOTO 10</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.39 (3).jpeg" alt="Foto 11">
+            <div class="gallery-label">📸 FOTO 11</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.39.jpeg" alt="Foto 12">
+            <div class="gallery-label">📸 FOTO 12</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.43 (1).jpeg" alt="Foto 13">
+            <div class="gallery-label">📸 FOTO 13</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.43 (2).jpeg" alt="Foto 14">
+            <div class="gallery-label">📸 FOTO 14</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.43.jpeg" alt="Foto 15">
+            <div class="gallery-label">📸 FOTO 15</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.45 (1).jpeg" alt="Foto 16">
+            <div class="gallery-label">📸 FOTO 16</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.45 (2).jpeg" alt="Foto 17">
+            <div class="gallery-label">📸 FOTO 17</div>
+          </div>
+          <div class="gallery-item"><img src="galeri/WhatsApp Image 2026-05-24 at 18.03.45.jpeg" alt="Foto 18">
+            <div class="gallery-label">📸 FOTO 18</div>
           </div>
         </div>
-        <hr class="modal-divider">
-        <p class="modal-text" style="color:rgba(31, 42, 68, 0.6);text-align:center;font-size:10px;font-weight: 500;">📷
-          Foto akan
-          ditambahkan setelah acara berlangsung</p>
+        <p class="modal-text"
+          style="color:rgba(31, 42, 68, 0.6);text-align:center;font-size:10px;font-weight: 500;margin-top:12px;">📷 18
+          foto kenangan · Inter Class Vocal Group Competition 2026</p>
       </div>
     </div>
   </div>
