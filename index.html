@@ -21,6 +21,12 @@
       --font-serif: 'Playfair Display', serif;
       --font-script: 'Pacifico', cursive;
       --font-body: 'Montserrat', sans-serif;
+      --neon-yellow: #fff200;
+      --neon-pink: #ff2d78;
+      --neon-cyan: #00f5ff;
+      --neon-orange: #ff6b00;
+      --neon-purple: #b400ff;
+      --neon-green: #00ff88;
     }
 
     * {
@@ -199,10 +205,10 @@
     .splash-title .line1 {
       font-family: var(--font-script);
       font-size: clamp(24px, 6vw, 42px);
-      color: var(--navy-deep);
+      color: var(--cream);
       display: block;
       margin-bottom: -10px;
-      text-shadow: 2px 2px 0px var(--cream-dark);
+      text-shadow: 2px 2px 0px var(--navy-deep);
       transform: rotate(-3deg);
     }
 
@@ -220,7 +226,7 @@
       font-family: var(--font-serif);
       font-weight: bold;
       font-size: clamp(10px, 3vw, 18px);
-      color: var(--vintage-blue);
+      color: var(--navy-deep);
       display: block;
       margin-top: 12px;
       letter-spacing: 4px;
@@ -502,7 +508,7 @@
     .modal-header {
       padding: 16px 20px 12px;
       border-bottom: 4px solid var(--navy-deep);
-      background: var(--warm-tan);
+      background: var(--navy-deep);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -696,6 +702,71 @@
     }
 
     .back-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px var(--navy-deep);
+    }
+
+    .song-buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 480px) {
+      .song-buttons-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .song-select-btn {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: bold;
+      background: var(--cream);
+      border: 2px solid var(--navy-deep);
+      color: var(--navy-deep);
+      cursor: pointer;
+      padding: 10px 14px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 3px 3px 0px var(--navy-deep);
+      transition: all 0.1s;
+      border-radius: 4px;
+    }
+
+    .song-select-btn::after {
+      content: '▶';
+      font-size: 10px;
+      color: var(--rust-red);
+    }
+
+    .song-select-btn:hover {
+      background: var(--cream-dark);
+    }
+
+    .song-select-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--navy-deep);
+    }
+
+    .close-lyric-btn {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: bold;
+      background: var(--rust-red);
+      border: 2px solid var(--navy-deep);
+      color: var(--cream);
+      cursor: pointer;
+      padding: 6px 12px;
+      margin-bottom: 12px;
+      box-shadow: 2px 2px 0px var(--navy-deep);
+      transition: all 0.1s;
+    }
+
+    .close-lyric-btn:active {
       transform: translate(2px, 2px);
       box-shadow: 0px 0px 0px var(--navy-deep);
     }
@@ -1060,7 +1131,7 @@
       <div class="modal-header" style="border-color:rgba(255,242,0,0.3)">
         <span class="modal-title" style="color:var(--neon-yellow);text-shadow:0 0 8px var(--neon-yellow)">🏆 PENJELASAN
           ACARA</span>
-        <button class="modal-close" onclick="closeModal('modal-podium')" style="background:var(--neon-yellow)">✕
+        <button class="modal-close" onclick="closeModal('modal-podium')" style="background:var(--neon-yellow); color:var(--navy-deep); font-weight:bold;">✕
           TUTUP</button>
       </div>
       <div class="modal-body">
@@ -1083,15 +1154,12 @@
         <span class="modal-section-title">📍 LOKASI & TANGGAL</span>
         <div class="profile-card">
           <p class="modal-text">
-            <span class="neon-badge badge-pink">📅 TANGGAL</span> <span style="color:white">27 Mei 2026</span><br><br>
-            <span class="neon-badge badge-cyan">⏰ WAKTU</span> <span style="color:white">08.00 - Selesai</span><br><br>
-            <span class="neon-badge badge-yellow">🏟️ TEMPAT</span> <span style="color:white">New BPPM</span>
+            <span class="neon-badge badge-pink">📅 TANGGAL</span> <span style="color:var(--navy-deep); font-weight:600;">27 Mei 2026</span><br><br>
+            <span class="neon-badge badge-cyan">⏰ WAKTU</span> <span style="color:var(--navy-deep); font-weight:600;">08.00 - Selesai</span><br><br>
+            <span class="neon-badge badge-yellow">🏟️ TEMPAT</span> <span style="color:var(--navy-deep); font-weight:600;">New BPPM</span>
           </p>
         </div>
-        <hr class="modal-divider">
-        <span class="modal-section-title">🏅 HADIAH</span>
-        <p class="modal-text">🥇 Juara 1 — Trophy + Sertifikat + Hadiah<br>🥈 Juara 2 — Trophy + Sertifikat +
-          Hadiah<br>🥉 Juara 3 — Trophy + Sertifikat + Hadiah<br>⭐ Best Vocalist — Penghargaan Khusus</p>
+
       </div>
     </div>
   </div>
@@ -1110,25 +1178,14 @@
             style="max-width: 100%; height: auto; border: 3px solid var(--neon-pink); border-radius: 8px; box-shadow: 0 0 15px rgba(255,45,120,0.5);"
             onerror="this.style.display='none'">
         </div>
-        <hr class="modal-divider">
-        <span class="modal-section-title">💌 PESAN SAMBUTAN</span>
-        <p class="modal-text">"Assalamu'alaikum warahmatullahi wabarakatuh.</p><br>
-        <p class="modal-text">Puji syukur kehadirat Tuhan Yang Maha Esa atas terselenggaranya acara <span
-            style="color:var(--neon-pink)">Vocal Group Among Classes</span> ini.</p><br>
-        <p class="modal-text">Acara ini merupakan wujud nyata dari semangat berkarya dan berkolaborasi yang telah kami
-          perjuangkan bersama. Saya mengucapkan terima kasih yang sebesar-besarnya kepada seluruh panitia, peserta, guru
-          pendamping, dan semua pihak yang telah berkontribusi.</p><br>
-        <p class="modal-text">Selamat menikmati malam yang penuh dengan harmoni dan cahaya neon ini. Mari kita jadikan
-          momen ini sebagai kenangan indah yang tak terlupakan!</p><br>
-        <p class="modal-text" style="color:var(--neon-yellow)">Wassalamu'alaikum warahmatullahi wabarakatuh."</p>
+
         <hr class="modal-divider">
         <span class="modal-section-title">👥 THE CHIEFS</span>
         <div class="profile-card" style="border-color:rgba(255,45,120,0.2)">
           <p class="modal-text">
-            <span class="neon-badge badge-pink">KETUA 1</span> <span style="color:white">Muhammad Nadhif
-              (4-D)</span><br><br>
-            <span class="neon-badge badge-cyan">KETUA 2</span> <span style="color:white">Kais Ahmad (4-F)</span><br><br>
-            <span class="neon-badge badge-yellow">KETUA 3</span> <span style="color:white">Ghaza Mahdi (3xB)</span>
+            <span class="neon-badge badge-pink">KETUA 1</span> <span style="color:var(--navy-deep); font-weight:600;">Muhammad Nadhif (4-D)</span><br><br>
+            <span class="neon-badge badge-cyan">KETUA 2</span> <span style="color:var(--navy-deep); font-weight:600;">Kais Ahmad (4-F)</span><br><br>
+            <span class="neon-badge badge-yellow">KETUA 3</span> <span style="color:var(--navy-deep); font-weight:600;">Ghaza Mahdi (3xB)</span>
           </p>
         </div>
       </div>
@@ -1137,45 +1194,26 @@
 
   <!-- Modal 3: Tablet - Smartbook -->
   <div class="modal-overlay" id="modal-tablet">
-    <div class="modal-box" style="border-color:var(--neon-cyan);">
-      <div class="modal-header">
-        <span class="modal-title">📱 SMARTBOOK — PANDUAN</span>
-        <button class="modal-close" onclick="closeModal('modal-tablet')">✕ TUTUP</button>
+    <div class="modal-box" style="border-color:#00f5ff;">
+      <div class="modal-header" style="background:#00f5ff; border-bottom-color:var(--navy-deep);">
+        <span class="modal-title" style="color:var(--navy-deep);">📱 SMARTBOOK DIGITAL</span>
+        <button class="modal-close" onclick="closeModal('modal-tablet')" style="background:var(--rust-red); color:var(--cream);">✕ TUTUP</button>
       </div>
-      <div class="modal-body">
-        <span class="modal-section-title">📋 PERATURAN UMUM</span>
-        <p class="modal-text">
-          1. Setiap kelas wajib mengirimkan 1 group vokal<br><br>
-          2. Anggota group terdiri dari 5-8 orang<br><br>
-          3. Membawakan 1 lagu pilihan + 1 lagu wajib<br><br>
-          4. Durasi penampilan maksimal 7 menit<br><br>
-          5. Kostum harus sesuai tema "Neon Night"<br><br>
-          6. Dilarang menggunakan backing vocal rekaman
+      <div class="modal-body" style="text-align: center; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <span class="modal-section-title" style="font-size: 24px; color: var(--rust-red); border-bottom: 3px solid var(--rust-red); margin-bottom: 16px;">📖 SMARTBOOK VGIC</span>
+        <p class="modal-text" style="font-size: 15px; line-height: 1.8; margin-bottom: 24px; max-width: 440px;">
+          Buku panduan resmi <span style="color: var(--rust-red); font-weight: bold;">Inter Class Vocal Group Competition 2026</span> sekarang dapat diakses secara online dalam bentuk flipbook interaktif digital!
         </p>
-        <hr class="modal-divider">
-        <span class="modal-section-title">⚖️ KRITERIA PENILAIAN</span>
-        <div class="profile-card">
-          <p class="modal-text">
-            <span class="neon-badge badge-pink">30%</span> Teknik Vokal (pitch, intonasi, dinamika)<br><br>
-            <span class="neon-badge badge-cyan">25%</span> Harmonisasi & Blend<br><br>
-            <span class="neon-badge badge-yellow">20%</span> Penampilan & Kostum<br><br>
-            <span class="neon-badge badge-pink">15%</span> Ekspresi & Penghayatan<br><br>
-            <span class="neon-badge badge-cyan">10%</span> Kreativitas Aransemen
-          </p>
+        
+        <div style="margin: 10px 0 20px;">
+          <a href="https://online.fliphtml5.com/ptenh/SMARTBOOK-VGIC-FIX-FIX-27aE/" target="_blank" class="btn-pixel" style="display: inline-block; text-decoration: none; background: #00f5ff; color: var(--navy-deep); border: 3px solid var(--navy-deep); font-size: 18px; padding: 12px 24px; box-shadow: 4px 4px 0px var(--rust-red); font-family: var(--font-head); letter-spacing: 1px; cursor: pointer; transition: all 0.1s;">
+            📖 BUKA SMARTBOOK ONLINE
+          </a>
         </div>
-        <hr class="modal-divider">
-        <span class="modal-section-title">📝 KETENTUAN TEKNIS</span>
-        <p class="modal-text">
-          ▪ Penggunaan instrumen live diperbolehkan<br><br>
-          ▪ Musik pengiring dapat berupa minus one<br><br>
-          ▪ Sound check dilakukan H-1 acara<br><br>
-          ▪ File musik diserahkan dalam format MP3<br><br>
-          ▪ Peralatan tambahan oleh peserta sendiri
+        
+        <p class="modal-text" style="font-size: 11px; color: rgba(31, 42, 68, 0.6); max-width: 400px;">
+          Silakan klik tombol di atas untuk membuka buku panduan resmi pada tab baru browser Anda.
         </p>
-        <hr class="modal-divider">
-        <span class="modal-section-title">🚫 SANKSI</span>
-        <p class="modal-text">Pelanggaran peraturan akan dikenakan pengurangan nilai sebesar 10-50 poin tergantung
-          tingkat pelanggaran. Diskualifikasi dapat dilakukan jika pelanggaran bersifat fatal.</p>
       </div>
     </div>
   </div>
@@ -1191,45 +1229,70 @@
       </div>
       <div class="modal-body">
         <span class="modal-section-title">📅 HARI PELAKSANAAN</span>
-        <p class="modal-text" style="color:var(--neon-orange)">TBD — [Tanggal] 2025</p>
+        <p class="modal-text" style="color:var(--navy-deep); font-weight:600;">Rabu, 27 Mei 2026</p>
         <hr class="modal-divider">
-        <div class="timeline-item"><span class="timeline-time">12.00 - 13.00</span>
-          <div class="timeline-dot" style="background:var(--neon-orange)"></div><span class="timeline-desc">Registrasi &
-            Persiapan Peserta<br><span style="color:rgba(255,255,255,0.4)">Semua peserta hadir & kostum
-              siap</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.00 - 08.03</span>
+          <div class="timeline-dot" style="background:var(--neon-orange)"></div><span class="timeline-desc">Master Of Ceremoni</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">13.00 - 13.15</span>
-          <div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Pembukaan
-            Acara<br><span style="color:rgba(255,255,255,0.4)">MC membuka acara resmi</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.03 - 08.08</span>
+          <div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Pembacaan Ayat Suci Al-Qur'an</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">13.15 - 13.30</span>
-          <div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Sambutan Ketua
-            Panitia<br><span style="color:rgba(255,255,255,0.4)">& Sambutan Guru/Kepala Sekolah</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.08 - 08.15</span>
+          <div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Sambutan Ketua</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">13.30 - 13.45</span>
-          <div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Penampilan
-            Pembuka / Guest Star<br><span style="color:rgba(255,255,255,0.4)">Persembahan spesial pembuka</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.15 - 08.22</span>
+          <div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Sambutan Pimpinan dan Pembukaan Acara Secara Simbolis</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">13.45 - 16.30</span>
-          <div class="timeline-dot" style="background:var(--neon-green)"></div><span class="timeline-desc">Penampilan
-            Vokal Group Kelas<br><span style="color:rgba(255,255,255,0.4)">Sesi kompetisi utama (dengan
-              jeda)</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.22 - 08.27</span>
+          <div class="timeline-dot" style="background:var(--neon-green)"></div><span class="timeline-desc">Pembacakan Kriteria Juri</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">16.30 - 16.45</span>
-          <div class="timeline-dot" style="background:var(--neon-purple)"></div><span class="timeline-desc">Break &
-            Penilaian Juri<br><span style="color:rgba(255,255,255,0.4)">Rehat sejenak & tabulation</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.27 - 08.30</span>
+          <div class="timeline-dot" style="background:var(--neon-purple)"></div><span class="timeline-desc">Visual Sejarah Vocal Group</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">16.45 - 17.00</span>
-          <div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Penampilan
-            Spesial Dewan Guru<br><span style="color:rgba(255,255,255,0.4)">Surprise performance!</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.30 - 08.45</span>
+          <div class="timeline-dot" style="background:var(--neon-orange)"></div><span class="timeline-desc">Penampilan Kelas 5</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">17.00 - 17.30</span>
-          <div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Pengumuman &
-            Penyerahan Hadiah<br><span style="color:rgba(255,255,255,0.4)">Juara 1, 2, 3 & Best Vocalist</span></span>
+        <div class="timeline-item"><span class="timeline-time">08.45 - 09.00</span>
+          <div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Penampilan Kelas 2</span>
         </div>
-        <div class="timeline-item"><span class="timeline-time">17.30 - 18.00</span>
-          <div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Foto Bersama &
-            Penutupan<br><span style="color:rgba(255,255,255,0.4)">Kenangan indah bersama!</span></span>
+        <div class="timeline-item"><span class="timeline-time">09.00 - 09.15</span>
+          <div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Penampilan Kelas 1</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">09.15 - 09.30</span>
+          <div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Penampilan Kelas 3</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">09.30 - 09.37</span>
+          <div class="timeline-dot" style="background:var(--neon-green)"></div><span class="timeline-desc">Penampilan Band Dams Family</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">09.37 - 09.52</span>
+          <div class="timeline-dot" style="background:var(--neon-purple)"></div><span class="timeline-desc">Penampilan Kelas 3 Intensive</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">09.52 - 10.07</span>
+          <div class="timeline-dot" style="background:var(--neon-orange)"></div><span class="timeline-desc">Penampilan Kelas 4</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">10.07 - 10.22</span>
+          <div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Penampilan Kelas 1 Intensive</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">10.22 - 10.37</span>
+          <div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Penampilan Kelas 6</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">10.37 - 12.30</span>
+          <div class="timeline-dot" style="background:var(--neon-yellow)"></div><span class="timeline-desc">Istirahat Ishoma</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">12.30 - 12.35</span>
+          <div class="timeline-dot" style="background:var(--neon-green)"></div><span class="timeline-desc">Master Of Ceremoni</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">12.35 - 12.42</span>
+          <div class="timeline-dot" style="background:var(--neon-purple)"></div><span class="timeline-desc">Penampilan Band Dams Family</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">12.42 - 12.53</span>
+          <div class="timeline-dot" style="background:var(--neon-orange)"></div><span class="timeline-desc">Drama Musical</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">12.53 - 13.03</span>
+          <div class="timeline-dot" style="background:var(--neon-pink)"></div><span class="timeline-desc">Pembacaan Pemenang Oleh Juri dan Foto Bersama</span>
+        </div>
+        <div class="timeline-item"><span class="timeline-time">13.03 - 13.08</span>
+          <div class="timeline-dot" style="background:var(--neon-cyan)"></div><span class="timeline-desc">Penutupan</span>
         </div>
       </div>
     </div>
@@ -1248,165 +1311,1559 @@
         <p class="modal-text" style="margin-bottom:12px">Tap kelas untuk melihat lagu & lirik:</p>
         <div id="class-list">
           <div class="class-item" onclick="toggleLyrics('cls1')">
-            <span class="class-name">🎭 CLASS ONE</span>
-            <p class="class-song">♪ "Takut" — Idgitaf</p>
+            <span class="class-name">🎭 KELAS 1</span>
+            <p class="class-song">♪ 4 Lagu Paduan Suara + 1 Nasyid</p>
             <div class="lyrics-panel" id="cls1">
-              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls1')">◀ TUTUP LIRIK</button>
-              <div class="lyrics-text">Ku takut kau tak serius
-                Ku takut kau hanya bermain-main
-                Dengan perasaan yang kau tahu
-                Kau sendiri tak mau rasakan
+              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls1')">◀ TUTUP</button>
+              <div class="song-buttons-grid">
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c1s1')">🎵 Hymne Guru</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c1s2')">🎵 Selamat Datang</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c1s3')">🎵 Ada Gajah</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c1s4')">🎵 Boria</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c1s5')">🎤 Nasyid</button>
+              </div>
+              <div class="song-lyric-item" id="c1s1" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c1s1')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 HYMNE GURU
 
-                Ku takut kau tak tulus
-                Ku takut kau hanya mencari
-                Seseorang yang bisa mengisi
-                Kekosongan yang ada di hati
+Terpujilah wahai ibu bapak guru
+Namamu akan selalu hidup dalam sanubariku
+Semua baktimu akan kuukir di dalam hatiku
+Sebagai prasasti terima kasihku tuk pengabdianmu
+Engkau sebagai pelita dalam kegelapan
+Engkau laksana embun penyejuk dalam kehausan
+Engkau patriot pahlawan bangsa tanpa tanda jasa</div>
+              </div>
+              <div class="song-lyric-item" id="c1s2" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c1s2')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 SELAMAT DATANG
 
-                Tapi ku tak bisa berhenti
-                Meski kutahu ini tak pasti
-                Ku tetap di sini menunggu
-                Karena kau yang ku mau
+A a a a
+Selamat datang kawan baru Kawan lama
+Selamat datang para handai dan taulanku
 
-                [Reff]
-                Takut tapi maju
-                Ragu tapi rindu
-                Kau membuatku bingung sendiri
-                Dengan semua senyum manismu</div>
+Darussalam mempertemukan
+Darussalam mempersatukan
+Darussalam untuk semua golongan
+
+Hilangkan gundah gulana aaaaa
+Selam di Darussalam a a a
+Kita kan selalu Bersama
+Bersama dalam pondok Darussalam a a a
+syalalalala — Darussalaam syalalalalala (2x) — Darussalam (2x)
+
+Menuntut ilmuuuuu, Dipondok tercintaaaa
+Untuk menggapai ridha lillahi-ta'ala
+Mari berjuang fisabilillah
+Darussalaam syalalalalala (3x)
+
+Darussalam punya banyak cerita
+Darussalam ku kenang selamanya
+Darussalam itu kita semua</div>
+              </div>
+              <div class="song-lyric-item" id="c1s3" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c1s3')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 ADA GAJAH
+
+E e a hari ini tu idul adha
+E e a mari kita kurban bersama
+E e a tiap hari makan selalu
+E e a kurban sapi kurban kerbau kurban dombaa
+Kurban kurban kurban kurban kurban melulu
+Teng teng teng teng teng teng teng teng
+
+Ayo Kawan kurban Bersama
+kurban bersama agar Bahagya
+kurban sapi ataupun domba
+itu semua luar biasa
+Ayo Kawan kurban Bersama
+kurban bersama agar Bahagya
+kurban sapi ataupun domba
+kalo gak bisa ya tahun depan</div>
+              </div>
+              <div class="song-lyric-item" id="c1s4" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c1s4')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 BORIA
+
+Mari semua rakan dan taulan
+volksong suka-suka kami dendangkan
+Ini hanyalah sekadar gurauan
+Untuk semua sebagai hiburan
+Mari semua nyanyi Bersama
+bersuka ria di folksong gembira
+Doakan kita smoga juara
+Tahun depan naik kelas dua (2x)</div>
+              </div>
+              <div class="song-lyric-item" id="c1s5" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c1s5')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎤 NASYID
+
+Verse 1:
+Dentang lonceng berbunyi, panggilku kemari
+Tumpukan buku ditangan ini
+menggambarkan semangat pagi
+
+Pre-Chorus:
+Meski banyak tak ku mengerti
+Namun kau slalu tenangkan hati
+
+Chorus:
+Senandung Kemesraan kuatkan persahabatan
+Bernyanyi dan Bergembira Bersama tak terhenti
+jadi temanku saja, berbagi cerita lucu
+dunia jadi ceria, kalau aku sama kamu
+
+Verse 2:
+bawa bola kita bermain, kejar kejar sampai sore
+kalau hujan kita gambar, pelangi warna warni ya
+
+Bridge:
+kalau kamu sedih aku ada di sini
+kita saling bantu jadi teman selamanya
+
+Outro:
+jadi temanku saja, sampai kita besar nanti
+tetap ingat cerita, hari hari yang berarti</div>
+              </div>
+          <div class="class-item" onclick="toggleLyrics('cls2')">
+            <span class="class-name">🌟 KELAS 1 INTENSIF</span>
+            <p class="class-song">♪ 4 Lagu Paduan Suara + 1 Nasyid</p>
+            <div class="lyrics-panel" id="cls2">
+              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls2')">◀ TUTUP</button>
+              <div class="song-buttons-grid">
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c2s1')">🎵 Magadir (Qasidah)</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c2s2')">🎵 Gema Qurban Darussalam</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c2s3')">🎵 I Miss You - Slank</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c2s4')">🎵 Damai Bersamamu - Chrisye</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c2s5')">🎤 Nasyid</button>
+              </div>
+              <div class="song-lyric-item" id="c2s1" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c2s1')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 MAGADIR (QASIDAH)
+
+Magadir Magadir Ya Ghalbil Ala Magadir
+Magadir Magadir Ya Ghalbil Ala Magadir..
+Magadir Witsumbil Ala Magadir
+Magadir Ya Ghalbil Ala
+Magadir Witsumbil Ala
+Magadir Witsumbil Hayati
+Masawi Lakmanal Hana
+Magadir Witsumbil Hayati
+Masawi Lakmanal Hana
+Magadir Magadir</div>
+              </div>
+              <div class="song-lyric-item" id="c2s2" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c2s2')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 GEMA QURBAN DARUSSALAM
+(Nada: Kartonyono Medot Janji)
+
+Kok keterlaluan...
+Antre lama tak ada perhatian
+Jelas ku butuh dagingmu, ku butuh gulemu
+Kok keterlaluan...
+Lapar perut inii (yo!)
+Smoga saja aku kebagian
+Nanti kalau sudah makan, semua pasti gampang
+Perut ku kenyang, hati pun senang (sing penting wis madang!)
+
+[Pre-Chorus]:
+Awalnya aku betah (asek!), lama-lama lelah
+Nunggu jatah dagingnya yang tak kunjung datang (yo-oh-oy!)
+Hari raya yang mulia, sudah depan mata
+Ayo nyate bersama-sama.
+
+[Chorus]:
+Gema takbir di Gontor potong qurbanmu
+Roboh sapinya, sorak-sorai kawanmu
+Pesan Kiai tuk dituruti
+Cari ridha Ilahi (yo-yo-yo)
+Budalo! Ayo tak tunjukkan jalan-Nya (yo-yo-yo)
+Ke arah sana, belok kanan lurus saja
+Tak usah lirik piringku yang buat mu iri
+Nanti bebani...</div>
+              </div>
+              <div class="song-lyric-item" id="c2s3" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c2s3')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 I MISS YOU BUT I HATE YOU (SLANK)
+
+Waktu kita masih sama..
+Sungguh indah rasanya…
+Selalu saja ada cerita…
+Hampir setiap pagi dulu..
+Kumpul tanpa jemu…
+Sampai lupa waktu berlalu
+
+Banyak tempat yang pernah kita datangi
+Banyak cerita yang kita bagi..
+Kurasa semuanya tinggallah memori…
+Masing-masing sibuk cari mimpi sendiri…
+
+I miss you, I don't hate you, my friend (2x)</div>
+              </div>
+              <div class="song-lyric-item" id="c2s4" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c2s4')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 DAMAI BERSAMAMU (CHRISYE)
+
+Aku termenung di bawah mentari
+Di antara megahnya alam ini
+Menikmati indahnya kasih-Mu
+Kurasakan damainya hatiku
+
+Sabda-Mu bagai air yang mengalir
+Basahi panas terik di hatiku
+Menerangi semua jalanku
+Kurasakan tenteramnya hatiku
+
+Jangan biarkan damai ini pergi
+Jangan biarkan semuanya berlalu
+Hanya pada-Mu Tuhan tempatku berteduh
+Dari semua kepalsuan dunia
+
+Bila ku jauh dari diri-Mu
+Akan kutempuh semua perjalanan
+Agar selalu ada dekat-Mu
+Biar kurasakan lembutnya kasih-Mu</div>
+              </div>
+              <div class="song-lyric-item" id="c2s5" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c2s5')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎤 NASYID
+
+Verse:
+Dulu, bangku kayu ini tak pernah sepi
+Gema suara saling sahut menjemput pagi
+Kini hanya bayang yang tersisa di sudut mata
+Bisik suara menyapa dalam makna
+
+Bridge:
+Rekam semua anganmu
+
+Reff:
+Tundukkan wajahmu
+Bersujud dan selipkan doamu
+Beratnya langkahmu
+Jadikan hikmah yang tlah kau tempuh
+Doa dan harapan bersatu
+
+Interlude:
+Sebutlah asmanya saat semua mata
+Memandangmu penuh prasangka
+Bahkan jika ribuan ocehan datang
+Jangan kau merasa bimbang
+
+(Back to Reff)</div>
+              </div>
+            </div>
+          </div>
+Terpujilah wahai ibu bapak guru
+Namamu akan selalu hidup dalam sanubariku
+Semua baktimu akan kuukir di dalam hatiku
+Sebagai prasasti terima kasihku tuk pengabdianmu
+Engkau sebagai pelita dalam kegelapan
+Engkau laksana embun penyejuk dalam kehausan
+Engkau patriot pahlawan bangsa tanpa tanda jasa
+
+Selamat Datang:
+A a a a
+Selamat datang kawan baru Kawan lama
+Selamat datang para handai dan taulanku
+
+Darussalam mempertemukan
+Darussalam mempersatukan
+Darussalam untuk semua golongan
+
+Selamat datang Kawan baru Kawan lama
+Selamat datang para handai dan taulanku
+
+Darussalam mempertemukan
+Darussalam mempersatukan
+Darussalam untuk semua golongan
+
+Hilangkan gundah gulana aaaaa
+Selam di Darussalam a a a
+Kita kan selalu Bersama
+Bersama dalam pondok Darussalam a a a a a a a a a
+syalalalala
+Darussalaam syalalalalala (2x)
+Darussalam (2x)
+
+Menuntut ilmuuuuu
+Dipondok tercintaaaa
+Untuk menggapai ridha lillahi-ta'ala
+Sisihkan lengan aaaa
+Gerakan tangan aaaa
+Mari berjuang fisabilillah
+Darussalaam syalalalalala (3x)
+Darussalam
+
+Darussalam punya banyak cerita
+Darussalam ku kenang selamanya
+Darussalam itu kita semua darussalam
+
+Ada Gajah:
+E e a hari ini tu idul adha
+E e a mari kita kurban bersama
+E e a tiap hari makan selalu
+E e a kurban sapi kurban kerbau kurban dombaa
+Kurban kurban kurban kurban kurban melulu
+Teng teng teng teng teng teng teng teng
+Ayo Kawan kurban Bersama
+kurban bersama agar Bahagya
+kurban sapi ataupun domba
+itu semua luar biasa
+Ayo Kawan kurban Bersama
+kurban bersama agar Bahagya
+kurban sapi ataupun domba
+kalo gak bisa ya tahun depan
+
+BORIA:
+Mari semua rakan dan taulan
+volksong suka-suka kami dendangkan
+Ini hanyalah sekadar gurauan
+Untuk semua sebagai hiburan
+Mari semua nyanyi Bersama
+bersuka ria di folksong gembira
+Doakan kita smoga juara
+Tahun depan naik kelas dua (2x)
+
+
+【 🎤 LIRIK NASYID 】
+
+Verse 1:
+Dentang lonceng berbunyi
+panggilku kemari
+Tumpukan buku ditangan ini
+menggambarkan semangat pagi
+
+Pre-Chorus:
+Meski banyak tak ku mengerti
+Namun kau slalu tenangkan hati
+
+Chorus:
+Senandung Kemesraan
+kuatkan persahabatan
+Bernyanyi dan Bergembira
+Bersama tak terhenti
+jadi temanku saja
+berbagi cerita lucu
+dunia jadi ceria
+kalau aku sama kamu
+
+Verse 2:
+bawa bola kita bermain
+kejar kejar sampai sore
+kalau hujan kita gambar
+pelangi warna warni ya
+
+[Pre-Chorus]:
+tak perlu takut atau
+aku selalu di sampingmu
+
+Chorus:
+jadi temanku saja
+main bersama tiap hari
+kita nyanyi tertawa
+tanpa rasa sedih lagi
+jadi temanku saja
+berbagi cerita lucu
+dunia jadi ceria
+kalau aku sama kamu
+
+Bridge:
+kalau kamu sedih aku ada di sini
+kita saling bantu jadi teman selamanya
+
+Chorus:
+jadi temanku saja
+main bersama tiap hari
+kita nyanyi tertawa
+tanpa rasa sedih lagi
+jadi temanku saja
+berbagi cerita lucu
+dunia jadi ceria
+kalau aku sama kamu
+
+Outro:
+jadi temanku saja
+sampai kita besar nanti
+tetap ingat cerita
+hari hari yang berarti</div>
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls2')">
-            <span class="class-name">🌟 CLASS ONE INTENSIVE</span>
-            <p class="class-song">♪ "Bunga Tidur" — Tulus</p>
+            <span class="class-name">🌟 KELAS 1 INTENSIF</span>
+            <p class="class-song">♪ Paduan Suara & Nasyid</p>
             <div class="lyrics-panel" id="cls2">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls2')">◀ TUTUP LIRIK</button>
-              <div class="lyrics-text">Semalam kau datang dalam tidurku
-                Menyapa dengan senyum lesung pipimu
-                Ku terjaga dengan rindu yang membuncah
-                Menyadari kau hanya bunga tidur
+              <div class="lyrics-text">【 🎵 LIRIK PADUAN SUARA 】
 
-                Terasa nyata genggaman tanganmu
-                Terasa hangat semua cintamu
-                Mengapa harus terbangun dari mimpi ini
-                Biar ku terus bersamamu
+Magadir - Qasidah:
+Magadir Magadir Ya Ghalbil Ala Magadir
+Magadir Magadir Ya Ghalbil Ala Magadir..
+Magadir Witsumbil Ala Magadir
+Magadir Ya Ghalbil Ala
+Magadir Witsumbil Ala
+Magadir Ya Ghalbil Ala
+Magadir Witsumbil Ala
+Magadir Witsumbil Hayati
+Masawi Lakmanal Hana
+Magadir Witsumbil Hayati
+Masawi Lakmanal Hana
+Magadir Magadir
+Magadir Ya Ghalbil Ala
+Magadir Witsumbil Ala
+Magadir Ya Ghalbil Ala
+Magadir Witsumbil Ala
+Magadir Witsumbil Hayati
+Masawi Lakmanal Hana
+Magadir Witsumbil Hayati
+Masawi Lakmanal Hana
+Magadir Magadir
 
-                [Reff]
-                Jangan pergi jangan kau pergi
-                Biar ku terus bermimpi
-                Tentang kita yang bahagia
-                Dalam bunga tidurku
+GEMA QURBAN DARUSSALAM (Nada: Kartonyono Medot Janji):
+Kok keterlaluan...
+Antre lama tak ada perhatian
+Jelas ku butuh dagingmu, ku butuh gulemu
+Kok keterlaluan...
+Lapar perut inii (yo!)
+Smoga saja aku kebagian
+Nanti kalau sudah makan, semua pasti gampang
+Perut ku kenyang, hati pun senang (sing penting wis madang!)
 
-                Biar malam ini abadi
-                Biar cinta ini terjadi
-                Meski hanya dalam mimpi
-                Kau nyata di hatiku</div>
+[Pre-Chorus]:
+Awalnya aku betah (asek!), lama-lama lelah
+Nunggu jatah dagingnya yang tak kunjung datang (yo-oh-oy!)
+Hari raya yang mulia, sudah depan mata
+Ayo nyate bersama-sama.
+
+[Chorus]:
+Gema takbir di Gontor potong qurbanmu
+Roboh sapinya, sorak-sorai kawanmu
+Pesan Kiai tuk dituruti
+Cari ridha Ilahi (yo-yo-yo)
+Budalo! Ayo tak tunjukkan jalan-Nya (yo-yo-yo)
+Ke arah sana, belok kanan lurus saja
+Tak usah lirik piringku yang buat mu iri
+Nanti bebani...
+
+I Miss You but I Hate You - Slank:
+Waktu kita masih sama..
+Sungguh indah rasanya…
+Selalu saja ada cerita…
+Hampir setiap pagi dulu..
+Kumpul tanpa jemu…
+Sampai lupa waktu berlalu
+Banyak tempat yang pernah kita datangi
+Banyak cerita yang kita bagi..
+Kurasa semuanya tinggallah memori…
+Masing-masing sibuk cari mimpi sendiri…
+I miss you, I don't hate you, my friend (2x)
+
+Damai Bersama-mu - Chrisye:
+Aku termenung di bawah mentari
+Di antara megahnya alam ini
+Menikmati indahnya kasih-Mu
+Kurasakan damainya hatiku
+Sabda-Mu bagai air yang mengalir
+Basahi panas terik di hatiku
+Menerangi semua jalanku
+Kurasakan tenteramnya hatiku
+Jangan biarkan damai ini pergi
+Jangan biarkan semuanya berlalu
+Hanya pada-Mu Tuhan tempatku berteduh
+Dari semua kepalsuan dunia
+Bila ku jauh dari diri-Mu
+Akan kutempuh semua perjalanan
+Agar selalu ada dekat-Mu
+Biar kurasakan lembutnya kasih-Mu
+Jangan biarkan damai ini pergi
+Jangan biarkan semuanya berlalu
+Hanya pada-Mu Tuhan tempatku berteduh
+Dari semua kepalsuan dunia
+Bila ku jauh dari diri-Mu
+Akan kutempuh semua perjalanan
+Hanya pada-Mu Tuhan tempatku berteduh
+Dari semua kepalsuan dunia
+Dari semua kepalsuan dunia
+Dari semua kepalsuan
+Kepalsuan dunia
+
+
+【 🎤 LIRIK NASYID 】
+
+Verse:
+Dulu, bangku kayu ini tak pernah sepi
+Gema suara saling sahut menjemput pagi
+Kini hanya bayang yang tersisa di sudut mata
+Bisik suara menyapa dalam makna
+
+Bridge:
+Rekam semua anganmu
+
+Reff:
+Tundukkan wajahmu
+Bersujud dan selipkan doamu
+Beratnya langkahmu
+Jadikan hikmah yang tlah kau tempuh
+
+Doa dan harapan bersatu
+
+Interlude:
+Sebutlah asmanya saat semua mata
+Memandangmu penuh prasangka
+Bahkan jika ribuan ocehan datang
+Jangan kau merasa bimbang
+
+(Back to Reff)</div>
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls3')">
-            <span class="class-name">💫 CLASS TWO</span>
-            <p class="class-song">♪ "Cinta Luar Biasa" — Andmesh</p>
+            <span class="class-name">💫 KELAS 2</span>
+            <p class="class-song">♪ 4 Lagu Paduan Suara + 1 Nasyid</p>
             <div class="lyrics-panel" id="cls3">
-              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls3')">◀ TUTUP LIRIK</button>
-              <div class="lyrics-text">Kau datang membawa cinta
-                Yang aku tak pernah rasakan sebelumnya
-                Kau buat aku percaya
-                Bahwa cinta bisa seindah ini
+              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls3')">◀ TUTUP</button>
+              <div class="song-buttons-grid">
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c3s1')">🎵 Malu-Malu</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c3s2')">🎵 We Love Darussalam</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c3s3')">🎵 Kuy Qurban</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c3s4')">🎵 Lebih Baik</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c3s5')">🎤 Nasyid</button>
+              </div>
+              <div class="song-lyric-item" id="c3s1" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c3s1')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 MALU-MALU
 
-                Kau bukan sekedar teman
-                Lebih dari itu kau adalah hidupku
-                Kau buat aku mengerti
-                Arti bahagia yang sesungguhnya
+Saat aku menjadi anak kelas dua
+Rasa gelisah datang dengan tiba-tiba
+Padahal, aku tahun lalu kelas satu uuhu.
 
-                [Reff]
-                Cinta luar biasa
-                Yang kau berikan untukku
-                Takkan pernah terganti
-                Oleh siapapun di dunia
+Kucoba memahami arti kelas dua..
+Ternyata banyak yang harus kupelajari
+Akankah diriku mampu tuk melalui
+Perjalanan jadi kelas dua..
 
-                Ku bersyukur kau ada
-                Di setiap hari-hariku
-                Kau adalah cinta luar biasa
-                Luar biasa bagiku</div>
+Harus ku harus tuk belajar
+Segala hal yang baru.. datang
+Belajar hingga aku jadi paham
+
+Oh harus ku harus untuk maju
+Maju memberanikan diri
+Memahami dan mengerti
+Kehidupan.. Jadi kelas dua..</div>
+              </div>
+              <div class="song-lyric-item" id="c3s2" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c3s2')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 WE LOVE DARUSSALAM
+
+Hey kawan mari kemari . .
+Kita bernyanyi disini . .
+Kicau indah burung menari . .
+Menghangatkan suasana ini . .
+
+Hari demi hari berlalu . .
+Bersama menuntut ilmu
+Laksana sebuah perahu . .
+Melangkah maju pantang mundur
+
+Dengan . . Semangat panca jiwa . .
+Marilah kita membangun bangsa . .
+Dengan . . Nafas kebersamaan . .
+Kita . . Satukan bangsa . .
+
+Reff:
+Di darus . . Salam . .
+Kita belajar bersama . .
+Satukan langkah kita gapai impian
+
+Di darus . . Salam . .
+Kita berjuang fi sabilillah . .
+Terima kasihku untukmu . .
+Darussalam . .</div>
+              </div>
+              <div class="song-lyric-item" id="c3s3" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c3s3')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 KUY QURBAN
+
+Ayok, kawanku kita berqurban
+Sapi dan kambing ayo siapkan
+Janganlah pelit ingatlah tuhan
+qurban.. qurban..qurban..
+
+Dan kuy kuy kuy kuy kita qurban
+dan kuy kuy kuy kita sisihkan
+dan kuy kuy kuy kita tunaikan
+qurban.. qurban.. qurban..
+
+dan kuy kuy kuy kuy kita hijrah
+dan kuy kuy kuy niat sedekah
+dan kuy kuy kuy ucap bismillah
+lillah.. lillah.. lillah..
+
+Ayok. pabila harta berlimpah
+janganlah cuma buat bermewah
+ingatlah hidup tuk bersedekah
+lillah.. lillah.. lillah..</div>
+              </div>
+              <div class="song-lyric-item" id="c3s4" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c3s4')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 LEBIH BAIK
+
+Tiada kata yang dapat kuucap
+Saat kau pergi
+'Ku hanya diam menatap langkahmu
+Meninggalkan kita
+
+Walau berat di hati, tak apa
+Karena 'ku tahu
+Pasti ada tantangan yang berat
+Di setiap perjalanan yang hebat
+Takkan berakhir di sini
+Semuanya akan jadi lebih baik
+
+Walau kita tidak lagi berlari bersama lagi
+But doaku ini selalu untukmu
+Sampai suatu hari nanti kita 'kan bersama lagi
+Berbagi cerita terbaik dari hidup ini</div>
+              </div>
+              <div class="song-lyric-item" id="c3s5" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c3s5')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎤 NASYID
+
+Verse 1:
+Kalau ku bosan dan aku tak nyaman
+Apa yang kulakukan?
+Bila dilanjutkan, apa ku bisa bertahan?
+
+Verse 2:
+Aku mendengarkan, ingin meluruskan
+Apa yang kau pikirkan
+Coba perhatikan yang akan aku katakan….
+
+Chorus 1:
+Hidup bukan soal nyaman
+Bukan tentang malas-malasan
+Dan satu hal, sukses enggak bisa instan
+
+Chorus 2:
+Ini hidup kan sementara
+Harus sukses dapat berkahnya
+Mudah-mudahan, tuk wasilah masuk surga
+
+[Bridge]
+
+Chorus 3:
+Semua pernah merasa rapuh
+Ingat lillah jika kau lelah
+Peluh pernah akan membentukmu kuat
+
+Chorus 4:
+Kadang jatuh jangan mengeluh
+Ikhlas ingat akan setelah
+Kesulitan akan ada kemudahan
+
+Outro:
+Mudah-mudahan... Kita Semua Masuk surga</div>
+              </div>
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls4')">
-            <span class="class-name">⚡ CLASS THREE</span>
-            <p class="class-song">♪ "Ragu" — Yura Yunita</p>
+            <span class="class-name">⚡ KELAS 3</span>
+            <p class="class-song">♪ 4 Lagu Paduan Suara + 1 Nasyid</p>
             <div class="lyrics-panel" id="cls4">
-              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls4')">◀ TUTUP LIRIK</button>
-              <div class="lyrics-text">Ada yang berbeda hari ini
-                Saat matamu memandangku
-                Ku tak mengerti maksudnya
-                Membuat hatiku bimbang
+              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls4')">◀ TUTUP</button>
+              <div class="song-buttons-grid">
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c4s1')">🎵 Ode Pimpinan</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c4s2')">🎵 Di Bawah Langit Sama</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c4s3')">🎵 Tanjung Perak</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c4s4')">🎵 Pamer Bojo</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c4s5')">🎤 Nasyid</button>
+              </div>
+              <div class="song-lyric-item" id="c4s1" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c4s1')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 ODE PIMPINAN
 
-                Apakah ini yang namanya cinta
-                Atau hanya sekedar rasa kagum
-                Ku tak tahu harus bagaimana
-                Menghadapi perasaan ini
+Hidup harus terus berjalan
+Meski dalam keterbatasan
+Meski lelah tetaplah bertahan
+Doa-doa selalu kami panjatkan
 
-                [Reff]
-                Ragu oh ragu
-                Mengapa kau hadir di hatiku
-                Buat aku tak bisa tidur
-                Memikirkan dirimu
+Semangatmu takkan pernah padam
+Inspirasi kami siang dan malam
+Naluri pemimpinmu amatlah tajam
+Lengkapi idemu tuk membuka jalan
 
-                Ingin ku pastikan
-                Apa yang ada di hatimu
-                Tapi ku takut salah langkah
-                Dan kehilanganmu</div>
+Bagi kami engkaulah harapan
+Bagi kami engkaulah teladan
+Bagi kami masih ada jalan
+Insya Allah buat kesembuhan
+
+Pondok takkan pernah mati
+Meski berganti sosok kiyai
+Meniti jalan menapak bumi Lillah
+Menggapai dunia ini (2x)</div>
+              </div>
+              <div class="song-lyric-item" id="c4s2" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c4s2')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 DI BAWAH LANGIT YANG SAMA (BOBOIBOY)
+
+Kita disini bersama sama
+Melewati indah dunia
+Dipayungi sinar mentari
+Tak ada lagi yang kita takuti
+
+Kita bersama seperti kawan
+Takkan ada yang mampu mengalahkan
+
+Di bawah langit yang sama kita
+Bergandengan saling menjaga
+Di atas bumi yang sama kita
+Bergandengan saling menjaga</div>
+              </div>
+              <div class="song-lyric-item" id="c4s3" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c4s3')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 TANJUNG PERAK
+
+Waktu subuh datang
+Udara berhembus kencang
+Kencanglah sekali
+di lantai tiga syiria
+
+Belum berapa lama
+Aku duduk ketiduran
+Al-akh Mirza datang
+Akupun diberdirikan
+
+Akhi (3x) — Ini waktunya mengaji
+Akhi (3x) — Jangan diulangi lagi
+(la tu'id… ya….) — (Na'am Al-akh)
+
+Darussalam pondok kita
+Sama-sama kita cinta
+Hilangkan gundah gulana
+Mari bernyanyi bersama
+
+Ini kitaa… kelas tigaa…..
+Ini kitaa… haa… haa..
+kelas tigaa….</div>
+              </div>
+              <div class="song-lyric-item" id="c4s4" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c4s4')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 PAMER BOJO
+
+Hari ini, hari raya idul adha
+Sama-sama kita qurban kambing domba
+Kita semua, nyanyi bersama
+Jadi juara, di Volksong Gembira
+
+Ada sapi, ada kambing, ada domba
+Ayo kawan jangan sedih dan gelisah
+Kita berjuang, bersama-sama
+Hidup senang, hati senang, cendol dawet
+Cendol dawet, cendol, dawet
+Cendol, Dawet, Cendol, Dawet
+Cendol, Dawet, Cendol dawet apa?
+Volksong Gembira apa? Jadi juara
+1,2,3,4,5,6,7,8 Tak Gitak (4x)</div>
+              </div>
+              <div class="song-lyric-item" id="c4s5" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c4s5')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎤 NASYID
+
+Verse 1:
+Saat ku kecil, Kau menyayangiku
+Tak pernah kulihat amarah di wajahmu
+Namun kadang ku membuatmu kesal
+Maafkanlah aku
+
+Verse 2:
+Wajahmu bagaikan mentari
+Menyinari di setiap hari
+Namun kadang ku terjatuh kau bangkitkan
+Jiwa ragaku kembali
+
+Reff:
+Didalam cinta terdapat doa
+Yang slalu kupanjatkan untuknya
+Setiap malamku setiap sujudku
+Ku kan slalu mengucapkan namamu
+
+Didalam cinta terdapat doa
+Kan kulukiskan wajahmu di surga
+Semua ini aku ciptakan untukmu
+
+Bridge:
+Ooo — Kasih sayangmu tak terbatas waktu
+Pengorbananmu kau curahkan slalu
+
+Terimakasihku — Doaku untukmu
+Ku menyayangimu — Ku mencintaimu...</div>
+              </div>
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls5')">
-            <span class="class-name">🎸 CLASS THREE INTENSIVE</span>
-            <p class="class-song">♪ "Ruang Sendiri" — Kunto Aji</p>
+            <span class="class-name">🎸 KELAS 3 INTENSIF</span>
+            <p class="class-song">♪ 3 Lagu Paduan Suara + 1 Nasyid</p>
+            <div class="lyrics-panel" id="cls5">
+              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls5')">◀ TUTUP</button>
+              <div class="song-buttons-grid">
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c5s1')">🎵 Mabuk Cinta - Armada</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c5s2')">🎵 Kunci Bahagia</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c5s3')">🎵 Terbuang Dalam Waktu</button>
+                <button class="song-select-btn" onclick="event.stopPropagation();selectSong('c5s4')">🎤 Nasyid</button>
+              </div>
+              <div class="song-lyric-item" id="c5s1" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c5s1')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 MABUK CINTA (ARMADA)
+
+Bayangkan bila harimu penuh warna
+Itulah yang saat ini kurasakan
+
+[Bridge]:
+Berkurban kambing sapi unta
+Berdoa menyebut namanya
+Senangnya bernyanyi bersama
+Mari rayakan semua
+
+[Reff]:
+Kurasa ku sedang berbahagia
+Nikmatnya, makan daging sapi unta
+Di Idul Adha
+
+[Verse]:
+Bayangkan bila harimu penuh warna
+Itulah yang saat ini kurasakan
+
+[Bridge]:
+Berkurban kambing sapi unta
+Berdoa menyebut namanya
+Senangnya bernyanyi bersama
+Mari rayakan semua
+
+[Reff]:
+Kurasa ku sedang berbahagia
+Nikmatnya, makan daging sapi unta
+Kurasa ku sedang berbahagia
+Kurasa ku sedang berbahagia
+Di idul adha (4x)</div>
+              </div>
+              <div class="song-lyric-item" id="c5s2" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c5s2')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 KUNCI BAHAGIA
+
+Verse 1:
+Kala hatimu gelisah
+Inginkan sesuatu yang tak kau punya
+Namun apa daya kau tak bisa
+Tetap syukurilah yang tlah ada
+
+Verse 2:
+Jika hatimu menepi
+Dan tak mampu tuk dapat mensyukuri
+Ingatlah sgala yang tlah kau miliki
+Semua atas ridho Sang Ilahi
+
+Bridge:
+Tak perlu kau kecewa
+Atas hal yang tak kau bisa
+Semuanya Tlah ditakdirkannya
+Jangan kau banyak bertanya
+
+Reff:
+Mengapa sulit bahagia
+Bersyukur pun kau tak pernah
+Mengeluh slalu adanya
+Jangan kau lupa bahagia
+Akhirat juga dunia
+Bahagia itu mudah
+Walau sederhana asal berkah</div>
+              </div>
+              <div class="song-lyric-item" id="c5s3" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c5s3')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎵 TERBUANG DALAM WAKTU
+
+Verse 1:
+Teringat seru suaramu
+Menepis keraguan
+Namun dewasa mengubah
+
+Verse 2:
+Cara pandang dan keikhlasan
+Bersaut dan bergulat
+Terperai-perai menghilang
+
+Bridge:
+Perih yang terasa
+Sakit yang tak sirna
+Harapan akankah ada
+Berputar arah
+
+Bridge 2:
+Angan tenggelam dalam kabut dan amarah
+Luka terkuak dan menggebu tanpa arah
+Tangis yang terbendung
+Terbuang dalam waktu — Yang meluruh
+
+Reff:
+Perih yang terasa — Sakit yang tak sirna
+Harapan akankah ada — Berubah
+Melihatmu bersemi dan bermekaran
+Tawa candamu berikan kekuatan
+Sisa hariku pagi berganti waktu — Memelukmu
+
+Reff 2:
+Kita kan tua dan kehilangan pegangan
+Lihat senyummu memberikan kekuatan
+Sisa nafasku cinta tak kenal waktu — Menjagamu</div>
+              </div>
+              <div class="song-lyric-item" id="c5s4" style="display:none">
+                <button class="close-lyric-btn" onclick="event.stopPropagation();closeSong('c5s4')">◀ PILIH LAGU LAIN</button>
+                <div class="lyrics-text">🎤 NASYID
+
+Verse 1:
+Semesta telah bersaksi
+Dengan namamu ya rabbi
+Berkahi kami — Denganmu kasih
+
+Verse 2:
+Tak satupun makhluk
+Lengah dari pandanganmu
+Aku mengabdi — Padamu rabbi
+
+Bridge:
+Kadang ku tak mematuhi perintah
+Mendekati hal yg harusnya ku jauhi
+
+Reff:
+Kepadamu kami menyembah
+Kepadamu kami mohon pertolongan
+Tunjukkanlah kami jalan yg lurus
+Jalan orang-orang yg kau beri nikmat
+Bukan jalan yg tersesat
+
+Chorus:
+Ternyata diri — Tak bisa hidup tanpamu</div>
+              </div>
+            </div>
+          </div>
+Rasa gelisah datang dengan tiba-tiba
+Padahal, aku tahun lalu kelas satu uuhu.
+
+Kucoba memahami arti kelas dua..
+Ternyata banyak yang harus kupelajari
+Akankah diriku
+Mampu tuk melalui perjalanan
+Jadi kelas dua..
+
+Harus ku harus tuk belajar
+Segala hal yang baru.. datang
+Belajar hingga aku jadi. paham
+
+Oh harus ku harus untuk maju
+Maju memberanikan diri
+Memahami dan mengerti
+Kehidupan..
+Jadi kelas dua..
+
+We Love Darussalam:
+Hey kawan mari kemari . .
+Kita bernyanyi disini . .
+Kicau indah burung menari . .
+Menghangatkan suasana ini . .
+
+Hari demi hari berlalu . .
+Bersama menuntut ilmu
+Laksana sebuah perahu . .
+Melangkah maju pantang mundur
+
+Dengan . . Semangat panca jiwa . .
+Marilah kita membangun bangsa . .
+Dengan . . Nafas kebersamaan . .
+Kita . . Satukan bangsa . .
+
+Reff:
+Di darus . . Salam . .
+Kita belajar bersama . .
+Satukan langkah kita gapai impian
+
+Di darus . . Salam . .
+Kita berjuang fi sabilillah . .
+Terima kasihku untukmu . .
+Darussalam . .
+
+(Musik)
+dengan . . semangat panca jiwa . .
+marilah kita membangun bangsa . .
+dengan . . nafas kebersamaan . .
+kita . . satukan bangsa . .
+
+Reff:
+di darus . . salam . .
+kita belajar bersama . .
+satukan langkah kita gapai impian .
+
+di darus . . salam . .
+kita berjuang fi sabilillah . .
+terima kasihku untukmu . .
+darus . . salam . .
+
+Kuy Qurban:
+Ayok, kawanku kita berqurban
+Sapi dan kambing ayo siapkan
+Janganlah pelit ingatlah tuhan
+qurban.. qurban..qurban..
+
+Dan kuy kuy kuy kuy kita qurban
+dan kuy kuy kuy kita sisihkan
+dan kuy kuy kuy kita tunaikan
+qurban.. qurban.. qurban..
+
+dan kuy kuy kuy kuy kita hijrah
+dan kuy kuy kuy niat sedekah
+dan kuy kuy kuy ucap bismillah
+lillah.. lillah.. lillah..
+
+Ayok. pabila harta berlimpah
+janganlah cuma buat bermewah
+ingatlah hidup tuk bersedekah
+lillah.. lillah.. lillah..
+
+Dan kuy kuy kuy kuy kita qurban
+dan kuy kuy kuy kita sisihkan
+dan kuy kuy kuy kita tunaikan
+qurban.. qurban.. qurban..
+
+dan kuy kuy kuy kuy kita hijrah
+dan kuy kuy kuy niat sedekah
+dan kuy kuy kuy ucap bismillah
+lillah.. lillah.. lillah..
+
+Lebih Baik:
+Tiada kata yang dapat kuucap
+Saat kau pergi
+'Ku hanya diam menatap langkahmu
+Meninggalkan kita
+Walau berat di hati, tak apa
+Karena 'ku tahu
+Pasti ada tantangan yang berat
+Di setiap perjalanan yang hebat
+Takkan berakhir di sini
+Semuanya akan jadi lebih baik
+
+Walau kita tidak lagi berlari bersama lagi
+But doaku ini selalu untukmu
+Sampai suatu hari nanti kita 'kan bersama lagi
+Berbagi cerita terbaik dari hidup ini
+
+'Ku hanya diam menatap langkahmu
+Meninggalkan kita
+
+Pasti ada tantangan yang berat
+Di setiap perjalanan yang hebat
+Takkan berakhir di sini
+Semuanya akan jadi lebih baik
+
+Walau kita tidak lagi berlari bersama lagi
+But doaku ini selalu untukmu
+Sampai suatu hari nanti kita 'kan bersama lagi
+Berbagi cerita terbaik
+
+
+【 🎤 LIRIK NASYID 】
+
+Verse 1:
+Kalau ku bosan dan aku tak nyaman
+Apa yang kulakukan?
+Bila dilanjutkan, apa ku bisa bertahan?
+
+Verse 2:
+Aku mendengarkan, ingin meluruskan
+Apa yang kau pikirkan
+Coba perhatikan
+Yang akan aku katakan….
+
+Chorus 1:
+Hidup bukan soal nyaman
+Bukan tentang malas-malasan
+Dan satu hal, sukses enggak bisa instan
+
+Chorus 2:
+Ini hidup kan sementara
+Harus sukses dapat berkahnya
+Mudah-mudahan, tuk wasilah masuk surga
+
+Verse 3:
+Banyak keluhan yang kau ceritakan
+Tak menyelesaikan
+Tetap bertahan asal jangan "Melek Walang"...
+
+(Back to Chorus 1 and 2)
+
+[Bridge]
+
+Chorus 3:
+Semua pernah merasa rapuh
+Ingat lillah jika kau lelah
+Peluh pernah akan membentukmu kuat
+
+Chorus 4:
+Kadang jatuh jangan mengeluh
+Ikhlas ingat akan setelah
+Kesulitan akan ada kemudahan
+
+(Back to Chorus 1 and 4)
+
+[Melody.....]
+(Back to Chorus 1 and 2)
+
+Outro:
+Mudah-mudahan...
+Kita Semua Masuk surga</div>
+            </div>
+          </div>
+          <div class="class-item" onclick="toggleLyrics('cls4')">
+            <span class="class-name">⚡ KELAS 3</span>
+            <p class="class-song">♪ Paduan Suara & Nasyid</p>
+            <div class="lyrics-panel" id="cls4">
+              <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls4')">◀ TUTUP LIRIK</button>
+              <div class="lyrics-text">【 🎵 LIRIK PADUAN SUARA 】
+
+Ode Pimpinan:
+Hidup harus terus berjalan
+Meski dalam keterbatasan
+Meski lelah tetaplah bertahan
+Doa-doa selalu kami panjatkan
+
+Semangatmu takkan pernah padam
+Inspirasi kami siang dan malam
+Naluri pemimpinmu amatlah tajam
+Lengkapi idemu tuk membuka jalan
+
+Bagi kami engkaulah harapan
+Bagi kami engkaulah teladan
+Bagi kami masih ada jalan
+Insya Allah buat kesembuhan
+
+Pondok takkan pernah mati
+Meski berganti sosok kiyai
+Meniti jalan menapak bumi Lillah
+Menggapai dunia ini (2x)
+
+DIBAWAH LANGIT YANG SAMA - BOBOIBOY:
+Kita disini bersama sama
+Melewati indah dunia
+Dipayungi sinar mentari
+Tak ada lagi yang kita takuti
+
+Kita bersama seperti kawan
+Takkan ada yang mampu mengalahkan
+
+Di bawah langit yang sama kita
+Bergandengan saling menjaga
+Di atas bumi yang sama kita
+Bergandengan saling menjaga
+
+TANJUNG PERAK:
+Waktu subuh datang
+Udara berhembus kencang
+Kencanglah sekali
+di lantai tiga syiria
+
+Belum berapa lama
+Aku duduk ketiduran
+Al-akh Mirza datang
+Akupun diberdirikan
+
+Akhi (3x)
+Ini waktunya mengaji
+Akhi (3x)
+Jangan diulangi lagi
+(la tu'id… ya….)
+(Na'am Al-akh)
+
+Darussalam pondok kita
+Sama-sama kita cinta
+Hilangkan gundah gulana
+Mari bernyanyi bersama
+
+Ini kitaa… kelas tigaa…..
+Ini kitaa… haa… haa..
+kelas tigaa….
+
+PAMER BOJO:
+Hari ini, hari raya idul adha
+Sama-sama kita qurban kambing domba
+Kita semua, nyanyi bersama
+Jadi juara, di Volksong Gembira
+
+Ada sapi, ada kambing, ada domba
+Ayo kawan jangan sedih dan gelisah
+Kita berjuang, bersama-sama
+Hidup senang, hati senang, cendol dawet
+Cendol dawet, cendol, dawet”
+Cendol”, Dawet”, Cendol”, Dawet”
+Cendol”, Dawet”, Cendol dawet apa?
+Volksong Gembira apa? Jadi juara
+1,2,3,4,5,6,7,8 Tak Gitak” (4x)
+
+
+【 🎤 LIRIK NASYID 】
+
+Verse 1:
+Saat ku kecil
+Kau menyayangiku
+Tak pernah kulihat amarah di wajahmu
+Namun kadang ku membuatmu kesal
+Maafkanlah aku
+
+Verse 2:
+Wajahmu bagaikan mentari
+Menyinari di setiap hari
+Namun kadang ku terjatuh kau bangkitkan
+Jiwa ragaku kembali
+
+Reff:
+Didalam cinta terdapat doa
+Yang slalu kupanjatkan untuknya
+Setiap malamku setiap sujudku
+Ku kan slalu mengucapkan namamu
+
+Didalam cinta terdapat doa
+Kan kulukiskan wajahmu di surga
+Semua ini aku ciptakan untukmu
+
+Bridge:
+Ooo
+Kasih sayangmu tak terbatas waktu
+Pengorbananmu kau curahkan slalu
+
+Terimakasihku
+Doaku untukmu
+Ku menyayangimu
+Ku mencintaimu...</div>
+            </div>
+          </div>
+          <div class="class-item" onclick="toggleLyrics('cls5')">
+            <span class="class-name">🎸 KELAS 3 INTENSIF</span>
+            <p class="class-song">♪ Paduan Suara & Nasyid</p>
             <div class="lyrics-panel" id="cls5">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls5')">◀ TUTUP LIRIK</button>
-              <div class="lyrics-text">Di sini kita berdua
-                Tapi kenapa aku merasa sendiri
-                Kita berbicara tapi tak saling mendengar
-                Ada jurang yang memisahkan kita
+              <div class="lyrics-text">【 🎵 LIRIK PADUAN SUARA 】
 
-                Ku ingin kembali ke masa lalu
-                Saat kita masih saling memahami
-                Saat tawa kita masih tulus
-                Saat cinta kita masih bersemi
+Mabuk Cinta - Armada:
+Bayangkan bila harimu penuh warna
+Itulah yang saat ini kurasakan
 
-                [Reff]
-                Ruang sendiri yang kau berikan
-                Membuatku semakin jauh darimu
-                Ku butuh lebih dari kata-kata
-                Ku butuh kau hadir sepenuhnya
+[Bridge]:
+Berkurban kambing sapi unta
+Berdoa menyebut namanya
+Senangnya bernyanyi bersama
+Mari rayakan semua
 
-                Jangan biarkan kita terus begini
-                Tenggelam dalam kesunyian bersama
-                Mari kita temukan lagi
-                Apa yang dulu kita miliki</div>
+[Reff]:
+Kurasa ku sedang berbahagia
+Nikmatnya, makan daging sapi unta
+Di Idul Adha
+
+[Verse]:
+Bayangkan bila harimu penuh warna
+Itulah yang saat ini kurasakan
+
+[Bridge]:
+Berkurban kambing sapi unta
+Berdoa menyebut namanya
+Senangnya bernyanyi bersama
+Mari rayakan semua
+
+[Reff]:
+Kurasa ku sedang berbahagia
+Nikmatnya, makan daging sapi unta
+Kurasa ku sedang berbahagia
+Kurasa ku sedang berbahagia
+Di idul adha (4x)
+
+Kunci Bahagia:
+Verse 1:
+Kala hatimu gelisah
+Inginkan sesuatu yang tak kau punya
+Namun apa daya kau tak bisa
+Tetap syukurilah yang tlah ada
+
+Verse 2:
+Jika hatimu menepi
+Dan tak mampu tuk dapat mensyukuri
+Ingatlah sgala yang tlah kau miliki
+Semua atas ridho Sang Ilahi
+
+Bridge:
+Tak perlu kau kecewa
+Atas hal yang tak kau bisa
+Semuanya
+Tlah ditakdirkannya
+Jangan kau banyak bertanya
+
+Reff:
+Mengapa sulit bahagia
+Bersyukur pun kau tak pernah
+Mengeluh slalu adanya
+Jangan kau lupa bahagia
+Akhirat juga dunia
+Bahagia itu mudah
+Walau sederhana asal berkah
+
+Verse 2:
+Jika hatimu menepi
+Dan tak mampu tuk dapat mensyukuri
+Ingatlah sgala yang tlah kau miliki
+Semua atas ridho Sang Ilahi
+
+Bridge:
+Tak perlu kau kecewa
+Atas hal yang tak kau bisa
+Semuanya
+Tlah ditakdirkannya
+
+Reff:
+Jangan kau banyak bertanya
+Mengapa sulit bahagia
+Bersyukur pun kau tak pernah
+Mengeluh slalu adanya
+Jangan kau lupa bahagia
+Akhirat juga dunia
+Bahagia itu mudah
+Walau sederhana asal berkah
+
+Terbuang Dalam Waktu:
+Verse 1:
+Teringat seru suaramu
+Menepis keraguan
+Namun dewasa mengubah
+
+Verse 2:
+Cara pandang dan keikhlasan
+Bersaut dan bergulat
+Terperai-perai menghilang
+
+Bridge:
+Perih yang terasa
+Sakit yang tak sirna
+Harapan akankah ada
+Berputar arah
+
+Bridge 2:
+Angan tenggelam dalam kabut dan amarah
+Luka terkuak dan menggebu tanpa arah
+Tangis yang terbendung
+Terbuang dalam waktu
+Yang meluruh
+
+Reff:
+Perih yang terasa
+Sakit yang tak sirna
+Harapan akankah ada
+Berubah
+Melihatmu bersemi dan bermekaran
+Tawa candamu berikan kekuatan
+Sisa hariku pagi berganti waktu
+Memelukmu
+
+Reff 2:
+Kita kan tua dan kehilangan pegangan
+Lihat senyummu memberikan kekuatan
+Sisa nafasku cinta tak kenal waktu
+Menjagamu
+
+
+【 🎤 LIRIK NASYID 】
+
+Verse 1:
+Semesta telah bersaksi
+Dengan namamu ya rabbi
+Berkahi kami
+Denganmu kasih
+
+Verse 2:
+Tak satupun makhluk
+Lengah dari pandanganmu
+Aku mengabdi
+Padamu rabbi
+
+Bridge:
+Kadang ku tak mematuhi perintah
+Mendekati hal yg harusnya ku jauhi
+
+Reff:
+Kepadamu kami menyembah
+Kepadamu kami mohon pertolongan
+Tunjukkanlah kami jalan yg lurus
+Jalan orang-orang yg kau beri nikmat
+Bukan jalan yg tersesat
+
+Chorus:
+Ternyata diri
+Tak bisa hidup tanpamu</div>
             </div>
           </div>
           <div class="class-item" onclick="toggleLyrics('cls6')">
-            <span class="class-name">🌙 CLASS FOUR</span>
-            <p class="class-song">♪ "Sisa Rasa" — Tiara Andini</p>
+            <span class="class-name">🌙 KELAS 4</span>
+            <p class="class-song">♪ Paduan Suara & Nasyid</p>
             <div class="lyrics-panel" id="cls6">
               <button class="back-btn" onclick="event.stopPropagation();toggleLyrics('cls6')">◀ TUTUP LIRIK</button>
-              <div class="lyrics-text">Sudah lama kita tak bertemu
-                Tapi bayangmu masih menghantui
-                Ku mencoba untuk melupakanmu
-                Tapi selalu gagal setiap kali
+              <div class="lyrics-text">【 🎵 LIRIK PADUAN SUARA 】
 
-                Ada sisa rasa yang tertinggal
-                Di sudut hati yang paling dalam
-                Ku tak tahu harus bagaimana
-                Mengusir kenangan tentangmu
+Opening:
+Kami dari kelas 4
+Datang dan tampil di folksong gembira (2x)
 
-                [Reff]
-                Sisa rasa yang kau tinggalkan
-                Masih terasa hingga kini
-                Meski kau telah pergi jauh
-                Kau masih ada di sini
+Runtuh:
+Ku terbangun lagi
+Di antara sepi
+Hanya pikiran yang ramai
+Mengutuki diri
+Tak bisa kembali
+'Tuk mengubah alur kisah
+Ketika mereka meminta tawa
+Ternyata rela tak semudah kata
+Tak perlu khawatir, ku hanya terluka
+Terbiasa 'tuk pura-pura tertawa
+Namun, bolehkah s'kali saja ku menangis
+Sebelum kembali membohongi diri?
+Ketika kau lelah
+Berhentilah dulu
+Beri ruang, beri waktu
+Mereka bilang, "Syukurilah saja"
+Padahal rela tak semudah kata
+Tak perlu khawatir, ku hanya terluka
+Terbiasa 'tuk pura-pura tertawa
+Namun, bolehkah s'kali saja ku menangis
+Sebelum kembali membohongi diri?
+Na-na, na-na-na (3x) oh
 
-                Dalam setiap tarikan nafasku
-                Dalam setiap langkah kakiku
-                Ada jejakmu yang terus mengikuti
-                Sisa cinta yang tak bisa mati</div>
+Full Senyum Kawan:
+Yok ayo full senyum, kawan
+Dalam menyambut idul adha
+Kurban sapi kambing, atau domba, ayo kita pilih
+(Sofu robi’… )
+(kelas empat…)
+Semalam ku dengar gema takbir
+Idul adha mari perbanyak tuk berzikir
+Agar hidupmu selalu di berkahi…
+Oleh sang iilahii….
+
+Tak terasa hari yang kita tunggu
+Hari raya idul adha kita bersatu
+Beribadah dan berdo’a kepadamu..
+Tuk menggapai riidhomuuu
+
+Idul adha mari kita bersama…
+Bersuka ria nyanyi di folksong gembira
+Kawan kawan juga ustadz ustadzku
+Ayo bergembira…
+
+yok ayo full senyum kawan
+Dalam menyambut idul adha
+Kurban sapi kambing domba…
+sama-sama dapat pahala…
+
+Yok ayo full senyum ustadz
+Dalam menyambut idul adha
+Untuk dewan juri s’mua
+Salam kenal dengan juaranya
+
+Apanya Dong:
+Pikir-pikir apanya, apanya
+Apanya dong?
+Yang sebelah mana?
+Sesuatu sangat menarik, oh-ho-ho
+Pikir-pikir apanya, apanya
+Apanya dong?
+kami punya apa?
+Sungguh mati, aku tertarik
+Dulu kelas satu, dua tiga
+kami masih biasa saja
+namun kini kelas 4
+rasanya sudah berbeda
+Ada mudabbirnya, panitia
+pesertanya ya kami juga
+tapi kalau sama-sama
+kami yakin pasti bisa
+Apa, apa, apanya dong? Apanya dong?
+Apanya dong? Dang-ding-dong
+Apa, apa, apanya dong? Apanya dong?
+Dang-ding-dong, dang-ding-dong (2x)
+
+Shollu Ala Muhammad:
+Allahumma shalli 'ala sayidina muhammad
+ya rabbi shalli 'alaihi wa saliim
+shollu 'ala muhammad (4x)
+Pabila hati hilang cahaya iman
+langkahnya hidup hitam tanpa penerang
+pabila jiwa jauh dari al-quran
+langkahnya hidup bagai tanpa pedoman
+Pabila mulut jauh dari asma-nya
+langkahnya hidup bagai hilang berkah-nya
+pabila dunia tak berlandaskan jiwa
+siap-siap akhirat meninggalkannya
+Di bayang-bayang fatamorgana
+berharap hidup khusnul khotimah
+di bayang-bayang fatamorgana
+diri memohon selamatkan hamba
+Shollu 'ala muhammad (4x)
+Pabila hati hilang cahaya iman
+langkahnya hidup hitam tanpa penerang
+pabila jiwa jauh dari al-quran
+langkahnya hidup bagai tanpa pedoman
+Di bayang-bayang fatamorgana
+berharap hidup khusnul khotimah
+di bayang-bayang fatamorgana
+diri memohon selamatkan hamba
+Ya rabbi.. (2x)
+Yaa yaa rabbi...
+Shollu 'ala muhammad (4x)
+sholallah ala muhammad
+shallallahu alaihi wa salam
+sholallah ala muhammad
+sholallah alai wa sallam
+yaa nabi salaam 'alaika
+yaa rasul salaam 'alaika
+yaa habiib salam 'alaika
+sholawattullah 'alaika
+Sholallah ala muhammad
+shallallahu alaihi wa salam
+sholallah ala muhammad
+sholallah alai wa sallam
+yaa nabi salaam 'alaika
+yaa rasul salaam 'alaika
+
+
+【 🎤 LIRIK NASYID 】
+
+Verse 1:
+Perlahan pasti
+Berlalu segalanya
+Satu demi satu amati
+Masa-masa lama
+
+Verse 2:
+Meski dicoba
+Belum tentu hasilnya
+Sama seperti
+Ada yg dikepala
+
+Bridge:
+Belajar merangkul
+Mengartikan rasa
+yang tak pernah
+Ada sebelumnya
+
+Reff:
+Janganlah kau putus asa
+Masih ada harapan indah
+Ini bukanlah akhir
+Usahakan terus coba lagi
+
+Hidup tak terulang lagi
+Bila jatuh kau harus bangkit
+Hidup hanya sekali
+Jadikanlah berarti</div>
             </div>
           </div>
         </div>
@@ -1424,7 +2881,7 @@
           TUTUP</button>
       </div>
       <div class="modal-body">
-        <p class="modal-text" style="margin-bottom:14px;color:rgba(255,255,255,0.5)">Kenangan Indah Bersama ✨</p>
+        <p class="modal-text" style="margin-bottom:14px;color:rgba(31, 42, 68, 0.75); font-weight: 500;">Kenangan Indah Bersama ✨</p>
         <div class="gallery-grid">
           <div class="gallery-item">🎤<div class="gallery-label">SOUNDCHECK</div>
           </div>
@@ -1446,7 +2903,7 @@
           </div>
         </div>
         <hr class="modal-divider">
-        <p class="modal-text" style="color:rgba(255,255,255,0.4);text-align:center;font-size:7px">📷 Foto akan
+        <p class="modal-text" style="color:rgba(31, 42, 68, 0.6);text-align:center;font-size:10px;font-weight: 500;">📷 Foto akan
           ditambahkan setelah acara berlangsung</p>
       </div>
     </div>
@@ -2079,11 +3536,11 @@
         const floatY = Math.sin(tick * 0.05 + h.x) * 5;
         ctx.font = 'bold 13px "Montserrat"';
         ctx.textAlign = 'center';
-        ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
-        ctx.shadowBlur = 6;
+        ctx.shadowColor = '#1F2A44';
+        ctx.shadowBlur = 4;
         const lines = h.label.split('\n');
         lines.forEach((l, i) => {
-          ctx.fillStyle = '#1F2A44';
+          ctx.fillStyle = '#ffffff';
           ctx.fillText(l, hx, hy - 22 + floatY - (lines.length - 1 - i) * 16);
         });
         ctx.shadowBlur = 0;
@@ -2255,7 +3712,50 @@
     // ===== LYRICS TOGGLE =====
     window.toggleLyrics = function (id) {
       const el = document.getElementById(id);
-      el.classList.toggle('open');
+      if (el.classList.contains('open')) {
+        el.classList.remove('open');
+      } else {
+        // Reset state of all song lyrics in this panel when opening
+        el.querySelectorAll('.song-lyric-item').forEach(item => {
+          item.style.display = 'none';
+        });
+        const grid = el.querySelector('.song-buttons-grid');
+        if (grid) grid.style.display = 'grid';
+        const backBtn = el.querySelector('.back-btn');
+        if (backBtn) backBtn.style.display = 'inline-block';
+        
+        el.classList.add('open');
+      }
+      Audio.sfx.click();
+    };
+
+    window.selectSong = function (songId) {
+      const targetLyrics = document.getElementById(songId);
+      if (!targetLyrics) return;
+
+      const panel = targetLyrics.closest('.lyrics-panel');
+      const grid = panel.querySelector('.song-buttons-grid');
+      const backBtn = panel.querySelector('.back-btn');
+
+      grid.style.display = 'none';
+      if (backBtn) backBtn.style.display = 'none';
+
+      targetLyrics.style.display = 'block';
+      Audio.sfx.click();
+    };
+
+    window.closeSong = function (songId) {
+      const targetLyrics = document.getElementById(songId);
+      if (!targetLyrics) return;
+
+      const panel = targetLyrics.closest('.lyrics-panel');
+      const grid = panel.querySelector('.song-buttons-grid');
+      const backBtn = panel.querySelector('.back-btn');
+
+      targetLyrics.style.display = 'none';
+      grid.style.display = 'grid';
+      if (backBtn) backBtn.style.display = 'inline-block';
+      Audio.sfx.click();
     };
 
     // ===== PIANO GAME =====
